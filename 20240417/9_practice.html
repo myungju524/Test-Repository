@@ -6,35 +6,34 @@
     <title>Document</title>
   </head>
   <body>
+    <h1>회원가입</h1>
     <form>
-      <div style="border: 1px solid black">
-        <h1>회원가입</h1>
-        <fieldset>
-          <legend>필수 입력 사항</legend>
-          <p>
-            ID <input type="text" placeholder="아이디 10글자 이내" />
-            <input type="button" value="중복 확인" />
-          </p>
-          <p>
-            비밀번호
-            <input
-              type="password"
-              placeholder="영문,숫자,특수문자 포함
+      <fieldset>
+        <legend>필수 입력 사항</legend>
+        <div>
+          ID <input type="text" placeholder="아이디 10글자 이내" />
+          <input type="button" value="중복 확인" />
+        </div>
+        <div>
+          비밀번호
+          <input
+            type="password"
+            placeholder="영문,숫자,특수문자 포함
             8자 이상"
-            />
-          </p>
-          <p>비밀번호 확인 <input type="password" /></p>
-          <p>
-            Email <input type="email" required />
-            <select name="email">
-              <option value="self">직접입력</option>
-              <option value="naver">@naver.com</option>
-              <option value="daum">@daum.net</option>
-              <option value="google">@google.com</option>
-            </select>
-          </p>
-        </fieldset>
-      </div>
+          />
+        </div>
+        <div>비밀번호 확인 <input type="password" /></div>
+        <div>
+          Email <input type="email" required />
+          <select name="email">
+            <option value="self">직접입력</option>
+            <option value="naver">@naver.com</option>
+            <option value="daum">@daum.net</option>
+            <option value="google">@google.com</option>
+          </select>
+        </div>
+      </fieldset>
+
       <fieldset>
         <legend>추가 정보</legend>
         <p>
@@ -51,18 +50,18 @@
         <p>생년월일 <input type="date" /></p>
         <p>
           취미<br />
-          <label for="baseball">야구</label>
           <input type="checkbox" id="baseball" />
-          <label for="basketball">농구</label>
+          <label for="baseball">야구</label>
           <input type="checkbox" id="basketball" />
-          <label for="soccer">축구</label>
-          <input type="checkbox" id="soccer" /><br />
-          <label for="study">공부</label>
+          <label for="basketball">농구</label>
+          <input type="checkbox" id="soccer" />
+          <label for="soccer">축구</label><br />
           <input type="checkbox" id="study" />
-          <label for="listentomusic">음악감상</label>
-          <input type="checkbox" id="listentomusic" /><br />
-          <label for="etc">기타</label>
+          <label for="study">공부</label>
+          <input type="checkbox" id="listentomusic" />
+          <label for="listentomusic">음악감상</label><br />
           <input type="checkbox" id="etc" />
+          <label for="etc">기타</label>
           <input type="text" />
         </p>
         <p>
@@ -73,9 +72,9 @@
         </p>
       </fieldset>
       <br />
-      <input type="button" value="회원가입" />
-      <input type="button" value="다시입력" />
-      <input type="button" value="이전으로" />
+      <input type="submit" value="회원가입" />
+      <input type="reset" value="다시입력" />
+      <input type="button" value="이전으로" onclick="history.go(-1);" />
     </form>
   </body>
 </html>
