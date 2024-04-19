@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>liststyle</title>
+  </head>
+  <style>
+    ul {
+      border-top: 1px solid red;
+      border-bottom: 1px solid red;
+      padding: 10px 0;
+      list-style-type: none;
+      /* list-style-image: url("../resources/img/아이콘1.png") ; */
+      text-align: center;
+    }
+    ul li {
+      display: inline;
+      text-transform: uppercase;
+      padding: 0 10px;
+      letter-spacing: 10px;
+    }
+    ul li a {
+      text-decoration: none;
+      color: black;
+    }
+    a:link {
+      color: black;
+    }
+
+    a:hover {
+      color: blueviolet;
+      text-decoration: underline;
+    }
+    a:active {
+      color: chartreuse;
+      background-color: darkgray;
+    }
+  </style>
+  <body>
+    <!-- <ul>
+      <li>
+        <img
+          src="../resources/img/아이콘1.png"
+          width="16"
+          height="16"
+        />아메리카노
+      </li>
+      <li>아이스티</li>
+      <li>자몽허니블랙티</li>
+    </ul> -->
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">contact</a></li>
+    </ul>
+  </body>
+</html>
