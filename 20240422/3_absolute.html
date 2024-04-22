@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>absolute</title>
+  </head>
+  <style>
+    #one {
+      background-color: palegreen;
+      width: 800px;
+      height: 400px;
+      position: absolute;
+      left: 100px;
+      top: 100px;
+    }
+    #two {
+      background-color: blueviolet;
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      /* left: 50px;
+      top: 50px; */
+      /* 원래 있던 값 기준으로 움직임 */
+    }
+    #three {
+      background-color: darkkhaki;
+      width: 300px;
+      height: 100px;
+      position: absolute;
+      left: 200px;
+      top: 200px;
+    }
+  </style>
+  <body>
+    <div id="one">
+      <div id="two">block #2<br />position: absolute;</div>
+    </div>
+    <div id="three"></div>
+  </body>
+</html>

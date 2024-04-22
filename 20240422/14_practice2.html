@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+    }
+    body > div {
+      border: solid red;
+      display: flex;
+      height: 500px;
+      padding: 0;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
+      text-align: center;
+    }
+    div > div {
+      background-color: beige;
+      font-size: 48px;
+      border: 1px solid black;
+      flex-grow: 1;
+    }
+  </style>
+  <body>
+    <h1>아래와 같이 만들어 보세요.</h1>
+    <div>
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+    </div>
+  </body>
+</html>
