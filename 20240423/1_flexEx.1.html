@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>flex 예제1</title>
+  </head>
+  <style>
+    #container {
+      border: 5px solid red;
+      border-radius: 10px;
+      font-size: 48px;
+      height: 500px;
+      display: flex;
+      justify-content: center; /* 수평정렬(주축) */
+      align-items: center; /* 수직정렬(교차축) */
+    }
+    .item {
+      display: flex;
+      width: 200px;
+      height: 100px;
+      border: 3px solid blue;
+      justify-content: center;
+      align-items: center;
+    }
+    /* 컨테이너 안에 또 컨테이너를 만듦 */
+  </style>
+  <body>
+    <div id="container">
+      <div class="item">flex</div>
+    </div>
+  </body>
+</html>
