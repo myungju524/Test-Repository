@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>loginpage</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+    />
+  </head>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      
+    }
+    #wrapper {
+      background-color: bisque;
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+    #layout {
+      display: flex;
+      background-color: aqua;
+      justify-content: center;
+      align-self: center;
+      flex-direction: column;
+      width: 20%;
+      height: 40%;
+    }
+    #center {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
+    #page1 {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    #page2 {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .one1 input {
+      background-color: lightblue;
+      border: 1px solid lightblue;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      padding-left: 20px;
+    }
+    .one2 input {
+      background-color: lightblue;
+      border: 1px solid lightblue;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      padding-left: 20px;
+    }
+    i {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+    }
+
+    #bottom input {
+      background-color: yellow;
+      border: 1px solid yellow;
+      width: 100px;
+      height: 40px;
+      border-radius: 10px;
+    }
+    p a {
+      color: aliceblue;
+      text-decoration: none;
+      font-weight: 600;
+    }
+  </style>
+  <body>
+    <div id="wrapper">
+      <div id="layout">
+        <div id="center">
+          <h3>Log In</h3>
+
+          <div id="page1">
+            <div class="one1">
+              <i class="fas fa-user"></i>
+              <input type="text" placeholder="Your Email" />
+            </div>
+          </div>
+          <br />
+          <div id="page2">
+            <div class="one2">
+              <i class="fas fa-lock"></i>
+              <input type="password" placeholder="Your Password" />
+            </div>
+          </div>
+          <br />
+          <div id="bottom">
+            <input type="submit" value="submit" />
+          </div>
+          <p><a href="#">Forgot Your password?</a></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>shopping mall flex</title>
+  </head>
+  <style>
+    /* 공통 스타일 시작 */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+    }
+    html,
+    body,
+    #wrapper {
+      width: 100%;
+      height: 100%;
+      gap: 1%;
+    }
+    ul {
+      padding: 0;
+      list-style-type: none;
+    }
+    a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+    }
+    /* 공통 스타일 끝 */
+    /* wrapper 스타일 시작 */
+    #wrapper {
+      border: 2px solid orange;
+      display: flex;
+      flex-direction: column;
+    }
+    /* wrapper 스타일 끝 */
+
+    /* header 스타일 시작 */
+    #header {
+      background-color: #ffd65c;
+      height: 10%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50px;
+    }
+    #header > img {
+      width: 100px;
+      height: 100px;
+    }
+    #header > span {
+      font-size: 2em;
+      font-weight: 900;
+      color: #53188b;
+    }
+    /* header 스타일 끝 */
+
+    /*  nav 스타일 시작 */
+    #nav {
+      background-color: #d1b3e0;
+      height: 10%;
+      margin: 0;
+      /* padding을 지우면 list style이 사라짐 마커는 padding 영역에 생김 */
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      border-radius: 50px;
+    }
+    #nav > li > a {
+      letter-spacing: 0.3em;
+      font-size: 1.5em;
+    }
+
+    /*  nav 스타일 끝 */
+
+    /* main 스타일 시작 */
+
+    #main {
+      /* background-color: aqua; */
+      height: 70%;
+      display: flex;
+      gap: 0.5%;
+    }
+    .aside {
+      background-color: #faebeb;
+      width: 15%;
+      padding: 1.5% 1%;
+      display: flex;
+      flex-direction: column;
+      border-radius: 50px 50px 0 0;
+    }
+    .aside li {
+      background-color: #e6b3b3;
+      padding: 8% 8%;
+      border-bottom: 1px solid #d1a3a3;
+    }
+    .aside li:last-child {
+      border-bottom: 1px solid #e6b3b3;
+    }
+
+    #content {
+      background-color: #fafafa;
+      width: 70%;
+      display: flex;
+      padding: 1%;
+      gap: 1%;
+    }
+    .item {
+      /* flex-grow: 1; */
+      width: 33%;
+      border: 1px solid #e5e5e5;
+      display: flex;
+      flex-direction: column;
+    }
+    .image-section {
+      height: 70%;
+    }
+    .desc-section {
+      height: 25%;
+    }
+    .btn-section {
+      height: 5%;
+    }
+    .btn-section button {
+      width: 100%;
+      height: 100%;
+    }
+    #content a {
+      color: black;
+    }
+    #content a:hover {
+      text-decoration: underline;
+    }
+    .aside #right a {
+      color: blue;
+      text-decoration: underline;
+    }
+
+    /* main 스타일 끝 */
+    /* footer 스타일 시작 */
+    #footer {
+      background-color: #ccccf2;
+      height: 10%;
+      border-radius: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    /* footer 스타일 끝 */
+  </style>
+  <body>
+    <div id="wrapper">
+      <div id="header">
+        <div>
+          <img src="../resources/img/여우.png" />
+          <span>Fox shopping</span>
+        </div>
+      </div>
+      <ul id="nav">
+        <li><a href="#">HOME</a></li>
+        <li><a href="#">SHOPPING ABOUT</a></li>
+        <li><a href="#">NEWS</a></li>
+        <li><a href="#">MY ACCOUNT</a></li>
+        <li><a href="#">CONTACTS</a></li>
+      </ul>
+      <div id="main">
+        <div class="aside">
+          <h3>카테고리</h3>
+          <ul>
+            <li><a href="#">컴퓨터</a></li>
+            <li><a href="#">의류</a></li>
+            <li><a href="#">음악</a></li>
+            <li><a href="#">영화</a></li>
+            <li><a href="#">스포츠/레저</a></li>
+            <li><a href="#">가구/인테리어</a></li>
+            <li><a href="#">식품</a></li>
+          </ul>
+        </div>
+        <div id="content">
+          <div class="item">
+            <div
+              class="image-section"
+              style="
+                background-image: url(../resources/img/dejavu2.png);
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+              "
+            ></div>
+            <div class="desc-section">
+              <a href="#">
+                타이틀곡 '데자부(Deja Vu)'는 우리가 했던 과거의 약속처럼 너와
+                나는 반드시 다시 만나게 되고, 재회의 순간이 마치 데자부 같이
+                느껴질 것이라고 말한다.투모로우바이투게더는 너와 함께하는 내일이
+                곧 나의 구원임을 깨달았기에 너를 찾아 세게 안을 것이라고
+                노래한다.
+              </a>
+            </div>
+            <div class="btn-section"><button>쇼핑카트에 추가하기</button></div>
+          </div>
+          <div class="item">
+            <div
+              class="image-section"
+              style="
+                background-image: url(../resources/img/freefall.png);
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+              "
+            ></div>
+            <div class="desc-section">
+              <a href="#">
+                타이틀곡 'Chasing That Feeling'은 달콤하지만 성장이 없었던
+                과거를 뒤로하고 현실에서의 새로운 시작을 알리는 곡이다. 질주감
+                있는 멜로디와 묵직한 비트, 신시사이저 사운드가
+                투모로우바이투게더 특유의 감성과 만나 새로운 매력을 전한다.
+              </a>
+            </div>
+            <div class="btn-section"><button>쇼핑카트에 추가하기</button></div>
+          </div>
+          <div class="item">
+            <div
+              class="image-section"
+              style="
+                background-image: url(../resources/img/temptation.png);
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+              "
+            ></div>
+            <div class="desc-section">
+              <a href="#">
+                타이틀곡 'Sugar Rush Ride' 뮤직비디오는, 마치 동화 속
+                '네버랜드'를 연상시키는 상상의 공간에 표류한 소년들을 통해
+                유혹에 흔들리며 방황하는 청춘의 모습을 그린다.
+              </a>
+            </div>
+            <div class="btn-section"><button>쇼핑카트에 추가하기</button></div>
+          </div>
+        </div>
+        <div class="aside">
+          <div id="right">
+            <h3>Shopping Cart</h3>
+            <p>현재 쇼핑카트에 물품이 없습니다.</p>
+            <a href="#">쇼핑카트 보기</a>
+            <br /><br />
+            <h3>Log in</h3>
+            <span>아이디</span>
+            <p><input type="text" /></p>
+            <span>비밀번호</span>
+            <p><input type="password" /></p>
+            <input type="submit" value="로그인" />
+            <input type="reset" value="초기화" />
+            <br />
+            <a href="#">회원가입</a>
+            <a href="#">비밀번호 분실</a>
+          </div>
+        </div>
+      </div>
+      <div id="footer">2024.04.24 DW아카데미 042-123-4567</div>
+    </div>
+  </body>
+</html>

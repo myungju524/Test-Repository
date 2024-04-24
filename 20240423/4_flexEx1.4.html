@@ -26,38 +26,43 @@ p<!DOCTYPE html>
       align-items: center;
       font-size: 28px;
       flex-grow: 2;
+      flex-shrink: 0;
     }
     #header2 {
       display: flex;
       background-color: #ffd65c;
       border-radius: 40px;
-      justify-content: center;
+      justify-content: space-around;
       align-items: center;
       margin-bottom: 1%;
       flex-grow: 1;
+      flex-shrink: 0;
     }
     #menu {
       background-color: #d1b3e0;
       display: flex;
       list-style-type: none;
-      justify-content: space-between;
+      /* justify-content: space-around; */
       border-radius: 40px;
       flex-grow: 1;
       align-items: center;
       margin-bottom: 1%;
+      flex-shrink: 0;
     }
 
     #main {
       background-color: white;
       flex-grow: 6;
       display: flex;
+      flex-shrink: 0;
     }
     #category {
       background-color: #faebeb;
-      flex-grow: 1;
+      /* flex-grow: 1; */
       border-radius: 40px;
       flex-shrink: 0;
       margin: 1%;
+      width: 15%;
     }
     #caterory2 {
       background-color: #e6b3b3;
@@ -65,17 +70,18 @@ p<!DOCTYPE html>
       display: flex;
       flex-direction: column;
     }
-    
+
     #computer {
       display: flex;
-      flex-grow: 1;
+      /* flex-grow: 1; */
+      width: 70%;
     }
     #rightarea {
-      flex-grow: 1;
+      /* flex-grow: 1; */
       background-color: #faebeb;
       border-radius: 40px;
-      flex-shrink: 0;
       margin: 1%;
+      width: 15%;
     }
 
     #footer {
@@ -85,15 +91,31 @@ p<!DOCTYPE html>
       display: flex;
       justify-content: center;
       align-items: center;
-    }
-
-    ul li {
-      display: inline;
-      letter-spacing: 3px;
+      flex-shrink: 0;
     }
     ul li a {
       text-decoration: none;
       color: white;
+      display: inline;
+      letter-spacing: 3px;
+    }
+    .li1 {
+      display: flex;
+      justify-content: space-around;
+    }
+    .li2 {
+      list-style-type: none;
+      border: 1px solid white;
+      padding: 1%;
+    }
+    #pic1 {
+      flex-grow: 1;
+    }
+    #pic2 {
+      flex-grow: 1;
+    }
+    #pic3 {
+      flex-grow: 1;
     }
   </style>
   <body>
@@ -112,40 +134,55 @@ p<!DOCTYPE html>
       </div>
       <div id="menu">
         <ul>
-          <li><a href="#">HOME</a></li>
-          <li><a href="#">SHOPPING ABOUT</a></li>
-          <li><a href="#">NEWS</a></li>
-          <li><a href="#">MY ACCOUNT</a></li>
-          <li><a href="#">CONTACTS</a></li>
+          <li class="li1"><a href="#">HOME</a></li>
+          <li class="li1"><a href="#">SHOPPING ABOUT</a></li>
+          <li class="li1"><a href="#">NEWS</a></li>
+          <li class="li1"><a href="#">MY ACCOUNT</a></li>
+          <li class="li1"><a href="#">CONTACTS</a></li>
         </ul>
       </div>
       <div id="main">
         <div id="category">
           <h2>카테고리</h2>
           <div id="caterory2">
-            <tr id="comp3">
-              <td>컴퓨터</td>
-              <td>의류</td>
-              <td>음악</td>
-              <td>영화</td>
-              <td>스포츠/레저</td>
-              <td>가구/인테리어</td>
-              <td>식품</td>
-            </tr>
+            <ul>
+              <li class="li2">컴퓨터</li>
+              <li class="li2">의류</li>
+              <li class="li2">음악</li>
+              <li class="li2">영화</li>
+              <li class="li2">스포츠/레저</li>
+              <li class="li2">가구/인테리어</li>
+              <li class="li2">식품</li>
+            </ul>
           </div>
         </div>
 
         <div id="computer">
-          <img src="../resources/img/dejavu.png" width="200" height="250" />
-          <p>한성컴퓨터<input type="button" value="쇼핑카트에 추가하기" /></p>
-          <img src="../resources/img/freefall.png" width="200" height="250" />
-          <p>LG GRAM<input type="button" value="쇼핑카트에 추가하기" /></p>
-          <img
-            src="../resources/img/temptation.png"
-            width="200"
-            height="250 >"
-          />
-          <p>MAC<input type="button" value="쇼핑카트에 추가하기" /></p>
+          <div id="pic1">
+            <img src="../resources/img/dejavu.png" width="200" height="250" />
+            <p class="comp2">
+              한성컴퓨터<br /><input
+                type="button"
+                value="쇼핑카트에 추가하기"
+              />
+            </p>
+          </div>
+          <div id="pic2">
+            <img src="../resources/img/freefall.png" width="200" height="250" />
+            <p class="comp2">
+              LG GRAM<br /><input type="button" value="쇼핑카트에 추가하기" />
+            </p>
+          </div>
+          <div id="pic3">
+            <img
+              src="../resources/img/temptation.png"
+              width="200"
+              height="250 >"
+            />
+            <p class="comp2">
+              MAC <br /><input type="button" value="쇼핑카트에 추가하기" />
+            </p>
+          </div>
         </div>
         <div id="rightarea">
           <h2>Shopping Cart</h2>
@@ -154,8 +191,12 @@ p<!DOCTYPE html>
           <h2>Log In</h2>
           <p>아이디<br /><input type="text" /></p>
           <p>패스워드<br /><input type="text" /></p>
+          <br />
+
           <span><input type="button" value="로그인" /></span>
-          <span><input type="reset" value="초기화" /></span>
+          <span><input type="reset" value="초기화" /></span><br />
+          <span><a href="#">회원가입</a></span>
+          <span><a href="#">비밀번호 분실</a></span>
         </div>
       </div>
       <div id="footer">
