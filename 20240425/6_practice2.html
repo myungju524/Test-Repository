@@ -41,6 +41,18 @@
       display: flex;
       flex-direction: column;
     }
+    li a{
+      text-decoration: none;
+      color: white;
+    }
+   
+    
+    #img1 {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
     #aside2 {
       background-color: #94dede;
       border-radius: 50px;
@@ -49,15 +61,7 @@
       background-color: #9999e6;
       border-radius: 50px;
     }
-    div > div {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    #li {
-      display: flex;
-      flex-direction: column;
-    }
+
     div > div:nth-child(1) {
       grid-area: header;
     }
@@ -84,8 +88,10 @@
           <li><a href="#">Naver</a></li>
           <li><a href="#">Daum</a></li>
         </ul>
-        <img src="../resources/img/dejavu2.png" width="100"height=200>
-        <p>데자부</p>
+        <div id="img1">
+          <img src="../resources/img/dejavu2.png" width="100" height="200" />
+          <p>데자부</p>
+        </div>
       </div>
       <div id="aside2"></div>
       <div id="footer"></div>
