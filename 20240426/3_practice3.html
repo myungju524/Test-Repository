@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+    }
+    html,
+    body,
+    #wrapper {
+      width: 100%;
+      height: 100%;
+    }
+    #wrapper {
+      display: grid;
+      grid-template-rows: 1fr 1fr 4fr 1fr;
+      grid-template-rows: repeat(
+        1,
+        1fr minmax(65px, auto) 6fr minmax(65px, auto)
+      );
+      gap: 1%;
+    }
+    #header {
+      background-color: #ffd65c;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2%;
+    }
+    #header span {
+      font-size: 2rem;
+      font-weight: 800;
+      color: rgb(29, 21, 36);
+    }
+    #header div {
+      width: 10%;
+      height: 100%;
+    }
+    #nav {
+      background-color: #d1b3e0;
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(10%, auto));
+      align-items: center;
+      justify-content: space-evenly;
+    }
+    li {
+      color: white;
+      font-weight: 600;
+    }
+    li a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    #main {
+      display: grid;
+      grid-template-columns: 1fr 4fr 1fr;
+      gap: 1%;
+    }
+    .aside {
+      background-color: #faebeb;
+      padding: 5%;
+    }
+    #category {
+      background-color: #e6b3b3;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+    #category li {
+      padding: 5%;
+      border-bottom: 1px solid #d1a3a3;
+      cursor: pointer;
+    }
+    #category li:hover {
+      background-color: #a17f7f;
+    }
+    #category li:nth-child(1) {
+      border-top: 1px solid #d1a3a3;
+    }
+    #content {
+      background-color: #fafafa;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(100px, auto));
+      padding: 1%;
+      gap: 1%;
+    }
+
+    .item {
+      border: 1px solid #e5e5e5;
+      padding: 5%;
+      display: grid;
+      grid-template-rows: 5fr 4fr 1fr;
+      gap: 1%;
+      /* align-items: center; */
+    }
+    .item a {
+      color: black;
+      text-decoration: none;
+    }
+    .item a:hover {
+      text-decoration: underline;
+    }
+    .item-desc {
+      align-self: center;
+    }
+    .item button {
+      width: 100%;
+      height: 100%;
+    }
+
+    #footer {
+      background-color: #ccccf2;
+    }
+  </style>
+  <body>
+    <!-- div>div*3 -->
+    <!-- div#id -->
+
+    <div id="wrapper">
+      <div id="header">
+        <div
+          style="
+            background-image: url(../resources/img/txt.jpg);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+          "
+        ></div>
+        <span>TXT Shopping</span>
+      </div>
+      <ul id="nav">
+        <li><a href="#">HOME</a></li>
+        <li><a href="#">SHOPPING ABOUT</a></li>
+        <li><a href="#">NEWS</a></li>
+        <li><a href="#">MY ACOUUNT</a></li>
+        <li><a href="#">CONTACTS</a></li>
+      </ul>
+      <div id="main">
+        <div id="aside1" class="aside">
+          <h3>카테고리</h3>
+          <ul id="category">
+            <li><a href="#">컴퓨터</a></li>
+            <li><a href="#">의류</a></li>
+            <li><a href="#">음악</a></li>
+            <li><a href="#">영화</a></li>
+            <li><a href="#">스포츠/레져</a></li>
+            <li><a href="#">가구/인테리어</a></li>
+            <li><a href="#">식품</a></li>
+          </ul>
+        </div>
+        <div id="content">
+          <div class="item">
+            <div
+              style="
+                background-image: url(../resources/img/dejavu2.png);
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+              "
+            ></div>
+            <div class="item-desc">
+              <a href="#"
+                >타이틀곡 'Chasing That Feeling'은 달콤하지만 성장이 없었던
+                과거를 뒤로하고 현실에서의 새로운 시작을 알리는 곡이다. 질주감
+                있는 멜로디와 묵직한 비트, 신시사이저 사운드가
+                투모로우바이투게더 특유의 감성과 만나 새로운 매력을 전한다.</a
+              >
+            </div>
+            <div>
+              <button>쇼핑카트에 추가하기</button>
+            </div>
+          </div>
+
+          <div class="item">
+            <div
+              style="
+                background-image: url(../resources/img/dejavu2.png);
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+              "
+            ></div>
+            <div class="item-desc">
+              <a href="#"
+                >타이틀곡 'Chasing That Feeling'은 달콤하지만 성장이 없었던
+                과거를 뒤로하고 현실에서의 새로운 시작을 알리는 곡이다. 질주감
+                있는 멜로디와 묵직한 비트, 신시사이저 사운드가
+                투모로우바이투게더 특유의 감성과 만나 새로운 매력을 전한다.</a
+              >
+            </div>
+            <div>
+              <button>쇼핑카트에 추가하기</button>
+            </div>
+          </div>
+          <div class="item">
+            <div
+              style="
+                background-image: url(../resources/img/dejavu2.png);
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+              "
+            ></div>
+            <div class="item-desc">
+              <a href="#"
+                >타이틀곡 'Chasing That Feeling'은 달콤하지만 성장이 없었던
+                과거를 뒤로하고 현실에서의 새로운 시작을 알리는 곡이다. 질주감
+                있는 멜로디와 묵직한 비트, 신시사이저 사운드가
+                투모로우바이투게더 특유의 감성과 만나 새로운 매력을 전한다.</a
+              >
+            </div>
+            <div>
+              <button>쇼핑카트에 추가하기</button>
+            </div>
+          </div>
+        </div>
+        <div id="aside2" class="aside">
+          <h3>Shopping Cart</h3>
+          <p>현재 쇼핑카트에 물품이 없습니다.</p>
+          <a href="#">쇼핑카트 보기</a>
+          <br /><br />
+          <h3>Log In</h3>
+          <span>아이디</span>
+          <form>
+            <p><input type="text" /></p>
+            <span>비밀번호</span>
+            <p><input type="password" /></p>
+            <input type="submit" value="로그인" />
+            <input type="reset" value="초기화" />
+          </form>
+          <br />
+          <a href="#">회원가입</a>
+          <a href="#">비밀번호 분실</a>
+        </div>
+      </div>
+      <div id="footer"></div>
+    </div>
+  </body>
+</html>

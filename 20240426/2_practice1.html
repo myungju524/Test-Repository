@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+    }
+    html,
+    body,
+    #wrapper {
+      width: 100%;
+      height: 100%;
+    }
+    #wrapper {
+      display: grid;
+      grid-template-rows: 2fr 1fr 5fr 2fr;
+      gap: 1%;
+    }
+    #header {
+      background-color: #ffef66;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, auto));
+      justify-content: center;
+      align-items: center;
+      border-radius: 30px;
+    }
+    #nav {
+      background-color: #b3a000;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, auto));
+      justify-content: center;
+      align-items: center;
+      border-radius: 30px;
+    }
+    #main {
+      /* background-color: blue; */
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1%;
+    }
+    .aside {
+      background-color: #ff7c80;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(50px, auto));
+      justify-content: center;
+      align-items: center;
+      border-radius: 50px;
+    }
+
+    #section {
+      display: grid;
+      background-color: #92d050;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50px;
+      margin-right: 5%;
+    }
+    #article {
+      background-color: #ccecff;
+      width: 200px;
+      height: 200px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(50px, auto));
+      justify-content: center;
+      align-items: center;
+      border-radius: 50px;
+    }
+
+    #footer {
+      background-color: #fe98fe;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, auto));
+      justify-content: center;
+      align-items: center;
+      border-radius: 30px;
+    }
+  </style>
+  <body>
+    <div id="wrapper">
+      <div id="header">
+        <p>header</p>
+      </div>
+      <div id="nav"><p>nav</p></div>
+      <div id="main">
+        <div class="aside"><p>aside left</p></div>
+        <div id="section">
+          <p>section</p>
+          <div id="article"><p>article</p></div>
+        </div>
+        <div class="aside"><p>aside right</p></div>
+      </div>
+      <div id="footer"><p>footer</p></div>
+    </div>
+  </body>
+</html>
