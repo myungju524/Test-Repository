@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>버튼 연습</title>
+  </head>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+    }
+    html,
+    body,
+    #wrapper {
+      width: 100%;
+      height: 100%;
+    }
+    #wrapper {
+      padding: 1rem;
+    }
+    a {
+      display: inline-block;
+      font-size: 22px;
+      padding: 20px 60px;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    .fillbtn:hover {
+      color: white;
+    }
+    .fillbtn {
+      border: 2px solid #4dbde5;
+      color: #4dbde5;
+      position: relative;
+      transition: 0.5s;
+      overflow: hidden;
+    }
+    .fillbtn::after {
+      content: "";
+      position: absolute;
+      display: inline-block;
+      width: 100%;
+      height: 200%;
+      top: 0;
+      left: 0;
+      background-color: #4dbde5;
+      transform: scaleY(0);
+      /* transform-origin: 100% 100%; */
+      transition: 0.5s;
+      z-index: -1;
+    }
+    .fillbtn:hover::after {
+      transform: scaleY(1);
+    }
+    .pulsebtn {
+      border: 2px solid #4dbde5;
+      background-color: #4dbde5;
+      color: white;
+      transition: 0.3s;
+      /* box-shadow: 0 0 0 5px gray; */
+    }
+    .pulsebtn:hover {
+      animation: pulse 0.5s;
+    }
+
+    @keyframes pulse {
+      from {
+        box-shadow: 0 0 0 0 #4dbde5;
+      }
+
+      to {
+        box-shadow: 0 0 0 18px transparent;
+      }
+    }
+
+    .linebtn {
+      color: #4dbde5;
+      transition: 0.3s;
+      position: relative;
+    }
+    .linebtn:hover{
+        letter-spacing: 5px;
+    }
+
+    .linebtn::before,
+    .linebtn::after {
+      content: "";
+      display: inline-block;
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background-color: white;
+      transform: scaleX(0);
+      left: 0;
+      transition: 0.3s;
+
+    }
+    .linebtn::before {
+      top: 0;
+    }
+    .linebtn::after {
+      bottom: 0;
+    }
+    .linebtn:hover::before,
+    .linebtn:hover::after {
+      background-color: #4dbde5;
+      transform: scaleX(1.2);
+     
+      
+    }
+  </style>
+  <body>
+    <div id="wrapper">
+      <div class="content">
+        <h2>Fill Up Button</h2>
+        <a href="#" class="fillbtn">Fill Up</a>
+      </div>
+      <div class="content">
+        <h2>Pulse Button</h2>
+        <a href="#" class="pulsebtn">Pulse</a>
+      </div>
+      <div class="content">
+        <h2>Line Button</h2>
+        <a href="#" class="linebtn">Line</a>
+      </div>
+    </div>
+  </body>
+</html>
