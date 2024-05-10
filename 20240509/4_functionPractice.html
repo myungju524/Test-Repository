@@ -76,12 +76,14 @@
 
       function solution1(inputValue) {
         // 소스코드 작성
-        inputValue.push("banana");
-        return inputValue;
+        arr.push("banana");
+        return arr;
       }
 
       // 함수 실행 코드
+      console.log(`-------solution1-------`);
       console.log(solution1(arr));
+      console.log(`-----------------------`);
 
       // ---------------------------------------------------------------
 
@@ -90,12 +92,14 @@
 
       function solution2(inputValue) {
         // 소스코드 작성
-        inputValue.unshift("banana");
-        return inputValue;
+        arr2.unshift("banana");
+        return arr2;
       }
 
       // 함수 실행 코드
+      console.log(`-------solution2-------`);
       console.log(solution2(arr2));
+      console.log(`-----------------------`);
 
       // ---------------------------------------------------------------
 
@@ -104,12 +108,14 @@
 
       function solution3(inputValue) {
         // 소스코드 작성
-        inputValue.push();
+
         return inputValue.length;
       }
 
       // 함수 실행 코드
+      console.log(`-------solution3-------`);
       console.log(solution3(arr3));
+      console.log(`-----------------------`);
 
       // ---------------------------------------------------------------
 
@@ -118,12 +124,15 @@
 
       function solution4(inputValue) {
         // 소스코드 작성
-        inputValue.pop();
-        return inputValue;
+
+        return inputValue.pop();
       }
 
       // 함수 실행 코드
+      console.log(`-------solution4-------`);
       console.log(solution4(arr4));
+      console.log(arr4);
+      console.log(`-----------------------`);
 
       // ---------------------------------------------------------------
 
@@ -132,12 +141,15 @@
 
       function solution5(inputValue) {
         // 소스코드 작성
-        inputValue.shift();
-        return inputValue;
+
+        return arr5.shift();
       }
 
       // 함수 실행 코드
+      console.log(`-------solution5-------`);
       console.log(solution5(arr5));
+      console.log(arr5);
+      console.log(`-----------------------`);
 
       // ---------------------------------------------------------------
 
@@ -146,12 +158,14 @@
 
       function solution6(inputValue) {
         // 소스코드 작성
-        return inputValue.slice(1,4)
+        return inputValue.slice(1, 4);
       }
 
       // 함수 실행 코드
+      console.log(`-------solution6-------`);
       console.log(solution6(arr6)); // ["pie", "fig", "melon"] 나와야함
       console.log(arr6 == solution6(arr6)); // false 나와야함
+      console.log(`-----------------------`);
 
       // ---------------------------------------------------------------
 
@@ -161,8 +175,7 @@
 
       function solution7(inputValue1, inputValue2) {
         // 소스코드 작성
-        
-
+        return inputValue1.concat(inputValue2);
       }
 
       // 함수 실행 코드

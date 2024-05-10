@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Number Guess</h1>
+    <p>1부터 100 사이의 정수를 입력하세요.</p>
+    <input id="number" type="text" />
+    <button onclick="clickfn()">숫자 추측</button>
+    <button onclick="reset2()">다시시작</button>
+    <p id="message"></p>
+  </body>
+  <script>
+    const input2 = document.querySelector(`#number`);
+    const pTag2 = document.querySelector(`#message`);
+    let randNum = 0;
+    let resStr2 = "";
+    let count = 0;
+    const MAX_COUNT = 10;
+    function reset2() {
+      pTag2.innerHTML = "";
+      count = 0;
+      randNum = getRandom();
+      resStr2 = "";
+      input2.value = "";
+    }
+
+    // getRandom에서 정답으로 맞힐 랜덤한 숫자를 추출한다.👀
+    function getRandom() {
+      return parseInt(Math.random() * 100) + 1;
+    }
+    randNum = getRandom();
+    function clickfn() {
+      if (count == MAX_COUNT) {
+        reset2();
+        return false;
+      }
+
+      let inputNum = input2.value;
+      //사용자가 input 창에 입력한 숫자를 가져온다. 맞나?🤔
+      if (randNum == inputNum) {
+        resStr2 = "정답입니다!!!🎉";
+        alert(resStr2);
+        reset2();
+      } else {
+        count++;
+        if (randNum > inputNum) {
+          resStr2 = `입력하신 숫자보다 큽니다.😲 입력하신 숫자 : ${inputNum}<br>`;
+        } else {
+          resStr2 = `입력하신 숫자보다 작습니다.😅 입력하신 숫자 : ${inputNum}<br>`;
+        }
+        pTag2.innerHTML = pTag2.innerHTML + resStr2;
+      }
+      if (MAX_COUNT == count) {
+        resStr2 = `게임에서 패배하셨습니다.😫 랜덤 숫자는 ${randNum} 이었습니다.`;
+        pTag2.innerHTML = resStr2;
+      }
+    }
+  </script>
+</html>
