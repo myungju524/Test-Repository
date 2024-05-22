@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="2_messenger2.css" />
+    <title>메신저</title>
+  </head>
+  <body>
+    <img class="background" src="../resources/img/하늘.jpg" />
+    <div class="container">
+      <div class="header">
+        <button class="btn">
+          <img src="../resources/img/left-arrow.png" width="31" height="31" />
+        </button>
+        <img
+          class="profile-pic"
+          src="../resources/img/프로필.jpg"
+          width="35"
+          height="48"
+        />
+        <div class="info-block">
+          <p class="username">범규</p>
+          <p class="status">5분 전에 활동</p>
+        </div>
+        <div class="call-box">
+          <button class="btn">
+            <img src="../resources/img/phone-call.png" width="25" height="25" />
+          </button>
+          <button class="btn">
+            <img src="../resources/img/video-call.png" width="25" height="25" />
+          </button>
+        </div>
+      </div>
+      <div id="chat-box">
+        <div class="bubble friend-bubble">누나</div>
+        <div class="bubble friend-bubble">뭐해요?</div>
+        <div class="bubble friend-bubble">난 리허설 끝났어요!</div>
+        <!-- <div class="bubble my-bubble">범규 생각</div> -->
+      </div>
+      <div class="footer">
+        <textarea id="input" placeholder="메세지를 입력하세요."></textarea>
+        <button class="btn" id="send-btn">
+          <img src="../resources/img/send.png" width="30" height="30" />
+        </button>
+      </div>
+    </div>
+  </body>
+  <script>
+    const chatBox = document.querySelector("#chat-box");
+    const input = document.querySelector("#input");
+    const sendBox = document.querySelector("#send-btn");
+
+    function textSend() {
+      const inputText = input.value;
+      if (inputText.length == 0) {
+        return false;
+      }
+      let chgMessege = inputText.replaceAll(" ", "&nbsp;");
+      chgMessege = chgMessege.replaceAll("\n", "<br/>");
+
+      const divEl = document.createElement("div");
+
+      divEl.innerHTML = chgMessege;
+
+      divEl.classList.add("bubble", "my-bubble");
+
+      chatBox.append(divEl);
+
+      input.value = "";
+    }
+    function sendEnter(e) {
+      if (e.key == "Enter" && !e.shiftKey) {
+        textSend();
+        e.preventDefault();
+      }
+    }
+
+    sendBox.addEventListener("click", textSend);
+    input.addEventListener("keypress", sendEnter);
+  </script>
+</html>
