@@ -1,0 +1,86 @@
+#my-input {
+  width: 200px;
+  height: 30px;
+  font-size: 20px;
+}
+.events {
+  border: 1px solid black;
+  width: 333px;
+  height: 34px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-around;
+  border-left: 0;
+}
+.event {
+  width: 50%;
+  border-left: 1px solid black;
+  padding: 5px;
+  text-align: center;
+}
+
+.function-keys {
+  width: 700px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.check {
+  color: white;
+}
+#keypress.check {
+  background-color: blue;
+}
+#keydown.check {
+  background-color: chartreuse;
+}
+#keyup.check {
+  background-color: tomato;
+}
+.main-keys {
+  width: 700px;
+  height: 300px;
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+.key {
+  width: 45px;
+  height: 45px;
+  border: 1px solid black;
+  margin: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+#Backspace,
+#Tab {
+  width: 79px;
+}
+#CapsLock,
+#Enter {
+  width: 86px;
+}
+#ShiftLeft,
+#ShiftRight {
+  width: 110px;
+}
+#ControlLeft,
+#ControlRight,
+#MetaLeft,
+#Metaright,
+#AltLeft,
+#Altright {
+  width: 50px;
+}
+#Space {
+  width: 284px;
+}
+.on {
+  color: white;
+  background-color: grey;
+  transform: translateY(1px);
+  box-shadow: inset 0 0 2px #999999;
+}
