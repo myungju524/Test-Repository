@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Authors</h1>
+    <button>posts</button>
+    <button>comments</button>
+    <button>albums</button>
+    <button>photos</button>
+    <button>users</button>
+    <button>todos</button>
+    <ul id="authors"></ul>
+  </body>
+  <script>
+    async function fetchAndPrint() {
+      const btnText = this.innerHTML;
+      const url = `https://jsonplaceholder.typicode.com/${btnText}`;
+      const respone = await fetch(url);
+      const result = await respone.json();
+      const ulTag = document.getElementById("authors");
+      result.forEach((el) => {
+        const keys = Object.keys(el);
+        keys.forEach((userkey) => {
+          if (typeof el[userkey] == "string") {
+            const liTag = document.createElement("li");
+            liTag.innerHTML = `${userkey} : ${el[userkey]}`;
+            ulTag.append(liTag);
+          }
+        });
+      });
+    }
+    const btns = document.querySelectorAll("button");
+    btns.forEach((el) => {
+      el.addEventListener("click", fetchAndPrint);
+    });
+  </script>
+</html>
