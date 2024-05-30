@@ -12,7 +12,7 @@
     body {
       margin: 0;
       padding: 0;
-      background-image: url(../resources/img/background.jpg);
+      background-image: url(../../resources/img/background.jpg);
       background-size: cover;
       background-repeat: no-repeat;
       height: 100vh;
@@ -35,7 +35,7 @@
       font-size: 16px;
       padding: 10px;
       border: none;
-    
+
       left: 50%;
       bottom: 0;
 
@@ -77,13 +77,14 @@
     const scorePanel = document.querySelector(".score");
     let count = 0;
     let score = 0;
+
     // 단어들이 뿌려질 container의 범위를 파악한다.
     const container = document.querySelector("#container");
     console.log(
-      `offfsetWidth: ${container.offsetWidth}, offsetHeight: ${container.offsetHeight}`
+      `offsetWidth: ${container.offsetWidth}, offsetHeight: ${container.offsetHeight}`
     );
-    const maxpositionX = container.offsetWidth - 90;
-    const maxpositionY = container.offsetHeight - 100;
+    const maxPositionX = container.offsetWidth - 90;
+    const maxPositionY = container.offsetHeight - 100;
 
     // 단어를 생성하고 화면에 출력하는 부분
     function init() {
@@ -93,67 +94,54 @@
 
         // words 배열에 있는 단어를 생성한 span 태그에 넣어준다.
         span.innerHTML = el;
-        //span 태그에 클래스를 추가한다.(word)
 
+        // span 태그에 클래스를 추가한다.(word)
         span.classList.add("word");
 
         // span 태그에 아이디 속성을 추가한다.
         span.setAttribute("id", el);
 
         // span 태그의 위치를 랜덤으로 설정한다.
-        span.style.top = `${Math.floor(Math.random() * maxpositionY)}px`;
-        span.style.left = `${Math.floor(Math.random() * maxpositionX)}px`;
+        span.style.top = `${Math.floor(Math.random() * maxPositionY)}px`;
+        span.style.left = `${Math.floor(Math.random() * maxPositionX)}px`;
 
-        // container div에 span 태그를 추가한다.
+        // container div 에 span 태그를 추가한다.
         container.append(span);
       });
     }
+
     // 사용자가 입력한 텍스트와 동일한 id를 가진 span 태그를 제거한다.
     input.addEventListener("change", function () {
       const word = document.querySelector(`span[id=${input.value}]`);
-      console.log(word);
       if (word != null) {
         word.remove();
         score = score + 100;
         scorePanel.innerHTML = `총점 : ${score}`;
         count++;
+
         // 게임 클리어
         if (count == words.length) {
-          alert("Clear!!🎉🎊");
-          if (confirm("재도전?")) {
+          alert("Clear!!👏");
+          if (confirm("재도전??")) {
             window.location.reload();
           }
         }
       }
       input.value = "";
-
-      //
     });
 
-    // 단어들을 내려오게 하는 부분
+    // 단어들을 내려오게하는 부분
     function wordRain() {
-      // HTMLCollection과 NodeList는 모두 유사배열이지만
-      // HTMLCollection은 배열 함수를 사용할 수 없다.
+      // HTMLCollection과 NodeList 는 모두 유사배열이지만
+      // HTMLCollection 은 배열 함수를 사용할 수 없다.
       const words = document.querySelectorAll(".word");
-      console.log(words);
-
-      // getBoundingClientRect : 최종 렌더링 된 크기 반환(현재 뷰포트에서의 요소의 상대적인 위치)
+      // getBoundingClientRect : 최종 렌더링된 크기 반환(현재 뷰포트에서의 요소의 상대적인 위치)
       // offset-, client-, scroll- : 레이아웃 크기를 반환
-      // test.style.top = "0px";
-      console.log(input.style.height); // body 태그내에 입력한 값만 나옴
-      console.log(getComputedStyle(input).height.split("px")[0]);
       console.log(container.getBoundingClientRect().bottom - 45);
-
-      // console.log(rectSize);
-      // console.log(test.offsetWidth, test.offsetHeight);
-
-      // span.style.top = -75;
-
       setInterval(function () {
         words.forEach(function (el) {
           const rectSize = el.getBoundingClientRect();
-          el.style.top = `${rectSize.top + -75}px`;
-          console.log(input.style.top);
+          el.style.top = `${rectSize.top - 75}px`;
           if (
             el.getBoundingClientRect().bottom >
             container.getBoundingClientRect().bottom -
@@ -163,9 +151,8 @@
           }
         });
       }, 1000);
-      // console.log(test.style.top);
-      // test.style.top = test.style.top + "30px";
     }
+
     init();
     wordRain();
   </script>
