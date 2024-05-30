@@ -68,7 +68,59 @@
       "jQuery",
       "명주",
     ];
-    const input = document.querySelector('#input')
-    
+    const input = document.querySelector("#input");
+    const scorePanel = document.querySelector(".score");
+    let score = 0;
+    let count = 0;
+    const container = document.querySelector("#container");
+    const maxpositionX = container.offsetWidth - 90;
+    const maxpositionY = container.offsetHeight - 100;
+
+    function init() {
+      words.forEach(function (el) {
+        const span = document.createElement("span");
+        span.innerHTML = el;
+        span.classList.add("word");
+        span.setAttribute("id", el);
+        span.style.top = `${Math.floor(Math.random() * maxpositionY)}px`;
+        span.style.left = `${Math.floor(Math.random() * maxpositionX)}px`;
+        container.append(span);
+      });
+    }
+    input.addEventListener("change", function () {
+      const word = document.querySelector(`span[id=${input.value}`);
+      if (word != null) {
+        word.remove();
+        score = score + 100;
+        scorePanel.innerHTML = `총점 :${score}`;
+        count++;
+        if (count == words.length) {
+          alert("clear!!");
+          if (confirm("재도전?")) {
+            window.location.reload();
+          }
+        }
+      }
+      input.value = "";
+    });
+    function wordRain() {
+      const words = document.querySelectorAll(".word");
+
+      setInterval(function () {
+        words.forEach(function (el) {
+          const rectSize = el.getBoundingClientRect();
+          el.style.top = `${rectSize.top +- 75}px`;
+          if (
+            el.getBoundingClientRect().bottom >
+            container.getBoundingClientRect().bottom -
+              parseInt(getComputedStyle(input).height.split("px")[0])
+          ) {
+            el.remove();
+          }
+        });
+      }, 1000);
+    }
+    init();
+    wordRain();
   </script>
 </html>
