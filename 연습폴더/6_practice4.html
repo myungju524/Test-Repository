@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
+  <style>
+    tr {
+      cursor: pointer;
+      height: 50px;
+    }
+    .selected {
+      background-color: yellow;
+    }
+  </style>
   <body>
     <form name="joinForm">
       <p>
@@ -53,7 +62,7 @@
         <th>성별</th>
         <th>이메일</th>
         <th>전화번호</th>
-        </tr>  
+        </tr>
       `;
 
       snapshot.forEach((doc) => {
@@ -85,5 +94,91 @@
         });
       });
     }
+    const deleteBtn = document.getElementById("deleteBtn");
+    deleteBtn.addEventListener("click", function () {
+      const selectedTrs = document.querySelectorAll("tr.selected");
+      if (selectedTrs.length == 0) {
+        alert("삭제할 데이터가 없습니다.");
+        return false;
+      }
+      selectedTrs.forEach((tr) => {
+        const docId = tr.lastElementChild.value;
+        deleteDatas("member", docId);
+      });
+      getMembersHandleTrclick();
+    });
+    const updateBtn = document.getElementById("updateBtn");
+    updateBtn.addEventListener("click", function () {
+      const selectedTrs = document.querySelectorAll("tr.selected");
+      if (selectedTrs.length == 0) {
+        alert("수정할 회원을 선택해주세요.");
+        return false;
+      } else if (selectedTrs.length >= 2) {
+        alert("회원정보 수정은 하나씩만 가능합니다.");
+        return false;
+      }
+      const selectedTr = selectedTrs[0];
+      const trChilren = selectedTr.children;
+      for (let i = 0; i < trChilren.length; i++) {
+        trChilren[i].addEventListener("click", (e) => {
+          e.stopPropagation();
+        });
+        const tdText = trChilren[i].innerHTML;
+        trChilren[i].innerHTML = `<input type='text' value=${tdText} />`;
+      }
+    });
+
+    const saveUpdateBtn = document.getElementById("saveUpdateBtn");
+    saveUpdateBtn.addEventListener("click", function () {
+      const selectedTr = document.querySelector("tr.selected");
+      const trChildren = selected.children;
+      const trChildrenArr = Array.from(trChildren);
+      const docId = trChildrenArr.pop().value;
+      const updateObj = trChildrenArr.reduce(
+        (acc, cur) => ({
+          ...acc,
+          [cur.classList.value]: cur.firstElementChild.value,
+        }),
+        {}
+      );
+
+      let originTrStr = "";
+      for (let i = 0; i < trChildren.length; i++) {
+        if (trChildren[i].tagName != "INPUT") {
+          originTrStr += `<td>${trChildren[i].firstElementChild.value}</td>`;
+        } else {
+          originTrStr += `<input type='hidden' value=${trChildren[i].value}/> `;
+        }
+      }
+
+      selectedTr.innerHTML = originTrStr;
+
+      selectedTr.classList.remove("selected");
+      updateDatas("member", docId, updateObj).then(getMembersHandleTrclick);
+    });
+    const btn = document.getElementById("saveBtn");
+    btn.addEventListener("click", async function () {
+      const formEl = document.forms[0];
+      const formElChildren = formEl.elements;
+      const formElChildrenArr = [...formElChildren];
+
+      const joinFormObj = formElChildrenArr.reduce(
+        (acc, cur) => ({
+          ...acc,
+          [cur.name]: cur.value,
+        }),
+        {}
+      );
+
+      const memberInfo = {
+        name: document.querySelector("input[name='name']").value,
+        age: Number(document.querySelector("input[name='age']").value),
+        tel: document.querySelector("input[name='tel']").value,
+        gender: document.querySelector("input[name='gender']").value,
+        email: document.querySelector("input[name='email']").value,
+      };
+      const result = await addDatas("member", memberInfo);
+      result ? getMembersHandleTrclick() : alert("저장을 실패했습니다.");
+    });
   </script>
 </html>
