@@ -19,7 +19,7 @@ const firebaseConfig = {
   messagingSenderId: "1028203633700",
   appId: "1:1028203633700:web:a8da40205cd845736a8cb1",
 };
-
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
@@ -30,9 +30,10 @@ async function getDatas(collectionName) {
   return snapshot;
 }
 async function addDatas(collectionName, dataObj) {
-  // 문서 ID 수동
+  
 
   try {
+    // 문서 ID 수동
     // const saveDoc = await doc(db, collectionName, "2");
     // console.log(`doc()결과 :${saveDoc}`);
     // const saveResult = await setDoc(saveDoc, dataObj);
@@ -41,7 +42,7 @@ async function addDatas(collectionName, dataObj) {
 
     // 문서 ID 자동
     const collect = await collection(db, collectionName);
-    await addDoc(collect, dataObj);
+    await addDoc(collect, dataObj); // 결과 == undefined
     return true;
   } catch (error) {
     return false;

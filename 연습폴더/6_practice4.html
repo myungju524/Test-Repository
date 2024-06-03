@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form name="joinForm">
+      <p>
+        <label>이름</label>
+        <input type="text" name="name" />
+      </p>
+      <p>
+        <label>나이</label>
+        <input type="text" name="age" />
+      </p>
+      <p>
+        <label>이메일</label>
+        <input type="text" name="email" />
+      </p>
+      <p>
+        <label>전화번호</label>
+        <input type="text" name="tel" />
+      </p>
+      <p>
+        <label>성별</label>
+        <input type="text" name="gender" />
+      </p>
+    </form>
+    <button id="saveBtn">데이터 저장</button>
+    <table border="1"></table>
+    <br /><br />
+    <button id="updateBtn">회원정보수정</button>
+    <button id="saveUpdateBtn">회원정보저장</button>
+    <button id="deleteBtn">회원삭제</button>
+  </body>
+  <script type="module">
+    import {
+      db,
+      getDatas,
+      addDatas,
+      deleteDatas,
+      updateDatas,
+    } from "../resources/js/firebase.js";
+    async function getMembers() {
+      const snapshot = await getDatas("member");
+      const tableTag = document.querySelector("table");
+      let tagStr = `
+      <tr>
+        <th>이름</th>
+        <th>나이</th>
+        <th>성별</th>
+        <th>이메일</th>
+        <th>전화번호</th>
+        </tr>  
+      `;
+
+      snapshot.forEach((doc) => {
+        const { name, age, gender, tel, email } = doc.data();
+        tagStr += `
+        <tr>
+            <td class='name'>${name}</td>
+            <td class='age'>${age}</td>
+            <td class='gender'>${gender}</td>
+            <td class='email'>${email}</td>
+            <td class='tel'>${tel}</td>
+            <input type='hidden' value ${doc.id}/>
+            </tr>
+        `;
+      });
+      tableTag.innerHTML = tagStr;
+    }
+
+    function getMembersHandleTrclick() {
+      getMembers().then(handleTrClick);
+    }
+    getMembersHandleTrclick();
+
+    function handleTrClick() {
+      const trs = document.querySelectorAll("tr");
+      trs.forEach((tr) => {
+        tr.addEventListener("click", (e) => {
+          if (e.target.tagName != "TH") tr.classList.toggle("selected");
+        });
+      });
+    }
+  </script>
+</html>
