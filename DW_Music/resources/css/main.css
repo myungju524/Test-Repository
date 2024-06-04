@@ -95,12 +95,12 @@ header {
   border-radius: 16px;
   padding: 24px;
   color: #fff;
-  padding: 24px;
+  
   background-color: transparent;
   cursor: pointer;
 }
 .plans-title,
-.benefis-title {
+.benefits-title {
   font-size: 24px;
   font-weight: 500;
   margin: 32px 0;
