@@ -80,8 +80,7 @@
           <h2 class="section-title charts-title">이달의 Top 100</h2>
           <a class="chart-see-all" href="#"> 모두보기 </a>
         </div>
-        <ol class="charts" id="charts">
-          
+        <ol class="charts" id="charts"></ol>
       </section>
     </main>
     <!-- 매거진 영역 끝-->
@@ -229,17 +228,13 @@
       );
     });
 
-    const menuItems = document.querySelectorAll('.menu-item')
-    menuItems.forEach((el, idx)=>{
-        el.addEventListener('click', function(){
-            if(idx===0){
-                location.href = 'main.html';
-
-            }else if(idx === 1){
-                location.href = ''
-            }
-
-        })
-    })
+    const menuItems = document.querySelectorAll(".menu-item");
+    menuItems.forEach((el, idx) => {
+      el.addEventListener("click", function () {
+        if (idx === 0) {
+          location.href = "main.html";
+        }
+      });
+    });
   </script>
 </html>
