@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ADD COLOR</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+    <link rel="stylesheet" href="resources/css/style.css" />
+    <link rel="stylesheet" href="resources/css/new.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1 class="header-heading">새 컬러 등록하기</h1>
+        <a class="cancel" href="javascript:history.go(-1)">
+          <img class="cancel-icon" src="resources/img/x.svg" />
+        </a>
+      </div>
+      <div class="section">
+        <h2 class="section-heading">MBTI</h2>
+
+        <div class="mbti-options" id="mbti-options">
+          <!-- <div class="mbti-option"><span class="mbti-char">E</span>외향형</div>
+          <div class="mbti-option selected">
+            <span class="mbti-char">I</span>내향형
+          </div> -->
+        </div>
+      </div>
+      <div class="section">
+        <h2 class="section-heading">
+          컬러
+          <button class="random">
+            <img class="repeat-icon" src="resources/img/repeat.svg" />
+          </button>
+        </h2>
+        <div class="color-input-container" id="color-input-container">
+          <input class="color-input" type="text" value="#9441FF" />
+          <span
+            class="color-input-chip"
+            id="colorChip"
+            style="background-color: #9441ff"
+          ></span>
+        </div>
+      </div>
+      <button class="submit">컬러 등록</button>
+    </div>
+  </body>
+  <script>
+    const mbtiOptions = document.getElementById("mbti-options");
+    const mbtiOptionsArr = [
+      { mbti: "E", desc: "외향형" },
+      { mbti: "I", desc: "내향형" },
+      { mbti: "S", desc: "감각형" },
+      { mbti: "N", desc: "직관형" },
+      { mbti: "F", desc: "감정형" },
+      { mbti: "T", desc: "사고형" },
+      { mbti: "P", desc: "인식형" },
+      { mbti: "J", desc: "판단형" },
+    ];
+    mbtiOptionsArr.forEach(function (info) {
+      mbtiOptions.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div class="mbti-option"><span class="mbti-char">
+            ${info.mbti}</span>${info.desc}</div>
+        `
+      );
+    });
+    const mbtiOptionsNodeList = document.querySelectorAll(".mbti-option");
+    mbtiOptionsNodeList.forEach((option, idx) => {
+      option.addEventListener("click", function () {
+        if (option.classList.contains("selected")) return false;
+
+        let versusEl;
+        if (idx % 2 == 0) {
+          versusEl = this.nextElementSibling;
+        } else {
+          versusEl = this.previousElementSibling;
+        }
+
+        // versusEl =
+        //   idx % 2 == 0 ? this.nextElementSibling : this.previousElementSibling;
+
+        if (versusEl.classList.contains("selected")) {
+          // contains - ~가 포함되어 있는지 확인.
+          versusEl.classList.remove("selected");
+        }
+        this.classList.add("selected");
+
+        // if (idx % 2 == 0) {
+
+        //     const nextEl = this.nextElementSibling;
+        //   if (nextEl.classList.contains("selected")) {
+        //     nextEl.classList.remove("selected");
+        //   }
+        //   this.classList.add("selected");
+        // } else {
+        //   const prevEl = this.previousElementSibling;
+        //   if (prevEl.classList.contains("selected")) {
+        //     prevEl.classList.remove("selected");
+        //   }
+        // }
+        // this.classList.add("selected");
+      });
+    });
+
+    const colorInput = document.querySelector(".color-input");
+    const colorChip = document.getElementById("colorChip");
+    colorInput.addEventListener("change", function () {
+      // change : Enter 포인터가 떨어졌을 때
+      const colorVal = colorInput.value;
+      if (colorVal.length == 7) {
+        colorChip.style.backgroundColor = colorVal;
+      } else {
+        alert("색상 코드는#을 포함한 HEX 형태로 작성해야합니다.");
+      }
+    });
+    const randomBtn = document.querySelector(".random");
+    randomBtn.addEventListener("click", function () {
+      const colorArr = [];
+      for (let i = 0; i < 3; i++) {
+        colorArr.push(parseInt(Math.random() * 256));
+      }
+      const hexColorCode = colorArr
+        .map((rgb) => rgb.toString(16).padStart(2, "0"))
+        .join("");
+      // padstart('maxlength', 붙일문자) 붙일문자가 앞에옴
+      colorInput.value = `#${hexColorCode.toUpperCase()}`;
+      colorChip.style.backgroundColor = `#${hexColorCode}`;
+    });
+  </script>
+</html>
