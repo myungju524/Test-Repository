@@ -29,10 +29,57 @@
           </div>
         </div>
       </section>
-      <section></section>
-      <section></section>
-      <section></section>
-      <section></section>
+      <section>
+        <h2 class="section-title">이달의 플레이리스트</h2>
+        <div class="playlists" id="playlists">
+          <div class="playlist">
+            <img
+              class="playlist-thumb"
+              src="resources/img/img_playlist_1.png"
+            />
+            <div class="playlist-title">여행을 떠나요</div>
+            <div class="playlist-artist">DW Music</div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2 class="section-title">추천 아티스트</h2>
+        <div class="artists" id="artists">
+          <div class="artist">
+            <img class="artist-profile" src="resources/img/img_artist_1.png" />
+            <div class="artist-name">Neon 5</div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2 class="section-title">느낌 별 스테이션</h2>
+        <div class="stations" id="stations">
+          <img class="station" src="resources/img/img_station_1.png" />
+        </div>
+      </section>
+      <section>
+        <div class="chats-header">
+          <h2 class="section-title chart-title">이달의 Top 100</h2>
+          <a class="chart-see-all" href="#"> 모두보기 </a>
+        </div>
+        <ol class="charts" id="charts">
+          <li class="chart">
+            <img class="chart-cover" src="resources/img/img_chart_1.png" />
+            <div class="chart-info">
+              <div class="chart-rank">
+                <div class="chart-number">1</div>
+                <span class="chart-change-up">▲</span>
+              </div>
+              <div class="chart-title">사건의 수평선</div>
+              <div class="chart-artist">은하</div>
+            </div>
+          </li>
+        </ol>
+      </section>
     </main>
   </body>
+  <script>
+    const playlists = document.getElementById("playlists");
+    const playlistInfoArr = [];
+  </script>
 </html>
