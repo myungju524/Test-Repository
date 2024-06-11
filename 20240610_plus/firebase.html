@@ -35,13 +35,20 @@
     .selected {
       background-color: yellow;
     }
+    .active {
+      display: inline-block;
+    }
+    .noneActive {
+      display: none;
+    }
   </style>
   <body>
     <div class="container">
       <div>
         <div>
           <button id="saveBtn">회원정보저장</button>
-          <button id="updateBtn">회원정보수정</button>
+          <button id="updateBtn" class="active">회원정보수정</button>
+          <button id="saveUpdateBtn" class="noneActive">수정정보저장</button>
           <button id="deleteBtn">회원정보삭제</button>
         </div>
         <table border="1">
@@ -87,12 +94,12 @@
         tableTag.insertAdjacentHTML(
           "beforeend",
           `
-        <tr data-id${doc.id}>
-        <td >${name}</td>
-        <td>${gender}</td>
-        <td>${age}</td>
-        <td>${email}</td>
-        <td>${tel}</td>
+        <tr data-id=${doc.id}>
+        <td class='name'>${name}</td>
+        <td class='gender'>${gender}</td>
+        <td class='age'>${age}</td>
+        <td class='email'>${email}</td>
+        <td class='tel'>${tel}</td>
         </tr>
 
         `
@@ -108,37 +115,36 @@
       if (e.target.tagName != "TH" && e.target.tagName != "TABLE") {
         e.target.parentElement.classList.toggle("selected");
       }
-      console.log(e.target.parentElement);
     });
     // 신규 회원 정보 저장
+
+    //   const addObj = inputsArr.reduce((acc, cur) => ({
+    //     ...acc,
+    //     [cur.name]: cur.value,
+    //   }));
+    // 화살표 함수에서는 funtion과 return을 생략할 수 있는데 생략해야 할 값이 객체형태면 () 소괄호로 감싸
+    // 주어야 한다.
     const saveBtn = document.getElementById("saveBtn");
     saveBtn.addEventListener("click", async function () {
       const inputs = document.querySelectorAll(".form-container input");
       const inputsArr = Array.from(inputs);
-      //   const addObj = inputsArr.reduce((acc, cur) => ({
-      //     ...acc,
-      //     [cur.name]: cur.value,
-      //   }));
-      // 화살표 함수에서는 funtion과 return을 생략할 수 있는데 생략해야 할 값이 객체형태면 () 소괄호로 감싸
-      // 주어야 한다.
+      // const addObj = inputsArr.reduce((acc, cur) => ({...acc, [cur.name]: cur.value}), {})
       const addObj = {};
       inputsArr.forEach((input) => {
         addObj[input.name] = input.value;
       });
       const result = await addDatas("member", addObj);
-      console.log(result);
       const { name, gender, age, email, tel } = addObj;
       tableTag.firstElementChild.insertAdjacentHTML(
         "afterend",
         `
-    <tr data-id=${result.id}>
-        <td >${name}</td>
-        <td>${gender}</td>
-        <td>${age}</td>
-        <td>${email}</td>
-        <td>${tel}</td>
+        <tr data-id=${result.id}>
+            <td class='name'>${name}</td>
+            <td class='gender'>${gender}</td>
+            <td class='age'>${age}</td>
+            <td class='email'>${email}</td>
+            <td class='tel'>${tel}</td>
         </tr>
-
       `
       );
     });
@@ -156,6 +162,47 @@
           return false;
         }
       });
+    });
+
+    // 회원 정보 수정
+    const updateBtn = document.getElementById("updateBtn");
+    const saveUpdateBtn = document.getElementById("saveUpdateBtn");
+
+    updateBtn.addEventListener("click", function () {
+      saveUpdateBtn.classList.remove("noneActive");
+      saveUpdateBtn.classList.add("active");
+      updateBtn.classList.remove("active");
+      updateBtn.classList.add("noneActive");
+
+      const selectedTr = document.querySelector(".selected");
+      const trChildren = [...selectedTr.children];
+      trChildren.forEach((td) => {
+        td.innerHTML = `<input type="text" value="${td.innerText}" />`;
+        td.addEventListener("click", function (e) {
+          e.stopPropagation();
+        });
+      });
+    });
+    saveUpdateBtn.addEventListener("click", function () {
+      saveUpdateBtn.classList.remove("active");
+      saveUpdateBtn.classList.add("noneActive");
+      updateBtn.classList.remove("noneActive");
+      updateBtn.classList.add("active");
+
+      const selectedTr = document.querySelector(".selected");
+      const trChildren = [...selectedTr.children];
+      let newTdStr = "";
+      const updateObj = {};
+      trChildren.forEach((td) => {
+        const className = td.classList.value;
+        const value = td.firstElementChild.value;
+        newTdStr += `<td class="${className}">${value}</td>`;
+        updateObj[className] = value;
+      });
+      selectedTr.innerHTML = newTdStr;
+
+      const docId = selectedTr.getAttribute("data-id");
+      updateDatas("member", docId, updateObj);
     });
   </script>
 </html>

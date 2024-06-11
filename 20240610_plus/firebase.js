@@ -28,3 +28,6 @@ async function deleteDatas(collectionName, docId) {
     return false;
   }
 }
+async function updateDatas(collectionName, docId, updateObj) {
+  await db.collection(collectionName).doc(docId).update(updateObj);
+}

@@ -24,12 +24,113 @@
       <div class="section">
         <h2 class="section-heading">MBTI</h2>
         <div class="mbti-options" id="mbti-options">
-          <div class="mbti-option"><span class="mbti-char">E</span>외향형</div>
+          <!-- <div class="mbti-option"><span class="mbti-char">E</span>외향형</div>
           <div class="mbti-option selected">
             <span class="mbti-char">I</span>내향형
-          </div>
+          </div> -->
         </div>
       </div>
+      <div class="section">
+        <h2 class="section-heading">
+          컬러
+          <button class="random">
+            <img class="repeat-icon" src="resources/img/repeat.svg" />
+          </button>
+        </h2>
+        <div class="color-input-container" id="color-input-container">
+          <input class="color-input" type="text" value="#9441ff" />
+          <span
+            class="color-input-chip"
+            id="colorChip"
+            style="background-color: #9441ff"
+          ></span>
+        </div>
+      </div>
+      <button class="submit">컬러 등록</button>
     </div>
   </body>
+  <script type="module">
+    import { addDatas } from "./resources/js/firebase.js";
+    const mbtiOptions = document.getElementById("mbti-options");
+    const mbtiOptionsArr = [
+      { mbti: "E", desc: "외향형" },
+      { mbti: "I", desc: "내향형" },
+      { mbti: "S", desc: "감각형" },
+      { mbti: "N", desc: "직관형" },
+      { mbti: "F", desc: "감정형" },
+      { mbti: "T", desc: "사고형" },
+      { mbti: "P", desc: "인식형" },
+      { mbti: "J", desc: "판단형" },
+    ];
+    mbtiOptionsArr.forEach(function (info) {
+      mbtiOptions.insertAdjacentHTML(
+        "beforeend",
+        `
+      <div class="mbti-option"><span class="mbti-char">
+        ${info.mbti}</span>${info.desc}</div>
+
+      `
+      );
+    });
+    const mbtiOptionsNodeList = document.querySelectorAll(".mbti-option");
+    mbtiOptionsNodeList.forEach((option, idx) => {
+      option.addEventListener("click", function () {
+        if (option.classList.contains("selected")) return false;
+        let versusEl;
+        if (idx % 2 == 0) {
+          versusEl = this.nextElementSibling;
+        } else {
+          versusEl = this.previousElementSibling;
+        }
+        if (versusEl.classList.contains("selected")) {
+          versusEl.classList.remove("selected");
+        }
+        this.classList.add("selected");
+      });
+    });
+    const colorInput = document.querySelector(".color-input");
+    const colorChip = document.getElementById("colorChip");
+    colorInput.addEventListener("change", function () {
+      const colorVal = colorInput.value;
+      if (colorVal.length == 7) {
+        colorChip.style.backgroundColor = colorVal;
+      } else {
+        alert("색상 코드는 #을 포함한 HEX 형태로 작성해야 합니다.");
+      }
+    });
+    const randomBtn = document.querySelector(".random");
+    randomBtn.addEventListener("click", function () {
+      const colorArr = [];
+      for (let i = 0; i < 3; i++) {
+        colorArr.push(parseInt(Math.random() * 256));
+      }
+      const hexColorCode = colorArr
+        .map((rgb) => rgb.toString(16).padStart(2, "0"))
+        .join("");
+      colorInput.value = `#${hexColorCode.toUpperCase()}`;
+      colorChip.style.backgroundColor = `#${hexColorCode}`;
+    });
+    const submitBtn = document.querySelector("button.submit");
+    submitBtn.addEventListener("click", async function () {
+      const selectedArr = document.querySelectorAll(".selected > span");
+      if (selectedArr.length != 4) {
+        alert("네가지의 MBTI를 모두 선택하셔야 됩니다.");
+        return false;
+      }
+      const mbtiVal = Array.from(selectedArr).reduce((acc, cur) => {
+        return acc + cur.innerText;
+      }, "");
+      const colorCode = colorInput.value.toLowerCase();
+
+      const addObj = { mbti: mbtiVal, code: colorCode };
+
+      const result = await addDatas("mbtiColor", addObj);
+      if (result) {
+        alert("MBTI 컬러 등록을 성공했습니다.");
+        window.location.reload();
+      } else {
+        alert("MBTI 컬러 등록을 실패했습니다. 관리자에게 문의하세요.");
+      }
+    });
+  </script>
 </html>
