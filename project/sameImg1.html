@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="sameImg1.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="step"><span>1단계</span></div>
+        <div class="text1">
+          <h1>동물을 찾아요</h1>
+          <p>
+            아래에 여러마리의 동물이 있어요. <br />
+            같은 동물끼리 찾아서 클릭해 보세요.
+          </p>
+        </div>
+      </div>
+      <div class="content">
+        <img class="dog1 dog" src="img/개.png" />
+        <img class="dog2 dog" src="img/개.png" />
+        <img class="rabbit1 rabbit" src="img/토끼.png" />
+        <img class="rabbit2 rabbit" src="img/토끼.png" />
+        <img class="ship1 ship" src="img/양.png" />
+        <img class="ship2 ship" src="img/양.png" />
+        <img class="bear1 bear" src="img/곰.png" />
+        <img class="bear2 bear" src="img/곰.png" />
+        <img class="cat1 cat" src="img/고양이.png" />
+        <img class="cat2 cat" src="img/고양이.png" />
+      </div>
+    </div>
+  </body>
+  <script>
+    const imgs = document.querySelectorAll("div img");
+    const dog1 = document.querySelector(".dog1");
+    const dog2 = document.querySelector(".dog2");
+    const rabbit1 = document.querySelector(".rabbit1");
+    const rabbit2 = document.querySelector(".rabbit2");
+    const ship1 = document.querySelector(".ship1");
+    const ship2 = document.querySelector(".ship2");
+    const bear1 = document.querySelector(".bear1");
+    const bear2 = document.querySelector(".bear2");
+    const cat1 = document.querySelector(".cat1");
+    const cat2 = document.querySelector(".cat2");
+    let firstSelected = null;
+
+    imgs.forEach(function (img) {
+      img.addEventListener("click", function (e) {
+        // 선택하면 selected 넣어주기, 가져오기
+
+        e.currentTarget.classList.add("selected");
+        const selected = document.getElementsByClassName("selected");
+        if (selected.length > 2) {
+          alert("두 개 이상 선택할 수 없습니다.");
+          window.location.reload();
+        }
+      });
+    });
+  </script>
+</html>

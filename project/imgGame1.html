@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <img
+        class="img1"
+        src="../resources/img/똥개.jpg"
+        width="300"
+        height="300"
+      />
+      <img
+        class="img2"
+        src="../resources/img/시바견.png"
+        width="300"
+        height="300"
+      />
+      <img
+        class="img3"
+        src="../resources/img/토이푸들.jpeg"
+        width="300"
+        height="300"
+      />
+    </div>
+    <br /><br />
+    <h1>다음 예시와 같은 동물을 찾으시오.</h1>
+    <img
+      id="img4"
+      class="img1 img2 img3"
+      src="../resources/img/똥개.jpg"
+      width="300"
+      height="300"
+    />
+  </body>
+  <script>
+    const img1 = document.querySelector(".img1");
+    const img2 = document.querySelector(".img2");
+    const img3 = document.querySelector(".img3");
+    const imgs = document.querySelectorAll("div img");
+    console.log(imgs);
+    img1.addEventListener("click", function () {
+      imgs.forEach((img) => {
+        if (img.className == "img1") {
+          alert("정답입니다! ");
+          window.location.href = "imgGame2.html";
+        }
+      });
+    });
+    img2.addEventListener("click", function () {
+      imgs.forEach((img) => {
+        if (img.className == "img2") {
+          alert("틀렸습니다! ");
+        }
+      });
+    });
+    img3.addEventListener("click", function () {
+      imgs.forEach((img) => {
+        if (img.className == "img3") {
+          alert("틀렸습니다! ");
+        }
+      });
+    });
+  </script>
+</html>
