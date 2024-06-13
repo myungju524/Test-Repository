@@ -34,29 +34,44 @@
   </body>
   <script>
     const imgs = document.querySelectorAll("div img");
-    const dog1 = document.querySelector(".dog1");
-    const dog2 = document.querySelector(".dog2");
-    const rabbit1 = document.querySelector(".rabbit1");
-    const rabbit2 = document.querySelector(".rabbit2");
-    const ship1 = document.querySelector(".ship1");
-    const ship2 = document.querySelector(".ship2");
-    const bear1 = document.querySelector(".bear1");
-    const bear2 = document.querySelector(".bear2");
-    const cat1 = document.querySelector(".cat1");
-    const cat2 = document.querySelector(".cat2");
     let firstSelected = null;
+    let clearStage = imgs.length;
 
     imgs.forEach(function (img) {
-      img.addEventListener("click", function (e) {
-        // 선택하면 selected 넣어주기, 가져오기
+      img.addEventListener("click", function () {
+        if (firstSelected === null) {
+          firstSelected = img;
+          img.classList.add("selected");
+        } else {
+          if (firstSelected.src == img.src) {
+            firstSelected.style.display = "none";
+            img.style.display = "none";
+            firstSelected = null;
 
-        e.currentTarget.classList.add("selected");
-        const selected = document.getElementsByClassName("selected");
-        if (selected.length > 2) {
-          alert("두 개 이상 선택할 수 없습니다.");
-          window.location.reload();
+            clearStage = clearStage - 2;
+            if (clearStage === 0) {
+              alert("Stage Clear!!");
+            }
+          } else {
+            alert("같은 동물을 선택하세요!");
+            firstSelected.classList.remove("selected");
+            firstSelected = null;
+          }
         }
       });
     });
+
+    // imgs.forEach(function (img) {
+    //   img.addEventListener("click", function (e) {
+    //     // 선택하면 selected 넣어주기, 가져오기
+
+    //     e.currentTarget.classList.add("selected");
+    //     const selected = document.getElementsByClassName("selected");
+    //     if (selected.length > 2) {
+    //       alert("두 개 이상 선택할 수 없습니다.");
+    //       window.location.reload();
+    //     }
+    //   });
+    // });
   </script>
 </html>

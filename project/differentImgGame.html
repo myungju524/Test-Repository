@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="differentImgGame.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="step"><span>2단계</span></div>
+        <div class="text1">
+          <h1>모양 색종이</h1>
+          <p>
+            여러 가지 모양 색종이를 스케치북에 붙여요. <br />
+            각 스케치북 속 모양을 잘 살펴보고, 보기에 없는 모양 색종이를 찾아
+            클릭해 보세요.
+          </p>
+        </div>
+      </div>
+      <div class="content">
+        <div class="content-wrap">
+          <img class="example" src="img/마름모.png" />
+          <img class="example" src="img/별.png" />
+          <img class="example" src="img/사각형.png" />
+          <img class="example" src="img/스페이드.png" />
+          <img class="example" src="img/하트.png" />
+        </div>
+        <div class="mains">
+          <div class="main">
+            <img class="stetchBook" src="img/스케치북.png" />
+            <img class="stekchBook" src="img/스케치북.png" />
+            <img class="stekchBook" src="img/스케치북.png" />
+            <img class="stekchBook" src="img/스케치북.png" />
+          </div>
+          <div class="overLays">
+            <div class="overLay1">
+              <img class="Figure1" src="img/별.png" />
+              <img class="Figure2" src="img/사각형.png" />
+              <img class="Figure3" src="img/스페이드.png" />
+              <img class="Figure4" src="img/클로버.png" />
+              <img class="Figure5" src="img/하트.png" />
+              <img class="Figure6" src="img/마름모.png" />
+            </div>
+            <div class="overLay2">
+              <img class="Figure7" src="img/스페이드.png" />
+              <img class="Figure8" src="img/마름모.png" />
+              <img class="Figure9" src="img/별.png" />
+              <img class="Figure10" src="img/사각형.png" />
+              <img class="Figure11" src="img/하트.png" />
+              <img class="Figure12" src="img/삼각형.png" />
+            </div>
+            <div class="overLay3">
+              <img class="Figure13" src="img/사다리꼴.png" />
+              <img class="Figure14" src="img/하트.png" />
+              <img class="Figure15" src="img/사각형.png" />
+              <img class="Figure16" src="img/마름모.png" />
+              <img class="Figure17" src="img/스페이드.png" />
+              <img class="Figure18" src="img/별.png" />
+            </div>
+            <div class="overLay4">
+              <img class="Figure19" src="img/하트.png" />
+              <img class="Figure20" src="img/원.png" />
+              <img class="Figure21" src="img/마름모.png" />
+              <img class="Figure22" src="img/스페이드.png" />
+              <img class="Figure23" src="img/사각형.png" />
+              <img class="Figure24" src="img/별.png" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const pics = document.querySelectorAll(".overLays img");
+    pics.forEach(function (pic) {
+      pic.addEventListener("click", function () {
+        if (
+          pic.classList.contains("Figure4") ||
+          pic.classList.contains("Figure12") ||
+          pic.classList.contains("Figure13") ||
+          pic.classList.contains("Figure20")
+        ) {
+          pic.classList.add("selected");
+          alert("정답입니다!");
+        } else {
+          pic.classList.add("wrongSelected");
+        }
+      });
+    });
+  </script>
+</html>
