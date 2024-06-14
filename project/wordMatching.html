@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="wordMatching.css" />
+    <link rel="stylesheet" href= />
   </head>
   <body>
     <div class="container">
@@ -18,6 +19,76 @@
           </p>
         </div>
       </div>
+      <div class="content">
+        <div class="first-content">
+          <div class="area1">
+            <div class="word1 word"><span>친</span></div>
+            <div class="icon1 icon"><img src="img/복숭아.png" /></div>
+            <div class="word2 word"><span>구</span></div>
+            <div class="icon2 icon"><img src="img/돌고래.png" /></div>
+            <div class="word3 word"><span>들</span></div>
+            <div class="icon3 icon"><img src="img/수박.png" /></div>
+          </div>
+          <div class="area2">
+            <div class="word4 word"><span>아</span></div>
+            <div class="icon4 icon"><img src="img/태양.png" /></div>
+            <div class="word5 word"><span>안</span></div>
+            <div class="icon5 icon"><img src="img/아이스크림.png" /></div>
+            <div class="word6 word"><span>녕</span></div>
+            <div class="icon6 icon"><img src="img/야자수.png" /></div>
+          </div>
+          <div class="area3">
+            <div class="word7 word"><span>반</span></div>
+            <div class="icon7 icon"><img src="img/장화.png" /></div>
+            <div class="word8 word"><span>가</span></div>
+            <div class="icon8 icon"><img src="img/삼계탕.png" /></div>
+            <div class="word9 word"><span>워</span></div>
+            <div class="icon9 icon"><img src="img/스노쿨링.png" /></div>
+          </div>
+        </div>
+        <div class="second-content">
+          <div class="img-area"><img src="img/소녀.png" /></div>
+          <div class="second-area">
+            <div class="exercise1"><img src="img/복숭아.png" /></div>
+            <div class="exercise2"><img src="img/돌고래.png" /></div>
+            <div class="exercise3"><img src="img/수박.png" /></div>
+            <div class="exercise4"><img src="img/태양.png" /></div>
+            <div class="exercise5"><img src="img/아이스크림.png" /></div>
+            <div class="exercise6"><img src="img/야자수.png" /></div>
+          </div>
+        </div>
+        <div class="third-content">
+          <div class="board">
+            <input class="input" type="text" placeholder="정답입력" />
+          </div>
+          <br /><br />
+          <button class="check">정답확인하기</button>
+        </div>
+      </div>
     </div>
   </body>
+  <script>
+    const input = document.querySelector(".input");
+    const check = document.querySelector(".check");
+
+    function textSend() {
+      const inputText = input.value;
+      if (inputText.length == 0) {
+        return false;
+      }
+      if (input.value == "친구들아안녕") {
+        alert("정답입니다");
+      } else {
+        alert("다시 생각해보세요");
+      }
+    }
+    function sendEnter(e) {
+      if (e.key == "Enter") {
+        textSend();
+        e.preventDefault();
+      }
+    }
+    check.addEventListener("click", textSend);
+    input.addEventListener("keypress", sendEnter);
+  </script>
 </html>
