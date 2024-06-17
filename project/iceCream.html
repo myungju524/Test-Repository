@@ -21,13 +21,73 @@
       </div>
       <div class="content">
         <div class="rules">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+          <div class="rule">
+            <img class="iceCream" src="img/예제1.png" />
+            <img class="right" src="img/화살표.png" />
+          </div>
+          <div class="rule">
+            <img class="iceCream" src="img/예제2.png" />
+            <img class="right" src="img/화살표.png" />
+          </div>
+          <div class="rule">
+            <img class="iceCream" src="img/예제3.png" />
+            <img class="right" src="img/화살표.png" />
+          </div>
+          <div class="rule">
+            <img class="question" src="img/만들어보기.png" />
+          </div>
         </div>
-        <div class="examples"></div>
+        <div id="answer"><img src="img/와플콘.png" /></div>
+
+        <div class="examples">
+          <img class="scoop1 scoop" src="img/녹차초코아이스크림.png" />
+          <img class="scoop2 scoop" src="img/딸기 스프링클 아이스크림.png" />
+          <img class="scoop3 scoop" src="img/레몬 아이스크림.png" />
+          <img class="scoop4 scoop" src="img/바닐라아이스크림.png" />
+          <img class="scoop5 scoop" src="img/초코아이스크림.png" />
+          <img class="scoop6 scoop" src="img/피스타치오아이스크림.png" />
+        </div>
       </div>
     </div>
   </body>
+  <script>
+    let scoopCount = 0;
+    const correctOrder = ["scoop5", "scoop2", "scoop1", "scoop3"];
+
+    function addScoop(event) {
+      const scoopClass = event.target.classList[0];
+      if (scoopClass !== correctOrder[scoopCount]) {
+        alert("다시 생각해보세요!");
+        return;
+      }
+
+      const scoopImage = event.target.src;
+      const stack = document.getElementById("answer");
+      const newScoop = document.createElement("img");
+      newScoop.src = scoopImage;
+      newScoop.className = "stacked-scoop";
+
+      const bottomPosition = 300 + scoopCount * 50;
+      newScoop.style.setProperty("--bottom-position", `${bottomPosition}px`);
+
+      setTimeout(() => {
+        newScoop.style.bottom = `${bottomPosition}px`;
+      }, 1000);
+
+      stack.appendChild(newScoop);
+      scoopCount++;
+      if (scoopCount === correctOrder.length) {
+        setTimeout(() => {
+          alert("완성되었습니다!");
+        }, 1100);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const scoops = document.querySelectorAll(".scoop");
+      scoops.forEach((scoop) => {
+        scoop.addEventListener("click", addScoop);
+      });
+    });
+  </script>
 </html>

@@ -44,3 +44,64 @@ body {
 .text p {
   margin: 0;
 }
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 150px;
+}
+.rules {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.rule {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.iceCream,
+.question {
+  width: 200px;
+}
+#answer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#answer img {
+  width: 100px;
+}
+.right {
+  width: 80px;
+}
+.examples {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dotted red;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+.examples img {
+  width: 100px;
+}
+.stacked-scoop {
+  position: absolute;
+  bottom: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  animation: drop 1s;
+}
+@keyframes drop {
+  0% {
+    bottom: 300px; /* Start off screen */
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    bottom: var(--bottom-position); /* End at calculated position */
+  }
+}
