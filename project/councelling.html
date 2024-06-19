@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .form-container {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 0.625rem;
+        box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
+        width: 25rem;
+      }
+      .form-container h2 {
+        text-align: center;
+        margin-bottom: 1.25rem;
+      }
+      .form-group {
+        margin-bottom: 0.9375rem;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 0.3125rem;
+      }
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: calc(100% - 1.25rem);
+        padding: 0.5rem;
+        margin: 0.3125rem 0;
+        border: 0.0625rem solid #ccc;
+        border-radius: 0.3125rem;
+      }
+      .form-group input[type="radio"] {
+        width: auto;
+      }
+      .form-group .radio-group {
+        display: flex;
+        justify-content: space-between;
+      }
+      .form-group .radio-group label {
+        margin-right: 0.625rem;
+      }
+      .form-group .checkbox-group {
+        display: flex;
+        align-items: center;
+      }
+      .form-group .checkbox-group input {
+        margin-right: 0.3125rem;
+      }
+      .form-group .checkbox-group label {
+        margin: 0;
+      }
+      .form-container button {
+        width: 100%;
+        padding: 0.625rem;
+        border: none;
+        border-radius: 0.3125rem;
+        background-color: #4caf50;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+      .form-container button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h2>무료상담 신청</h2>
+      <form>
+        <div class="form-group">
+          <label for="phone">휴대폰 번호 *</label>
+          <input
+            type="text"
+            id="phone"
+            placeholder="- 없이 휴대폰 번호를 입력해 주세요."
+          />
+        </div>
+        <div class="form-group">
+          <label for="address">주소 *</label>
+          <select id="sido">
+            <option>시/도 선택</option>
+            <!-- Add more options here -->
+          </select>
+          <select id="gugun">
+            <option>구/군 선택</option>
+            <!-- Add more options here -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="childName">자녀 이름 *</label>
+          <input
+            type="text"
+            id="childName"
+            placeholder="자녀의 이름을 입력해 주세요."
+          />
+        </div>
+        <div class="form-group">
+          <label>자녀 연령 *</label>
+          <div class="radio-group">
+            <label><input type="radio" name="age" value="유아" /> 유아</label>
+            <label
+              ><input type="radio" name="age" value="초등 저학년(1~3학년)" />
+              초등 저학년(1~3학년)</label
+            >
+            <label
+              ><input type="radio" name="age" value="초등 고학년(4~6학년)" />
+              초등 고학년(4~6학년)</label
+            >
+            <label
+              ><input type="radio" name="age" value="중고등" /> 중고등</label
+            >
+            <label><input type="radio" name="age" value="성인" /> 성인</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>학습 형태 *</label>
+          <div class="radio-group">
+            <label
+              ><input type="radio" name="studyType" value="선생님 방문" />
+              선생님 방문</label
+            >
+            <label
+              ><input type="radio" name="studyType" value="학습센터" />
+              학습센터</label
+            >
+            <label
+              ><input type="radio" name="studyType" value="온라인" />
+              온라인</label
+            >
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="content">상담 내용</label>
+          <textarea
+            id="content"
+            placeholder="상담할 내용을 입력해 주세요."
+          ></textarea>
+        </div>
+        <div class="form-group checkbox-group">
+          <input type="checkbox" id="agreement" />
+          <label for="agreement"
+            >개인정보 수집 및 이용에 동의합니다. (필수)</label
+          >
+        </div>
+        <button type="submit">상담 신청하기</button>
+      </form>
+    </div>
+  </body>
+</html>
