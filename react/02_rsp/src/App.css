@@ -3,4 +3,22 @@
   max-width: 640px;
   margin: 20px auto;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.App .App-title {
+  margin: 10px auto 28px;
+  font-size: 28px;
+}
+.App .score {
+  display: flex;
+  justify-content: center;
+}
+.App .scoreHistory {
+  margin: 16px;
+  height: 70px;
+  background-color: aliceblue;
+  color: black;
 }
