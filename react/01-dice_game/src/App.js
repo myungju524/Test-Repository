@@ -1,45 +1,66 @@
+import { useState } from "react";
 import "./App.css";
 import logo from "./assets/logo.png";
-import myImg from "./assets/dice-blue-1.svg";
-import yourImg from "./assets/dice-red-2.svg";
+
+import Board from "./Board";
 // 함수형 컴포넌트 : 컴포넌트를 함수형으로 만든 것(변수형으로도 만들 수 있다.)
 // 함수형 컴포넌트를 만들때에는 함수명의 첫 글자는 반드시 대문자여야 한다.
 // 함수형 컴포넌트 안에서는 JSX 문법으로 만든 리액트 엘리먼트를 리턴해줘야 한다.
 
-const style = {
-  backgroundColor: "#d9d9d9",
-  color: "yellow",
-};
-
 // for ==>htmlfor, onclick/onblur ==> onClick,onBlur
+
+function random(n) {
+  return Math.ceil(Math.random() * n);
+  // ceil < 반올림
+}
 function App() {
+  // State
+  // 던지기 버튼을 누르면 화면에서 주사위 이미지가 바뀌어야 한다.
+  // 순수 자바스크립트로 작성한다면 주사위 이미지마다 화면을 만들거나, 비동기로 화면에 요소를 추가, 삭제 하는 코드를 작성해야 한다.
+  // 리액트 에서는 State라는 것을 사용한다.
+  // 이 State가 바뀔 때마다 리액트가 알아서 화면을 새로 렌더링 해준다.
+  const [myNum, setMynum] = useState(1);
+  const [otherNum, setOtherNum] = useState(1);
+  const [gameHistory, setGameHistory] = useState([]);
+  const [otherGameHistory, setOtherGameHistory] = useState([]);
+  console.log(gameHistory);
+  console.log(otherGameHistory);
+  // 1과 f(함수) 들어있는 배열 나옴 {1,f} 객체 구조분해 할당 안 해도 됨
+  // 리액트에서는 함수표현식을 많이씀
+  const handleRollClick = () => {
+    // 주사위 숫자 뽑아야한다.
+    const nextMyNum = random(6);
+    const nextOtherNum = random(6);
+    // 기록 추가 한다.
+    // gameHistory.push(nextMyNum);
+    // otherGameHistory.push(nextOtherNum);
+    setGameHistory([...gameHistory, nextMyNum]);
+    setOtherGameHistory([...otherGameHistory, nextOtherNum]);
+    // 값을 바꿀때는 set... 을 사용
+  };
+
+  const handleClearClick = () => {
+    setGameHistory([]);
+    setOtherGameHistory([]);
+  };
+
   return (
     <div className="App">
       <div>
         <img src={logo} className="App-logo" />
         <h1 className="App-title">주사위 게임</h1>
         <div>
-          <button className="App-button blue">던지기</button>
-          <button className="App-button red">처음부터</button>
+          <button className="App-button blue" onClick={handleRollClick}>
+            던지기
+          </button>
+          <button className="App-button red" onClick={handleClearClick}>
+            처음부터
+          </button>
         </div>
       </div>
-      <div>
-        <div>
-          <h2>나</h2>
-          <img src={myImg} />
-          <h2>총점</h2>
-          <p>4</p>
-          <h2>기록</h2>
-          <p>1, 3</p>
-        </div>
-        <div>
-          <h2>상대</h2>
-          <img src={yourImg} />
-          <h2>총점</h2>
-          <p>6</p>
-          <h2>기록</h2>
-          <p>2, 4</p>
-        </div>
+      <div className="App-boards">
+        <Board name="나" color="blue" gameHistory={gameHistory} />
+        <Board name="상대" color="red" gameHistory={otherGameHistory} />
       </div>
     </div>
   );
