@@ -1,4 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 body {
-  background-color: darkslateblue;
-  color: #fff;
+  background-color: #40089a;
 }
