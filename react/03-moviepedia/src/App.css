@@ -35,6 +35,11 @@
   font-size: 18px;
   background-color: transparent;
 }
+.AppSortButton:not(.selected) {
+  cursor: pointer;
+  /* class에 selected가 없을 경우에 실행  */
+}
+
 .AppSortButton.selected {
   border-radius: 10px;
   color: #fff;
