@@ -16,13 +16,13 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDcuGAmSg2E0qWghVDIp455j9SPrH8qugc",
-  authDomain: "movie-pedia-822bb.firebaseapp.com",
-  projectId: "movie-pedia-822bb",
-  storageBucket: "movie-pedia-822bb.appspot.com",
-  messagingSenderId: "492131575513",
-  appId: "1:492131575513:web:19eac772739778831040c8",
-  measurementId: "G-YGJT4BBRRY",
+  apiKey: "AIzaSyAA2XNjgcfVpxSvsQIf9lmj_Cj1oOELjgw",
+  authDomain: "movie-pedia2.firebaseapp.com",
+  projectId: "movie-pedia2",
+  storageBucket: "movie-pedia2.appspot.com",
+  messagingSenderId: "273180255896",
+  appId: "1:273180255896:web:3ee5913c59af559f1dd2ed",
+  measurementId: "G-PYVWLDP14F",
 };
 
 // Initialize Firebase
