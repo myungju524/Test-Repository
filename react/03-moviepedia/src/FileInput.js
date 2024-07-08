@@ -3,8 +3,8 @@ import placeholderImg from "./assets/preview-placeholder.png";
 import "./FileInput.css";
 import resetImg from "./assets/ic-reset.png";
 
-function FileInput({ InputName, setFile, value }) {
-  const [preview, setPreview] = useState();
+function FileInput({ InputName, setFile, value, initialPreivew }) {
+  const [preview, setPreview] = useState(initialPreivew);
   const inputRef = useRef();
   // DOM 에 직접적으로 접근할 수 있는 훅 (document.@@)처럼 가져올 수 있음
   const handleFileChange = (e) => {
@@ -52,7 +52,10 @@ function FileInput({ InputName, setFile, value }) {
 
   return (
     <div className="FileInput">
-      <img className="FileInput-preview" src={preview || placeholderImg} />
+      <img
+        className={`FileInput-preview ${preview ? "selected" : ""}`}
+        src={preview || placeholderImg}
+      />
       <input
         ref={inputRef}
         className="FileInput-hidden-overlay"

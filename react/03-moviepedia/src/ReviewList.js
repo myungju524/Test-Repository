@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import Rating from "./Rating";
 import "./ReviewList.css";
 import bgImg from "./assets/bg.jpg";
+import ReviewForm from "./ReviewForm";
+import { collection } from "firebase/firestore";
+import { updateDatas } from "./firebase";
+import useTranslate from "./hooks/useTranslate";
 
 function formatDate(value) {
   const date = new Date(value);
   return `${date.getFullYear()} . ${date.getMonth() + 1} . ${date.getDate()}`;
 }
-function ReviewListItem({ item, handleDelete }) {
+function ReviewListItem({ item, handleDelete, handleEdit }) {
   const handleDeleteClick = () => {
     handleDelete(item.docId, item.imgUrl);
   };
+
+  const handleEditClick = () => {
+    handleEdit(item.id);
+  };
+
+  const t = useTranslate();
   return (
     <div className="ReviewListItem">
       <img className="ReviewListItem-img" src={item.imgUrl} />
@@ -20,12 +30,17 @@ function ReviewListItem({ item, handleDelete }) {
         <p className="ReviewListItem-date">{formatDate(item.createdAt)}</p>
         <p className="ReviewListItem-content">{item.content}</p>
         <div className="ReviewListItem-buttons">
-          <button className="ReviewListItem-edit-button">수정</button>
+          <button
+            className="ReviewListItem-edit-button"
+            onClick={handleEditClick}
+          >
+            {t("edit button")}
+          </button>
           <button
             className="ReviewListItem-delete-button"
             onClick={handleDeleteClick}
           >
-            삭제
+            {t("delete button")}
           </button>
         </div>
       </div>
@@ -33,14 +48,50 @@ function ReviewListItem({ item, handleDelete }) {
   );
 }
 
-function ReviewList({ items, handleDelete }) {
+function ReviewList({ items, handleDelete, onUpdate, onUpdateSuccess }) {
+  const [editingId, setEditingId] = useState(null);
+
+  console.log(editingId);
+
   return (
     <ul className="ReviewList">
-      {items.map((item) => (
-        <li key={item.id}>
-          <ReviewListItem item={item} handleDelete={handleDelete} />
-        </li>
-      ))}
+      {items.map((item) => {
+        if (item.id === editingId) {
+          const { title, rating, content, imgUrl, docId } = item;
+          const initialValues = { title, rating, content, imgUrl: null };
+
+          const handleSubmit = (collectionName, dataObj) => {
+            const result = onUpdate(collectionName, dataObj, docId);
+            return result;
+          };
+          const handleSubmitSuccess = (result) => {
+            onUpdateSuccess(result);
+            setEditingId(null);
+          };
+
+          return (
+            <li key={item.id}>
+              <ReviewForm
+                initialValues={initialValues}
+                initialPreivew={imgUrl}
+                handleCancel={setEditingId}
+                onSubmit={handleSubmit}
+                handleSubmitSuccess={handleSubmitSuccess}
+              />
+            </li>
+          );
+        }
+
+        return (
+          <li key={item.id}>
+            <ReviewListItem
+              item={item}
+              handleDelete={handleDelete}
+              handleEdit={setEditingId}
+            />
+          </li>
+        );
+      })}
     </ul>
   );
 }
