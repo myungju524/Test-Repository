@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import Cleanup from "./Cleanup";
+import ToDoList from "./ToDoList";
+import MovieApp from "./MovieApp";
 
 function App() {
   const [click, setClick] = useState(0);
@@ -26,10 +29,16 @@ function App() {
 
   return (
     <>
-      <input type="text" placeholder="Search here" onChange={handleChange} />
+      {/* <input type="text" placeholder="Search here" onChange={handleChange} />
       <h2>입력한 값 :{inputchange} </h2>
       <h1>{click}</h1>
       <button onClick={handleClick}>Click me</button>
+      <hr />
+      <Cleanup />
+      <hr />
+      <ToDoList />
+      <hr /> */}
+      <MovieApp />
     </>
   );
 }
