@@ -36,7 +36,7 @@
 .content {
   flex-grow: 1;
 }
-.add-item {
+.addItem {
   display: block;
   /* 앵커 태그가 인라인 요소라 컨텐트 만큼만 넓이를 가지기 때문에
     블록 요소 특징을 가지게 block 으로 바꿈 */
@@ -46,7 +46,7 @@
   padding: 24px 48px;
   border-radius: 8px;
 }
-.add-item:hover {
+.addItem:hover {
   background-color: #f4f7fb;
 }
 .items {
@@ -133,7 +133,7 @@
     padding: 4px 8px;
     gap: 8px;
   }
-  .add-item {
+  .addItem {
     padding: 20px 24px;
   }
   .item {

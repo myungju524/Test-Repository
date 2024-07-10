@@ -2,6 +2,9 @@ import React from "react";
 import styles from "./ColorSurvey.module.css";
 
 function ColorSurvey({ item }) {
+  // {}를 안 쓰고 쓰면 원래 (props) 일 때
+  // const item =props.item
+  // const {item} = props
   const { id, mbti, colorCode } = item;
   return (
     <div className={styles.colorSurvey}>
