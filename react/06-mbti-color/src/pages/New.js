@@ -5,7 +5,16 @@ import MBTISelect from "../components/MBTISelect";
 import ColorInput from "../components/ColorInput";
 
 function New(props) {
-  const [selected, setSelected] = useState();
+  const [formValue, setFormValue] = useState({
+    mbti: "ESTP",
+    colorCode: "#f2f2f2",
+  });
+
+  const handleChange = (name, value) => {
+    setFormValue((prevFormValue) => {
+      return { ...prevFormValue, [name]: value };
+    });
+  };
 
   return (
     <div className={styles.container}>
@@ -19,7 +28,10 @@ function New(props) {
       </header>
       <section className={styles.section}>
         <h2 className={styles.sectionHeading}>MBTI</h2>
-        <MBTISelect />
+        <MBTISelect
+          mbtiValue={formValue.mbti}
+          handleChange={(newMbti) => handleChange("mbti", newMbti)}
+        />
       </section>
       <section className={styles.section}>
         <h2 className={styles.sectionHeading}>
