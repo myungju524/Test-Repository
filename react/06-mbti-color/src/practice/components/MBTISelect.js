@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./MBTISelect.module.css";
 
 const mbtiArr = [
@@ -12,17 +12,12 @@ const mbtiArr = [
   { mbti: "J", desc: "판단형", groupNum: 3 },
 ];
 
-function MBTIOption({ option, selected, changeMbti }) {
+function MBTIOption({ option, selected }) {
   const { mbti, desc, groupNum } = option;
-
   const className = `${styles.mbtiOption} ${selected ? styles.selected : ""}`;
-  const handleMbtiClick = () => {
-    // console.log(groupNum, mbti);
-    changeMbti(groupNum, mbti);
-  };
 
   return (
-    <div className={className} onClick={handleMbtiClick}>
+    <div className={className}>
       <span className={styles.mbtiChar}>{mbti}</span>
       {desc}
     </div>
@@ -32,15 +27,10 @@ function MBTIOption({ option, selected, changeMbti }) {
 function MBTISelect({ mbtiValue, handleChange }) {
   const changeMbti = (selectedGroupNum, selectedMbti) => {
     if (mbtiValue[selectedGroupNum] !== selectedMbti) {
-      const beforeValue = mbtiValue.slice(0, selectedGroupNum);
-
-      const afterValue = mbtiValue.slice(selectedGroupNum + 1);
-
-      const nextValue = beforeValue + selectedMbti + afterValue;
-
-      handleChange(nextValue);
+      const befoteValue = mbtiValue.slice(0, selectedGroupNum);
     }
   };
+
   return (
     <div className={styles.mbtiOptions}>
       {mbtiArr.map((option, idx) => {
