@@ -16,9 +16,9 @@ function Practice2(props) {
     <Container>
       <h1>로그인</h1>
       <label htmlFor="email">Email</label>
-      <Input />
+      <Input placeholder="styled@example.com" />
       <label>password</label>
-      <Input />
+      <Input placeholder="password" />
     </Container>
   );
 }
