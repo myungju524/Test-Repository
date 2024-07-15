@@ -10,22 +10,30 @@ const ToggleWrapper = styled.button`
   background-color: ${({ theme }) => theme.bgColor};
   border: ${({ theme }) => theme.borderColor};
   font-size: 20px;
-
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 96px;
   height: 48px;
   border-radius: 30px;
-  box-shadow: 0 5px 10px rgba(100, 100, 100, 0.15),
-    0 2px 4px rgba(100, 100, 100, 0.15);
-
-  cursor: pointer;
+  box-shadow: ${({ mode }) =>
+    mode === "light"
+      ? `0 5px 10px rgba(100, 100, 100, 0.15),
+    0 2px 4px rgba(100, 100, 100, 0.15)`
+      : `0 5px 10px rgba(40, 40, 40, 1),
+    0 2px 4px rgba(40, 40, 40, 1)`};
 `;
 
 function ThemeToggleButton({ mode, onClick }) {
+  // 로컬스토리지에 themeMode 저장
+  localStorage.setItem("theme", mode);
+  const handleClick = () => {
+    onClick();
+  };
+
   return (
-    <ToggleWrapper onClick={onClick}>
+    <ToggleWrapper onClick={handleClick} mode={mode}>
       {mode === "light" ? "🌝" : "🌚"}
     </ToggleWrapper>
   );

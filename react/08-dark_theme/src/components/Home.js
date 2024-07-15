@@ -9,8 +9,6 @@ import { darkTheme, lightTheme } from "../theme/theme";
 function Home(props) {
   const [themeMode, toggleTheme] = useTheme();
 
-  const changeMode = () => {};
-
   return (
     <div>
       <Nav className={styles.nav} />

@@ -3,8 +3,11 @@ import Container from "./Container";
 import { Link } from "react-router-dom";
 import styles from "./Nav.module.css";
 import cn from "classnames";
+import { useTheme } from "../context/ThemeContext";
 
 function Nav({ className }) {
+  const [themMode] = useTheme();
+  const menuClass = `${styles.menu} ${themMode === "dark" ? styles.dark : ""}`;
   return (
     <div className={styles.nav}>
       <Container className={styles.container}>
@@ -13,7 +16,7 @@ function Nav({ className }) {
             <span>DW</span>OS
           </div>
         </Link>
-        <ul className={styles.menu}>
+        <ul className={menuClass}>
           <li>
             <Link to="about">ABOUT</Link>
           </li>

@@ -1,6 +1,8 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { darkTheme, lightTheme } from "../theme/theme";
 import { ThemeProvider as StyledProvider } from "styled-components";
+import { getSunsetRiseData } from "../api/getLocationData";
+import { getTimes } from "../utils/getDateData";
 
 // Context : 전역적인 공간  createContext() : 전역공간을 만드는 함수
 const ThemeContext = createContext();
@@ -8,8 +10,33 @@ const ThemeContext = createContext();
 function ThemeChangeProvider({ children }) {
   // 일몰시간 불러오는 API
   // 결과값을 가지고 조건문으로 light냐 dark
-  const [themeMode, setThemeMode] = useState("light");
+
+  const localTheme = localStorage.getItem("theme") || "light";
+  const [locationData, setLocationData] = useState({});
+  const [themeMode, setThemeMode] = useState(localTheme);
+
   const themeObject = themeMode === "light" ? lightTheme : darkTheme;
+
+  console.log(locationData);
+
+  const handleLoad = async () => {
+    const data = await getSunsetRiseData();
+    const { sunrise, sunset } = data;
+    const currentTime = getTimes();
+    // light 테마 적용
+    if (
+      currentTime > Number(sunrise.trim()) ||
+      currentTime < Number(sunset.trim())
+    ) {
+      setThemeMode("light");
+    } else {
+      setThemeMode("dark");
+    }
+    setLocationData(data);
+  };
+  useEffect(() => {
+    handleLoad();
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ themeMode, setThemeMode }}>
