@@ -1,0 +1,25 @@
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Nav from "./Nav";
+import styles from "./Home.module.css";
+import ThemeToggleButton from "./ThemeToggleButton";
+import { useTheme } from "../context/ThemeContext";
+import { darkTheme, lightTheme } from "../theme/theme";
+
+function Home(props) {
+  const [themeMode, toggleTheme] = useTheme();
+
+  const changeMode = () => {};
+
+  return (
+    <div>
+      <Nav className={styles.nav} />
+      <div className={styles.body}>
+        <Outlet />
+      </div>
+      <ThemeToggleButton mode={themeMode} onClick={toggleTheme} />
+    </div>
+  );
+}
+
+export default Home;
