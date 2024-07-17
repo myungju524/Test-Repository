@@ -1,6 +1,3 @@
-.courseItem {
-}
-
 .courseItem .thumb {
   border-top: 10px solid black;
   display: flex;
@@ -21,11 +18,21 @@
   font-weight: 500;
   margin: 0 0 10px;
   font-size: 14px;
+  text-overflow: ellipsis;
+  /* ellipsis 가로길이 ... 만들때만 사용 */
+  white-space: nowrap;
+  overflow: hidden;
 }
 .courseItem .description {
   font-size: 12px;
   font-weight: 300;
   margin: 0 0 10px;
+  display: -webkit-box;
+  /* 예전에 쓰던 문법 */
+  -webkit-box-orient: vertical;
+  /* flex-direction 과 같음 */
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 .courseItem .tags {
   list-style-type: none;
