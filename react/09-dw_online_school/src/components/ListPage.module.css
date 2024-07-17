@@ -30,7 +30,8 @@
 .catalog .description {
   color: #878787;
 }
-.community .heading .community .description {
+.community .heading,
+.community .description {
   color: #fff;
 }
 .container {
