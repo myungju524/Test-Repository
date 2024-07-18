@@ -21,7 +21,6 @@
   text-overflow: ellipsis;
   /* ellipsis 가로길이 ... 만들때만 사용 */
   white-space: nowrap;
-  overflow: hidden;
 }
 .courseItem .description {
   font-size: 12px;
