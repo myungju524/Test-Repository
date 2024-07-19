@@ -3,6 +3,7 @@ import styles from "./QuestionListPage.module.css";
 import ListPage from "../components/ListPage";
 import { getDatas } from "../api/firebase";
 import searchImg from "../assets/search.svg";
+import QuestionItem from "../components/QuestionItem";
 let listItetms;
 
 function QuestionListPage(props) {
@@ -26,6 +27,11 @@ function QuestionListPage(props) {
         </button>
       </form>
       <p className={styles.count}>총 {items.length}개 질문</p>
+      <div className={styles.questionList}>
+        {items.map((question) => {
+          return <QuestionItem key={question.docId} question={question} />;
+        })}
+      </div>
     </ListPage>
   );
 }
