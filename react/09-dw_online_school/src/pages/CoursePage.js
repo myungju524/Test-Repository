@@ -5,7 +5,7 @@ import Button from "../components/Button";
 import Card from "../components/Card";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import getCourseColor from "../utils/getCourseColor";
-import { getData } from "../api/firebase";
+import { getData, updateDatas } from "../api/firebase";
 import styles from "./CoursePage.module.css";
 
 function CoursePage() {
@@ -36,13 +36,22 @@ function CoursePage() {
     setCourse(resultData);
   };
 
-  const handleAddWishListClick = () => {
+  const handleAddWishListClick = async () => {
     const member = JSON.parse(localStorage.getItem("member"));
     if (member) {
+      const result = await updateDatas("member", member.docId, course, {
+        type: "ADD",
+        fieldName: "courseList",
+      });
+      if (result) {
+        navigate("/wishlist");
+      } else {
+        alert("코스 담기를 실패했습니다. \n관리자에게 문의하세요.");
+      }
     } else {
       alert("로그인을 해주세요.");
       navigate("/login", { state: pathname });
-      //   /슬래쉬가 있을 때 절대경로를 설정해 주는 것 라우팅 해 준 곳을 잘 확인하고 써야함
+      //   /슬래쉬가 있을 때 절대경로를 설정해 주는 것. 라우팅 해 준 곳을 잘 확인하고 써야함
     }
   };
   useEffect(() => {
@@ -55,7 +64,6 @@ function CoursePage() {
           <CourseIcon photoUrl={course?.photoUrl} />
           <h1 className={styles.title}>{course?.title}</h1>
           <Button variant="round" onClick={handleAddWishListClick}>
-            {" "}
             + 코스 담기
           </Button>
           <p className={styles.summary}>{course?.summary}</p>
