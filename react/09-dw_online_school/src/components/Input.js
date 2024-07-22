@@ -1,23 +1,27 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const SIZES = {
-  small: 16,
-  medium: 20,
   large: 24,
+  medium: 20,
+  small: 16,
 };
 
 const Input = styled.input`
-  border: none;
-  border-bottom: 2px solid #eeeeee;
-  outline: none;
-  padding: 16px 0;
   font-size: 16px;
+  border: none;
+  border-bottom: 2px solid ${({ $error }) => $error ? '#f44336' : '#eeeeee'};
+  padding: 8px 0;
+  outline: none;
   display: block;
+  width: 100%;
+
   &:focus {
-    border-color: #7760b4;
+    border-color: ${({ $error }) => $error ? '#f44336' : '#7760b4'};
   }
+
   &::placeholder {
-    color: lightgray;
+    color: #c4c5cd;
   }
 `;
+
 export default Input;

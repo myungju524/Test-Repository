@@ -1,17 +1,27 @@
-import React from "react";
-import Card from "./Card";
-import styles from "./QuestionItem.module.css";
-import userImg from "../assets/person.png";
+import React from 'react';
+import Card from './Card';
+import { Link } from 'react-router-dom';
+import Avatar from './Avatar';
+import styles from './QuestionItem.module.css';
+import DateText from './DateText';
 
 function QuestionItem({ question }) {
-  const { title, createdAt, answer } = question;
-
+  const { title, answers, createdAt, writer } = question;
   return (
-    <Card>
-      <div className={styles.content}>
-        <h3 className={styles.title}>{title}</h3>
-
-        <p className={styles.createdAt}>{createdAt}</p>
+    <Card className={styles.questionItem}>
+      <div className={styles.info}>
+        <p className={styles.title}>
+          <Link to={`/questions/${question.docId}`} state={{ question }}>
+            {title}
+          </Link>
+          <span className={styles.count}>[{answers.length}]</span>
+        </p>
+        <p className={styles.date}>
+          <DateText value={createdAt} />
+        </p>
+      </div>
+      <div className={styles.writer}>
+        <Avatar photoUrl={writer.profile.photo} name={writer.name} />
       </div>
     </Card>
   );

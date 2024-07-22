@@ -1,9 +1,9 @@
-import React from "react";
-import styles from "./Warn.module.css";
-import cn from "classnames";
-import warnImg from "../assets/warn.svg";
+import React from 'react';
+import styles from './Warn.module.css';
+import cn from 'classnames';
+import warnImg from '../assets/warn.svg';
 
-function Warn({ className, variant = "", title = "", description = "" }) {
+function Warn({ className, variant = '', title = '', description = '' }) {
   return (
     <div className={cn(styles.warn, className)}>
       <img className={styles.icon} src={warnImg} />

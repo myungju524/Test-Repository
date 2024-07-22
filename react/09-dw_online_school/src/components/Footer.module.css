@@ -1,33 +1,31 @@
 .footer {
+  padding: 20px 0 53px;
   color: #878787;
   background-color: #494949;
-  padding: 20px 0 53px;
 }
 .links {
   color: #c4c4c4;
-  list-style-type: none;
   display: flex;
+  list-style: none;
   gap: 30px;
   padding: 0;
 }
 .info {
-  list-style-type: none;
   display: flex;
+  list-style: none;
+  column-gap: 30px;
   flex-wrap: wrap;
   padding: 0;
-  column-gap: 30px;
 }
 .icons {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 16px 0;
 }
 .logo {
-  font-family: "Cafe24Meongi-B-v1.0";
-  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Meongi-B-v1.0.woff2")
-    format("woff2");
-  font-weight: 900;
+  font-family: 'TheJamsil5Bold';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2')
+    format('woff2');
+  font-weight: 700;
   font-style: normal;
   font-size: 20px;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
@@ -35,8 +33,4 @@
 .logo > span {
   background-color: #878787;
   color: #515151;
-}
-.sns {
-  display: flex;
-  gap: 8px;
 }

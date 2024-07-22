@@ -1,69 +1,70 @@
-import React, { useEffect, useState } from "react";
-import Container from "../components/Container";
-import CourseIcon from "../components/CourseIcon";
-import Button from "../components/Button";
-import Card from "../components/Card";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import getCourseColor from "../utils/getCourseColor";
-import { getData, updateDatas } from "../api/firebase";
-import styles from "./CoursePage.module.css";
+import React, { useEffect, useState } from 'react';
+import Container from '../components/Container';
+import CourseIcon from '../components/CourseIcon';
+import Button from '../components/Button';
+import Card from '../components/Card';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import getCourseColor from '../utils/getCourseColor';
+import { getData, updateDatas } from '../api/firebase';
+import styles from './CoursePage.module.css';
 
 function CoursePage() {
-  //   간단한 정보는useLocation 으로한다.
   const props = useLocation();
-  console.log(props);
   const { pathname } = props;
   const { courseSlug } = useParams();
   const navigate = useNavigate();
 
   const [course, setCourse] = useState();
 
-  // undefinded.code
-  // 옵셔널 체이닝 ? 쓰면 undefinded code 까지 안 가고 그냥 끝
+  // undefined.code
+  // undefined 여기서 그냥 끝
+  //   if(course) {
+  //     getCourseColor(course.code)
+  //   }
   const courseColor = getCourseColor(course?.code);
-
-  //   옵셔널 체이닝 :  ? 앞에있는 값이 undefinded 나 null 이면 undefinded 를 반환
-  //   const headerStyle = {
-  //     borderColor: courseColor,
-  //   };
+  const headerStyle = {
+    borderColor: courseColor,
+  };
 
   const handleLoad = async () => {
-    const resultData = await getData("courses", {
-      field: "slug",
-      condition: "==",
+    const resultData = await getData('courses', {
+      field: 'slug',
+      condition: '==',
       value: courseSlug,
     });
     setCourse(resultData);
   };
 
-  const handleAddWishListClick = async () => {
-    const member = JSON.parse(localStorage.getItem("member"));
+  const handleAddWishlistClick = async () => {
+    const member = JSON.parse(localStorage.getItem('member'));
+
     if (member) {
       const result = await updateDatas("member", member.docId, course, {
         type: "ADD",
-        fieldName: "courseList",
+        fieldName: "courseList"
       });
-      if (result) {
+      if(result) {
         navigate("/wishlist");
-      } else {
-        alert("코스 담기를 실패했습니다. \n관리자에게 문의하세요.");
+      }else {
+        alert("코스 담기를 실패했습니다.\n관리자에게 문의하세요.");
       }
     } else {
-      alert("로그인을 해주세요.");
-      navigate("/login", { state: pathname });
-      //   /슬래쉬가 있을 때 절대경로를 설정해 주는 것. 라우팅 해 준 곳을 잘 확인하고 써야함
+      alert('로그인을 해주세요.');
+      navigate('/login', { state: pathname });
     }
   };
+
   useEffect(() => {
     handleLoad();
   }, []);
+
   return (
     <>
-      <div className={styles.header} style={{ borderColor: courseColor }}>
+      <div className={styles.header} style={headerStyle}>
         <Container className={styles.content}>
           <CourseIcon photoUrl={course?.photoUrl} />
           <h1 className={styles.title}>{course?.title}</h1>
-          <Button variant="round" onClick={handleAddWishListClick}>
+          <Button variant='round' onClick={handleAddWishlistClick}>
             + 코스 담기
           </Button>
           <p className={styles.summary}>{course?.summary}</p>
@@ -72,7 +73,7 @@ function CoursePage() {
       <Container className={styles.topics}>
         {course?.topics.map(({ topic }) => {
           return (
-            <Card className={styles.topic} key={topic.slug}>
+            <Card key={topic.slug} className={styles.topic}>
               <h3 className={styles.title}>{topic.title}</h3>
               <p className={styles.summary}>{topic.summary}</p>
             </Card>

@@ -26,11 +26,11 @@ a:visited {
   min-height: 100vh;
 }
 .nav,
-.Footer {
+.footer {
   flex: none;
 }
 .body {
   position: relative;
   flex-grow: 1;
-  /* margin: 10px 0 0; */
+  /* margin: 10px 0; */
 }

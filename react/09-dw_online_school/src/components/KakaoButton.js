@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import kakaoImg from "./kakao.svg";
-import Button from "./LoginButton";
+import React from 'react';
+import styled from 'styled-components';
+import kakaoImg from './kakao.svg';
+import Button from './LoginButton';
 
 const Icon = styled.img`
   width: 24px;

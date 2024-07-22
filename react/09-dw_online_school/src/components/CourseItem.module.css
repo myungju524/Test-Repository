@@ -16,35 +16,33 @@
 }
 .courseItem .title {
   font-weight: 500;
-  margin: 0 0 10px;
   font-size: 14px;
+  margin: 0 0 10px;
   text-overflow: ellipsis;
-  /* ellipsis 가로길이 ... 만들때만 사용 */
   white-space: nowrap;
+  overflow: hidden;
 }
 .courseItem .description {
   font-size: 12px;
   font-weight: 300;
   margin: 0 0 10px;
   display: -webkit-box;
-  /* 예전에 쓰던 문법 */
   -webkit-box-orient: vertical;
-  /* flex-direction 과 같음 */
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
 .courseItem .tags {
-  list-style-type: none;
   display: flex;
   gap: 10px;
   padding: 0;
   margin: 0;
+  list-style: none;
 }
 .courseItem .tags > li {
+  padding: 2px 6px 3px;
   font-size: 12px;
   color: #878787;
   background-color: #ebebeb;
-  padding: 2px 6px 3px;
   border-radius: 5px;
   opacity: 0.8;
 }
