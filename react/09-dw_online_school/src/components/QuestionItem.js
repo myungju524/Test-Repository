@@ -1,9 +1,9 @@
-import React from 'react';
-import Card from './Card';
-import { Link } from 'react-router-dom';
-import Avatar from './Avatar';
-import styles from './QuestionItem.module.css';
-import DateText from './DateText';
+import React from "react";
+import Card from "./Card";
+import { Link } from "react-router-dom";
+import Avatar from "./Avatar";
+import styles from "./QuestionItem.module.css";
+import DateText from "./DateText";
 
 function QuestionItem({ question }) {
   const { title, answers, createdAt, writer } = question;
