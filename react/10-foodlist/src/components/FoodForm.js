@@ -18,9 +18,9 @@ function sanitize(type, value) {
       return value;
   }
 }
-function FoodForm(props) {
+function FoodForm({ handleSubmitSuccess, initialPreview, handleCancel }) {
   const [values, setValues] = useState(INITIAL_VALUE);
-  const [isSubmitting, setisSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (name, value) => {
     setValues((prevValues) => ({ ...prevValues, [name]: value }));
@@ -32,7 +32,7 @@ function FoodForm(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setisSubmitting(true);
+    setIsSubmitting(true);
     const resultData = await addDatas("foods", values);
   };
   return (
@@ -42,6 +42,7 @@ function FoodForm(props) {
         className="FoodForm-preview"
         value={values.imgUrl}
         onChange={handleChange}
+        initialPreview={initialPreview}
       />
       <div className="FoodForm-rows">
         <div className="FoodForm-title-calorie">
@@ -68,6 +69,9 @@ function FoodForm(props) {
           >
             확인
           </button>
+          {handleCancel && (
+            <button onClick={() => handleCancel(null)}>취소</button>
+          )}
         </div>
         <textarea
           className="FoodForm-content"

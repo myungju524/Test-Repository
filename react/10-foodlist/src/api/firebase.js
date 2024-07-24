@@ -49,6 +49,18 @@ async function getDatas(collectionName) {
   return resultData;
 }
 
+async function getDatasByOrder(collectionName, options) {
+  const collect = await collection(db, collectionName);
+  // const q = query(컬렉션정보, 조건1, 조건2, 조건3...)
+  const q = query(collect, orderBy(options.order, "desc"));
+  const snapshot = await getDocs(q);
+  const resultData = snapshot.docs.map((doc) => ({
+    docId: doc.id,
+    ...doc.data(),
+  }));
+  return resultData;
+}
+
 function createPath(path) {
   const uuid = crypto.randomUUID();
   return path + uuid;
@@ -66,8 +78,8 @@ async function addDatas(collectionName, addObj) {
 
   // 시간 정보 생성
   const time = new Date().getTime();
-  addObj.createAt = time;
-  addObj.updateAt = time;
+  addObj.createdAt = time;
+  addObj.updatedAt = time;
   // 컬렉션에 저장
   await addDoc(getCollection(collectionName), addObj);
 }
@@ -93,4 +105,32 @@ async function getLastIdNum(collectionName, field) {
   const lastId = lastDoc.docs[0].data()[field];
   return lastId;
 }
-export { addDatas };
+
+async function getDatasByOrderLimit(collectionName, options) {
+  const { fieldName, limits } = options;
+  let q;
+  if (!options.lq) {
+    q = query(
+      getCollection(collectionName),
+      orderBy(fieldName, "desc"),
+      limit(limits)
+    );
+  } else {
+    q = query(
+      getCollection(collectionName),
+      orderBy(fieldName, "desc"),
+      startAfter(options.lq),
+      limit(limits)
+    );
+  }
+
+  const snapshot = await getDocs(q);
+  const docs = snapshot.docs;
+  const lastQuery = docs[docs.length - 1];
+  const resultData = docs.map((doc) => ({
+    ...doc.data(),
+    docId: doc.id,
+  }));
+  return { resultData, lastQuery };
+}
+export { getDatas, addDatas, getDatasByOrder, getDatasByOrderLimit };
