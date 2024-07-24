@@ -35,9 +35,13 @@ function App() {
       "foods",
       options
     );
+    if (!options.lq) {
+      setItems(resultData);
+    } else {
+      setItems((prevItems) => [...prevItems, ...resultData]);
+    }
 
     console.log(lastQuery);
-    setItems((prevItems) => [...prevItems, ...resultData]);
     setLq(lastQuery);
     if (!lastQuery) {
       setHasNext(false);
@@ -73,7 +77,7 @@ function App() {
   // };
 
   useEffect(() => {
-    handleLoad({ fieldName: order, limits: LIMIT });
+    handleLoad({ fieldName: order, limits: LIMIT, lq: undefined });
   }, [order]);
 
   console.log(items);
