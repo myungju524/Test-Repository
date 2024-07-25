@@ -66,6 +66,7 @@ function FoodList({ items, onDelete, onUpdate, onUpdateSuccess }) {
           };
           const onSubmitSuccess = (result) => {
             onUpdateSuccess(result);
+            // 수정 폼을 리스트로 변경
             setEditingId(null);
           };
           return (

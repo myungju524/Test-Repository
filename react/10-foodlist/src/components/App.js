@@ -93,6 +93,12 @@ function App() {
       // 수정된 item의 index 찾기
       const splitIdx = prevItems.findIndex((item) => item.id === result.id);
 
+      const beforeArr = prevItems.slice(0, splitIdx);
+      // splitIdx 0부터 직전까지
+      const afterArr = prevItems.slice(splitIdx + 1);
+      //
+      // return [...beforeArr, result, ...afterArr];
+      // result = 새로운 아이템 수정된 아이템
       return [
         ...prevItems.slice(0, splitIdx),
         result,
