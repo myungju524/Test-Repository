@@ -55,7 +55,6 @@ function App() {
     if (!lastQuery) {
       setHasNext(false);
     }
-    listItems = resultData;
   };
   const handleNewestClick = () => setOrder("createdAt");
   const handleCalorieClick = () => setOrder("calorie");
