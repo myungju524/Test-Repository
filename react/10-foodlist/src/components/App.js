@@ -5,7 +5,7 @@ import FoodForm from "./FoodForm";
 import FoodList from "./FoodList";
 import footerLogo from "../assets/logo-text.png";
 import backgroundImg from "../assets/background.png";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import {
   addDatas,
   deleteDatas,
@@ -13,6 +13,8 @@ import {
   getDatasByOrderLimit,
   updateDatas,
 } from "../api/firebase";
+import LocaleSelect from "./LocaleSelect";
+import useTranslate from "../hooks/useTranslate";
 
 const LIMIT = 5;
 let listItems;
@@ -35,6 +37,7 @@ function App() {
   // 더보기 버튼을 관리하기 위해 만든 state
   const [hasNext, setHasNext] = useState(true);
   const [keyword, setKeyword] = useState("");
+  // const t = useTranslate();
 
   const handleLoad = async (options) => {
     const { resultData, lastQuery } = await getDatasByOrderLimit(
@@ -52,6 +55,7 @@ function App() {
     if (!lastQuery) {
       setHasNext(false);
     }
+    listItems = resultData;
   };
   const handleNewestClick = () => setOrder("createdAt");
   const handleCalorieClick = () => setOrder("calorie");
@@ -86,6 +90,7 @@ function App() {
 
   const handleUpdateSuccess = (result) => {
     setItems((prevItems) => {
+      // 수정된 item의 index 찾기
       const splitIdx = prevItems.findIndex((item) => item.id === result.id);
 
       return [
@@ -94,6 +99,19 @@ function App() {
         ...prevItems.slice(splitIdx + 1),
       ];
     });
+  };
+
+  const handleKeywordChange = (e) => {
+    setKeyword(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // const searchItems = listItems.filter(function (item) {
+    //   return item.title.includes(keyword);
+    // });
+    // setItems(searchItems);
+    setItems(listItems.filter((item) => item.title.includes(keyword)));
   };
 
   useEffect(() => {
@@ -111,8 +129,12 @@ function App() {
           <FoodForm onSubmitSuccess={handleAddsuccess} onSubmit={addDatas} />
         </div>
         <div className="App-filter">
-          <form className="App-search">
-            <input className="App-search-input" />
+          <form className="App-search" onSubmit={handleSubmit}>
+            <input
+              className="App-search-input"
+              onChange={handleKeywordChange}
+              value={keyword}
+            />
             <button className="App-search-button">
               <img src={searChImg} />
             </button>
@@ -147,10 +169,7 @@ function App() {
       <div className="App-footer">
         <div className="App-footer-container">
           <img src={footerLogo} />
-          <select>
-            <option>한국어</option>
-            <option>English</option>
-          </select>
+          {/* <LocaleSelect /> */}
           <div className="App-footer-menu">
             서비스 이용 약관 | 개인정보 처리방침
           </div>

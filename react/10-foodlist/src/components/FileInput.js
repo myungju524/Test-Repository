@@ -5,6 +5,7 @@ import "./FileInput.css";
 
 function FileInput({ name, onChange, value, initialPreview }) {
   const [preview, setPreview] = useState(initialPreview);
+
   const inputRef = useRef();
   const handleFileChange = (e) => {
     const nextValue = e.target.files[0];
@@ -16,6 +17,7 @@ function FileInput({ name, onChange, value, initialPreview }) {
   useEffect(() => {
     if (!value) return;
     const nextPreview = URL.createObjectURL(value);
+    // value에는 미디어 소스, 혹은 블록 타입이 들어가야 함
     setPreview(nextPreview);
 
     return () => {

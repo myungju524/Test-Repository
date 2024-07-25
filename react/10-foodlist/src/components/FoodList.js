@@ -57,12 +57,14 @@ function FoodList({ items, onDelete, onUpdate, onUpdateSuccess }) {
         if (item.id === editingId) {
           const { title, calorie, content, imgUrl, docId } = item;
           const initialValues = { title, calorie, content, imgUrl: null };
+          // initialValues : 사용자가 화면에서 직접 입력했던 것들
+          // imgUrl 이 문자열이라 null 값을 넘겨줌 문자열이면 에러남
 
-          const handleSubmit = (collectionName, dataObj) => {
-            const result = onUpdate(collectionName, dataObj, docId);
+          const handleSubmit = (collectionName, updataObj) => {
+            const result = onUpdate(collectionName, updataObj, docId);
             return result;
           };
-          const handleSubmitSuccess = (result) => {
+          const onSubmitSuccess = (result) => {
             onUpdateSuccess(result);
             setEditingId(null);
           };
@@ -71,9 +73,10 @@ function FoodList({ items, onDelete, onUpdate, onUpdateSuccess }) {
               <FoodForm
                 initialValues={initialValues}
                 initialPreview={imgUrl}
+                // 이미지는 따로 전달함 ...
                 onCancel={setEditingId}
                 onSubmit={handleSubmit}
-                handleSubmitSuccess={handleSubmitSuccess}
+                onSubmitSuccess={onSubmitSuccess}
               />
             </li>
           );

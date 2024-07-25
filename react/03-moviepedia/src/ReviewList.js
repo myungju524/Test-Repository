@@ -4,7 +4,6 @@ import "./ReviewList.css";
 import bgImg from "./assets/bg.jpg";
 import ReviewForm from "./ReviewForm";
 import { collection } from "firebase/firestore";
-import { updateDatas } from "./firebase";
 import useTranslate from "./hooks/useTranslate";
 
 function formatDate(value) {

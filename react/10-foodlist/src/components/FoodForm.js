@@ -18,8 +18,15 @@ function sanitize(type, value) {
       return value;
   }
 }
-function FoodForm({ onSubmitSuccess, initialPreview, onCancel, onSubmit }) {
-  const [values, setValues] = useState(INITIAL_VALUE);
+function FoodForm({
+  onSubmitSuccess,
+  onCancel,
+  onSubmit,
+  initialPreview,
+  initialValues = INITIAL_VALUE,
+}) {
+  const [values, setValues] = useState(initialValues);
+  // initialValues의 값이 없으면 INITIAL_VALUE 객체를 넣어주기로 함
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (name, value) => {
