@@ -81,7 +81,10 @@ async function addDatas(collectionName, addObj) {
   addObj.createdAt = time;
   addObj.updatedAt = time;
   // 컬렉션에 저장
-  await addDoc(getCollection(collectionName), addObj);
+  const result = await addDoc(getCollection(collectionName), addObj);
+  const docSnap = await getDoc(result);
+  const resultData = { ...docSnap.data(), docId: docSnap.id };
+  return resultData;
 }
 async function uploadImage(path, file) {
   const storage = getStorage();
@@ -133,4 +136,65 @@ async function getDatasByOrderLimit(collectionName, options) {
   }));
   return { resultData, lastQuery };
 }
-export { getDatas, addDatas, getDatasByOrder, getDatasByOrderLimit };
+
+async function deleteDatas(collectionName, docId, imgUrl) {
+  // 스토리지에 있는 이미지를 삭제할 때 필요한 것 ==> 파일명(경로포함) or 파일 url
+  // 스토리지 객체 생성
+  const storage = getStorage();
+  let message;
+
+  try {
+    // 삭제할 파일의 참초객체 생성(ref 함수 사용)
+    message = "이미지 삭제에 실패했습니다. /n관리자에게 문의하세요.";
+    const deleteRef = ref(storage, imgUrl);
+    // 파일 삭제
+    await deleteObject(deleteRef);
+
+    // 삭제할 문서의 참조객체 생성(doc 함수 사용)
+    message = "문서 삭제에 실패했습니다. /n관리자에게 문의하세요.";
+    const deleteDocRef = await doc(db, collectionName, docId);
+    // 문서  삭제
+    await deleteDoc(deleteDocRef);
+    return { result: true, message: message };
+  } catch (error) {
+    return { result: false, message: message };
+  }
+  // finally : try 코드가 성공하던 실패하던 무조건 실행됨
+
+  // try -catch 구문을 쓰지 않으면 화면상에서 확인을 할 수가 없다.
+}
+
+async function updateDatas(collectionName, dataObj, docId) {
+  const docRef = await doc(db, collectionName, docId);
+
+  const time = new Date().getTime();
+  dataObj.updatedAt = time;
+
+  if (dataObj.url !== null) {
+    const docSnap = await getDoc(docRef);
+    const prevImgUrl = docSnap.data().imgUrl;
+
+    const storage = getStorage();
+    const deleteRef = ref(storage, prevImgUrl);
+    await deleteObject(deleteRef);
+
+    const path = createPath("foods/");
+    const url = await uploadImage(path, dataObj.imgUrl);
+    dataObj.imgUrl = url;
+  } else {
+    delete dataObj["imgUrl"];
+  }
+  await updateDoc(docRef, dataObj);
+  const updatedData = await getDoc(docRef);
+  const resultData = { docId: updatedData.id, ...updatedData.data() };
+  return resultData;
+}
+
+export {
+  getDatas,
+  addDatas,
+  getDatasByOrder,
+  getDatasByOrderLimit,
+  deleteDatas,
+  updateDatas,
+};

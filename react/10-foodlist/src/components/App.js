@@ -6,7 +6,13 @@ import FoodList from "./FoodList";
 import footerLogo from "../assets/logo-text.png";
 import backgroundImg from "../assets/background.png";
 import { useEffect, useState } from "react";
-import { deleteDatas, getDatas, getDatasByOrderLimit } from "../api/firebase";
+import {
+  addDatas,
+  deleteDatas,
+  getDatas,
+  getDatasByOrderLimit,
+  updateDatas,
+} from "../api/firebase";
 
 const LIMIT = 5;
 let listItems;
@@ -53,28 +59,42 @@ function App() {
   const handleLoadMore = async () => {
     handleLoad({ fieldName: order, limits: LIMIT, lq: lq });
   };
-
-  const handleKeyWordChange = (e) => {
-    setKeyword(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setItems(
-      listItems.filter((item) => {
-        return item.title.includes(keyword);
+  const handleDelete = async (docId, imgUrl) => {
+    // items 에서 docId를 받아온다.
+    // db에서 데이터 삭제(스토리지에 있는 사진파일 삭제, database에 있는 데이터 삭제.
+    // 두 가지를 같이 해야함)
+    const { result, message } = await deleteDatas("foods", docId, imgUrl);
+    if (!result) {
+      alert(message);
+      return false;
+    }
+    // 삭제 성공시 화면에 그 결과를 반영한다.(필터 사용)
+    setItems((prevItems) =>
+      // prevItems == > 현재 state 값 (items 값 : 화면에 뿌려진 배열15개)
+      // 배열 안에 객체{} 가지고 있고 {...docId} 도 가지고 있음
+      // 삭제버튼을 누른 {docId 객체와} 가지고 있는 배열 중 docId 배열이 같으면 삭제한다.
+      // 그래서 삭제한 docId와 다른 docId들을 화면에 다시 출력한다.
+      prevItems.filter(function (item) {
+        return item.docId !== docId;
       })
     );
   };
 
-  // const handleDelete = async (docId, imgUrl) => {
-  //   const result = await deleteDatas("foods", docId, imgUrl);
-  //   if (!result) {
-  //     alert("저장된 이미지 파일이 없습니다. \n관리자에게 문의하세요");
-  //     return false;
-  //   }
-  //   setItems((prev) => prev.filter((item) => item.docId !== docId));
-  // };
+  const handleAddsuccess = (resultData) => {
+    setItems((prevItems) => [resultData, ...prevItems]);
+  };
+
+  const handleUpdateSuccess = (result) => {
+    setItems((prevItems) => {
+      const splitIdx = prevItems.findIndex((item) => item.id === result.id);
+
+      return [
+        ...prevItems.slice(0, splitIdx),
+        result,
+        ...prevItems.slice(splitIdx + 1),
+      ];
+    });
+  };
 
   useEffect(() => {
     handleLoad({ fieldName: order, limits: LIMIT, lq: undefined });
@@ -88,14 +108,11 @@ function App() {
       </div>
       <div className="App-container">
         <div className="App-FoodForm">
-          <FoodForm />
+          <FoodForm onSubmitSuccess={handleAddsuccess} onSubmit={addDatas} />
         </div>
         <div className="App-filter">
-          <form className="App-search" onSubmit={handleSubmit}>
-            <input
-              className="App-search-input"
-              onChange={handleKeyWordChange}
-            />
+          <form className="App-search">
+            <input className="App-search-input" />
             <button className="App-search-button">
               <img src={searChImg} />
             </button>
@@ -115,7 +132,12 @@ function App() {
             </AppSortButton>
           </div>
         </div>
-        <FoodList items={items} />
+        <FoodList
+          items={items}
+          onDelete={handleDelete}
+          onUpdate={updateDatas}
+          onUpdateSuccess={handleUpdateSuccess}
+        />
         {hasNext && (
           <button className="App-load-more-button" onClick={handleLoadMore}>
             더보기

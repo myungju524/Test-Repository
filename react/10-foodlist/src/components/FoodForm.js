@@ -18,7 +18,7 @@ function sanitize(type, value) {
       return value;
   }
 }
-function FoodForm({ handleSubmitSuccess, initialPreview, handleCancel }) {
+function FoodForm({ onSubmitSuccess, initialPreview, onCancel, onSubmit }) {
   const [values, setValues] = useState(INITIAL_VALUE);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -33,7 +33,11 @@ function FoodForm({ handleSubmitSuccess, initialPreview, handleCancel }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const resultData = await addDatas("foods", values);
+    const resultData = await onSubmit("foods", values);
+    onSubmitSuccess(resultData);
+
+    setIsSubmitting(false);
+    setValues(INITIAL_VALUE);
   };
   return (
     <form className="FoodForm" onSubmit={handleSubmit}>
@@ -62,6 +66,15 @@ function FoodForm({ handleSubmitSuccess, initialPreview, handleCancel }) {
             onChange={handleInputChange}
           />
 
+          {onCancel && (
+            <button
+              className="FoodForm-cancel-button"
+              onClick={() => onCancel(null)}
+            >
+              취소
+            </button>
+            // 수정버튼 눌렀을 때만 취소 < 버튼이 나옴.
+          )}
           <button
             className="FoodForm-submit-button"
             type="submit"
@@ -69,9 +82,6 @@ function FoodForm({ handleSubmitSuccess, initialPreview, handleCancel }) {
           >
             확인
           </button>
-          {handleCancel && (
-            <button onClick={() => handleCancel(null)}>취소</button>
-          )}
         </div>
         <textarea
           className="FoodForm-content"

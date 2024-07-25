@@ -7,15 +7,16 @@ function formatDate(value) {
   return `${date.getFullYear()} . ${date.getMonth() + 1} . ${date.getDate()} `;
 }
 formatDate();
-function FoodListItem({ item, handleDelete, handleEdit }) {
+function FoodListItem({ item, onDelete, onEdit }) {
+  const { calorie, content, createdAt, imgUrl, title, docId, id } = item;
   const handleDeleteClick = () => {
-    handleDelete(item.docId, item.imgUrl);
+    onDelete(docId, imgUrl);
   };
 
   const handleEditClick = () => {
-    handleEdit(item.id);
+    onEdit(id);
   };
-  const { calorie, content, createdAt, imgUrl, title } = item;
+
   return (
     <div className="FoodListItem">
       <img className="FoodListItem-preview" src={imgUrl} />
@@ -47,8 +48,9 @@ function FoodListItem({ item, handleDelete, handleEdit }) {
   );
 }
 
-function FoodList({ items, handleDelete, onUpdate, onUpdateSuccess }) {
+function FoodList({ items, onDelete, onUpdate, onUpdateSuccess }) {
   const [editingId, setEditingId] = useState(null);
+
   return (
     <ul className="FoodList">
       {items.map((item) => {
@@ -65,11 +67,11 @@ function FoodList({ items, handleDelete, onUpdate, onUpdateSuccess }) {
             setEditingId(null);
           };
           return (
-            <li key={item.id}>
+            <li key={item.docId}>
               <FoodForm
                 initialValues={initialValues}
                 initialPreview={imgUrl}
-                handleCancel={setEditingId}
+                onCancel={setEditingId}
                 onSubmit={handleSubmit}
                 handleSubmitSuccess={handleSubmitSuccess}
               />
@@ -78,11 +80,11 @@ function FoodList({ items, handleDelete, onUpdate, onUpdateSuccess }) {
         }
 
         return (
-          <li key={item.id}>
+          <li key={item.docId}>
             <FoodListItem
               item={item}
-              handleDelete={handleDelete}
-              handleEdit={setEditingId}
+              onDelete={onDelete}
+              onEdit={setEditingId}
             />
           </li>
         );
