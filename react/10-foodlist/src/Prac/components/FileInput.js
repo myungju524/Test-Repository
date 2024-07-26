@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./FileInput.css";
-import resetImg from "../assets/ic-reset-white.png";
+import placeholderImg from "../assets/preview-placeholder.png";
 
 function FileInput(props) {
   const [preview, setPreview] = useState();
+  const inputRef = useRef();
+
   return (
     <div className="FileInput">
-      <img className="FileInput-preview" />
+      <img className={`FileInput-preview ${preview ? "selected" : ""}`} />
       <input className="FileInput-hidden-overlay" type="file" />
       <button>
-        <img src={resetImg} />
+        <img src={preview || placeholderImg} />
       </button>
     </div>
   );
