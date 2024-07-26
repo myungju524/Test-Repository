@@ -17,7 +17,7 @@ function FileInput({ name, onChange, value, initialPreview }) {
   useEffect(() => {
     if (!value) return;
     const nextPreview = URL.createObjectURL(value);
-    // value에는 미디어 소스, 혹은 블록 타입이 들어가야 함
+    // value에는 미디어 소스, 혹은 블롭 타입이 들어가야 함
     setPreview(nextPreview);
 
     return () => {
