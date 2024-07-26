@@ -36,8 +36,9 @@ function App() {
   const [lq, setLq] = useState();
   // 더보기 버튼을 관리하기 위해 만든 state
   const [hasNext, setHasNext] = useState(true);
+  const t = useTranslate();
   const [keyword, setKeyword] = useState("");
-  // const t = useTranslate();
+  const [allitems, setAllItems] = useState([]);
 
   const handleLoad = async (options) => {
     const { resultData, lastQuery } = await getDatasByOrderLimit(
@@ -56,6 +57,7 @@ function App() {
       setHasNext(false);
     }
   };
+
   const handleNewestClick = () => setOrder("createdAt");
   const handleCalorieClick = () => setOrder("calorie");
 
@@ -110,19 +112,28 @@ function App() {
     setKeyword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (keyword === "") {
+      handleLoad({ fieldName: order, limits: LIMIT, lq: undefined });
+    } else {
+      const resultData = await getDatas("foods", {
+        limits: LIMIT,
+        keyword: keyword,
+      });
+      setItems(resultData);
+    }
+    setHasNext(false);
     // const searchItems = listItems.filter(function (item) {
     //   return item.title.includes(keyword);
     // });
     // setItems(searchItems);
-    setItems(listItems.filter((item) => item.title.includes(keyword)));
   };
 
   useEffect(() => {
     handleLoad({ fieldName: order, limits: LIMIT, lq: undefined });
   }, [order]);
-
   console.log(items);
   return (
     <div className="App" style={{ backgroundImage: `url(${backgroundImg})` }}>
@@ -149,13 +160,13 @@ function App() {
               selected={order === "createdAt"}
               onClick={handleNewestClick}
             >
-              최신순
+              {t("newest")}
             </AppSortButton>
             <AppSortButton
               onClick={handleCalorieClick}
               selected={order === "calorie"}
             >
-              칼로리순
+              {t("calorie")}
             </AppSortButton>
           </div>
         </div>
@@ -167,16 +178,16 @@ function App() {
         />
         {hasNext && (
           <button className="App-load-more-button" onClick={handleLoadMore}>
-            더보기
+            {t("load more")}
           </button>
         )}
       </div>
       <div className="App-footer">
         <div className="App-footer-container">
           <img src={footerLogo} />
-          {/* <LocaleSelect /> */}
+          <LocaleSelect />
           <div className="App-footer-menu">
-            서비스 이용 약관 | 개인정보 처리방침
+            {t("terms of service")} | {t("privary policy")}
           </div>
         </div>
       </div>

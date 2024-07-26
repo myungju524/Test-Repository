@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./FoodList.css";
 import FoodForm from "./FoodForm";
+import useTranslate from "../hooks/useTranslate";
 
 function formatDate(value) {
   const date = new Date(value);
@@ -16,6 +17,8 @@ function FoodListItem({ item, onDelete, onEdit }) {
   const handleEditClick = () => {
     onEdit(id);
   };
+
+  const t = useTranslate();
 
   return (
     <div className="FoodListItem">
@@ -33,13 +36,13 @@ function FoodListItem({ item, onDelete, onEdit }) {
               className="FoodListItem-edit-button"
               onClick={handleEditClick}
             >
-              수정
+              {t("edit button")}
             </button>
             <button
               className="FoodListItem-delete-button"
               onClick={handleDeleteClick}
             >
-              삭제
+              {t("delete button")}
             </button>
           </div>
         </div>
@@ -55,13 +58,13 @@ function FoodList({ items, onDelete, onUpdate, onUpdateSuccess }) {
     <ul className="FoodList">
       {items.map((item) => {
         if (item.id === editingId) {
-          const { title, calorie, content, imgUrl, docId } = item;
+          const { id, title, calorie, content, imgUrl, docId } = item;
           const initialValues = { title, calorie, content, imgUrl: null };
           // initialValues : 사용자가 화면에서 직접 입력했던 것들
           // imgUrl 이 문자열이라 null 값을 넘겨줌 문자열이면 에러남
 
           const handleSubmit = (collectionName, updataObj) => {
-            const result = onUpdate(collectionName, updataObj, docId);
+            const result = onUpdate(collectionName, updataObj, docId, imgUrl);
             return result;
           };
           const onSubmitSuccess = (result) => {

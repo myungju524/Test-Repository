@@ -1,4 +1,9 @@
-import { useLocale, useSetLocale } from "../contexts/LocaleContext";
+import { useContext } from "react";
+import {
+  LocaleContext,
+  useLocale,
+  useSetLocale,
+} from "../contexts/LocaleContext";
 import "./LocaleSelect.css";
 
 function LocaleSelect(props) {

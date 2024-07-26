@@ -25,13 +25,19 @@ const dict = {
     "privary policy": "Privary policy",
     "load more": "Load More",
     newest: "Newest",
-    calorie: "ㅊest",
+    calorie: "calorie",
   },
 };
 
 function useTranslate() {
   const locale = useLocale();
   const translate = (key) => dict[locale][key] || "";
+  // key 값만 전달 dict 객체 안에서 locale 과 key 값을 꺼내고 없으면 공백
+  // const language = dict[locale];
+  // const value = language[key];
+  // return value;
+  // 객체에서 프로퍼티 값을 가져오고 싶으면 대괄호[]사용
+
   return translate;
 }
 export default useTranslate;

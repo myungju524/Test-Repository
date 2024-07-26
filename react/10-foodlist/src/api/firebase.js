@@ -13,6 +13,7 @@ import {
   orderBy,
   limit,
   startAfter,
+  where,
 } from "firebase/firestore";
 import {
   deleteObject,
@@ -39,13 +40,17 @@ function getCollection(collectionName) {
   return collection(db, collectionName);
 }
 
-async function getDatas(collectionName) {
-  const collect = await collection(db, collectionName);
-  const snapshot = await getDocs(collect);
-  const resultData = snapshot.docs.map((doc) => ({
-    docId: doc.id,
-    ...doc.data(),
-  }));
+async function getDatas(collectionName, options) {
+  const q = query(
+    getCollection(collectionName),
+    where("title", ">=", options.keyword),
+    where("title", "<=", options.keyword + "\uf8ff"),
+    // 프리픽스만 검색됨 : 단어 앞에서부터 일치하는 게 있어야지만 검색 됨
+    limit(options.limits)
+  );
+  const snapshot = await getDocs(q);
+  const docs = snapshot.docs;
+  const resultData = docs.map((doc) => ({ ...doc.data(), docId: doc.id }));
   return resultData;
 }
 
@@ -164,29 +169,49 @@ async function deleteDatas(collectionName, docId, imgUrl) {
   // try -catch 구문을 쓰지 않으면 화면상에서 확인을 할 수가 없다.
 }
 
-async function updateDatas(collectionName, dataObj, docId) {
+async function updateDatas(collectionName, updateObj, docId, imgUrl) {
+  // updateDoc() 함수 사용 doc 참조 객체와 수정할 데이터 객체 필요
+
+  // doc 참조 객체
   const docRef = await doc(db, collectionName, docId);
 
+  // 저장되어있는 시간 관련 필드들의 값이 밀리세컨드로 되어있기 때문에
+  // getTime() 함수 사용
   const time = new Date().getTime();
-  dataObj.updatedAt = time;
 
-  if (dataObj.url !== null) {
-    const docSnap = await getDoc(docRef);
-    const prevImgUrl = docSnap.data().imgUrl;
-
-    const storage = getStorage();
-    const deleteRef = ref(storage, prevImgUrl);
-    await deleteObject(deleteRef);
-
-    const path = createPath("foods/");
-    const url = await uploadImage(path, dataObj.imgUrl);
-    dataObj.imgUrl = url;
+  // 사진 파일을 변경하지 않았을 때
+  // imgUrl : null
+  if (updateObj.imgUrl === null) {
+    // 사진이 변경되지 않았을 때 imgUrl 값이 null 로 넘어오기 때문에
+    // 그 상태로 문서를 update 해버리면 imgUrl 값이 null로 바뀐다.
+    // 그렇기 때문에 updateObj 에서 imgUrl 프로퍼티를 삭제해준다.
+    delete updateObj["imgUrl"];
   } else {
-    delete dataObj["imgUrl"];
+    // 사진 파일을 변경했을 때
+
+    // - 기존 사진 삭제
+    const storage = getStorage();
+    // getStorage()를 사용해서 storage 객체 생성
+    const deleteRef = ref(storage, imgUrl);
+    await deleteObject(deleteRef);
+    // deleteObject()함수 사용해서 삭제
+
+    // 변경한 사진을 스토리지에 저장
+    const url = await uploadImage(createPath("foods/"), updateObj.imgUrl);
+    // 스토리지에 저장하고 그 파일의 url을 가져와서 uploadObj의 imgUrl
+    // 값을 변경해준다.
+    // 왜 변경? ==> 기존 updateObj에 있는 imgUrl은 'File' 객체이고,
+    // 우리가 데이터베이스에 저장해야 할 imgUrl은 문자열 url 이기 때문에
+    updateObj.imgUrl = url;
   }
-  await updateDoc(docRef, dataObj);
-  const updatedData = await getDoc(docRef);
-  const resultData = { docId: updatedData.id, ...updatedData.data() };
+
+  // updatedAt 필드에 넣어줄 시간 데이터를 updateObj에 넣어준다.
+  updateObj.updatedAt = time;
+
+  // 문서 필드 데이터 수정
+  await updateDoc(docRef, updateObj);
+  const docSnap = await getDoc(docRef);
+  const resultData = { ...docSnap.data(), docId: docSnap.id };
   return resultData;
 }
 
