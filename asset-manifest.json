@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Test-Repository/static/css/main.ecc57a67.css",
-    "main.js": "/Test-Repository/static/js/main.4f37bda6.js",
+    "main.js": "/Test-Repository/static/js/main.78a88f5d.js",
     "static/media/landing.svg": "/Test-Repository/static/media/landing.4bbaee518e8f08af70e2809738254418.svg",
     "static/media/icon--computer-architecture.svg": "/Test-Repository/static/media/icon--computer-architecture.122c82b1c31a3f5fd81108ff488c239a.svg",
     "static/media/icon--deep-learning.svg": "/Test-Repository/static/media/icon--deep-learning.cb97e7d5d8acba83cca8be1b59b52491.svg",
@@ -36,10 +36,10 @@
     "static/media/search.svg": "/Test-Repository/static/media/search.8a36d7a29fe56e8c01df6f2931510f85.svg",
     "static/media/facebook.svg": "/Test-Repository/static/media/facebook.923e8d46d8ec99ef010f0699048cd7a4.svg",
     "main.ecc57a67.css.map": "/Test-Repository/static/css/main.ecc57a67.css.map",
-    "main.4f37bda6.js.map": "/Test-Repository/static/js/main.4f37bda6.js.map"
+    "main.78a88f5d.js.map": "/Test-Repository/static/js/main.78a88f5d.js.map"
   },
   "entrypoints": [
     "static/css/main.ecc57a67.css",
-    "static/js/main.4f37bda6.js"
+    "static/js/main.78a88f5d.js"
   ]
 }
