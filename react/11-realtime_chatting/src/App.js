@@ -1,15 +1,34 @@
+import { useEffect, useState } from "react";
 import "./App.css";
+import { getUserAuth } from "./api/firebase";
 import SignIn from "./components/SignIn";
+import { onAuthStateChanged } from "firebase/auth";
+import ChatRoom from "./components/ChatRoom";
 
 function App() {
+  const auth = getUserAuth();
+  const user = auth.currentUser;
+  const [loginUser, setLoginUser] = useState(user);
+
+  const handleLogout = () => {
+    auth.signOut();
+  };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      // 관찰자 함수
+      setLoginUser(user);
+    });
+  }, []);
+
   return (
     <div className="App">
       <header>
         <h4> 🙏 소원을 빌어주세요</h4>
-        <button>로그아웃</button>
+        <button onClick={handleLogout}>로그아웃</button>
       </header>
       <section>
-        <SignIn />
+        {user ? <ChatRoom /> : <SignIn auth={auth} login={setLoginUser} />}
       </section>
     </div>
   );
