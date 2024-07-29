@@ -15,6 +15,7 @@ import {
 } from "../api/firebase";
 import LocaleSelect from "./LocaleSelect";
 import useTranslate from "../hooks/useTranslate";
+import useAsync from "../hooks/useAsync";
 
 const LIMIT = 5;
 let listItems;
@@ -38,20 +39,23 @@ function App() {
   const [hasNext, setHasNext] = useState(true);
   const t = useTranslate();
   const [keyword, setKeyword] = useState("");
-  const [allitems, setAllItems] = useState([]);
-
+  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, loadingError, getDatasAsync] =
+    useAsync(getDatasByOrderLimit);
   const handleLoad = async (options) => {
-    const { resultData, lastQuery } = await getDatasByOrderLimit(
-      "foods",
-      options
-    );
+    // setIsLoading(true);
+    // const { resultData, lastQuery } = await getDatasByOrderLimit(
+    //   "foods",
+    //   options
+    // );
+    // setIsLoading(false);
+    const { resultData, lastQuery } = await getDatasAsync("foods", options);
     if (!options.lq) {
       setItems(resultData);
     } else {
       setItems((prevItems) => [...prevItems, ...resultData]);
     }
 
-    console.log(lastQuery);
     setLq(lastQuery);
     if (!lastQuery) {
       setHasNext(false);
@@ -177,7 +181,11 @@ function App() {
           onUpdateSuccess={handleUpdateSuccess}
         />
         {hasNext && (
-          <button className="App-load-more-button" onClick={handleLoadMore}>
+          <button
+            className="App-load-more-button"
+            onClick={handleLoadMore}
+            disabled={isLoading}
+          >
             {t("load more")}
           </button>
         )}
