@@ -28,34 +28,73 @@ body {
   background-color: #b2c7d9;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  /* justify-content: space-between; */
   flex: 1 1;
-  /* height: 100vh; */
+  /* App 컴포넌트가 100vh 만큼 영역을 가지고 있으니 flex로 늘려주는 것이 좋다 */
   overflow: hidden;
 }
 main {
   padding: 10px;
-  overflow-y: scroll;
+  flex: 1 1;
   overflow: auto;
+}
+main::-webkit-scrollbar {
+  width: 0.6rem;
+}
+main::-webkit-scrollbar-track {
+  /* track :  스크롤 막대가 없어진 바깥 영역*/
+  background-color: #b2c7d9;
+}
+main::-webkit-scrollbar-thumb {
+  /* thumb : 눈에 보이는 스크롤 막대 영역 */
+  background-color: #8b9aa6;
 }
 form {
   background-color: #ffec42;
   width: 100%;
   max-width: 450px;
   font-size: 1.5rem;
-  display: grid;
-  grid-template-columns: 5fr 1fr;
-  height: 75px;
+  height: 8vh;
+  flex: none;
+  display: flex;
 }
 form button {
   background-color: #ffec42;
-  border: none;
+  width: 20%;
 }
 button {
   border: none;
-  padding: 10px;
-  border-radius: 9999px;
+  color: gray;
+  padding: 5px 5px;
+  text-align: center;
+  font-size: 1rem;
+  outline: none;
   cursor: pointer;
+}
+.sign-in {
+  color: gray;
+  background-color: #fff;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 15px;
+  border-radius: 25px;
+}
+.notice {
+  margin-top: 20px;
+  color: #72808b;
+}
+.sign-out {
+  border: none;
+  color: gray;
+  padding: 8px 15px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+  border-radius: 25px;
+}
+.sign-out:hover {
+  color: #fff;
+  background-color: rgb(255, 85, 43);
 }
 
 form input {
@@ -66,4 +105,30 @@ form input {
   outline: none;
   border: none;
   padding: 0 15px;
+}
+.message {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.message img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.message p {
+  padding: 10px 20px;
+  border-radius: 9999px;
+  text-align: center;
+  color: #262626;
+}
+.message.sent {
+  flex-direction: row-reverse;
+  /* 순서가 반대로 나옴 */
+}
+.message.sent p {
+  background-color: #ffec42;
+}
+.message.received p {
+  background-color: #fff;
 }
