@@ -42,14 +42,12 @@ function DiaryList({ diaryList }) {
     // 필터링 함수
     const getFilteredList = () => {
       // filter state가 good 이면 (emotion의 값이 3보다 작거나 같을 때)
-      setFilter(filterOptionList.emotion);
-
       // filter state가 good이 아니면(emotion의 값이 3보다 클 때)
     };
 
     // 정렬 함수
 
-    const getOrderedList = () => {
+    const getOrderedList = (a, b) => {
       // order state가 latest이면 b-a
       // order state가 latest가 아니면 a-b
     };
