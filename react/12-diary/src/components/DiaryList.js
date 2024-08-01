@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 import "./DiaryList.css";
 import DiaryItem from "./DiaryItem";
@@ -15,9 +15,13 @@ const filterOptionList = [
   { name: "안좋은 감정만", value: "bad" },
 ];
 
-function ControlMenu({ optionList }) {
+function ControlMenu({ optionList, value, onChange }) {
   return (
-    <select className="ControlMenu">
+    <select
+      className="ControlMenu"
+      value={value}
+      onChange={(e) => onChange(e.target.vale)}
+    >
       {optionList.map((option, idx) => {
         return (
           <option key={idx} value={option.value}>
@@ -29,14 +33,45 @@ function ControlMenu({ optionList }) {
   );
 }
 
-function DiaryList(props) {
+function DiaryList({ diaryList }) {
+  const [order, setOrder] = useState("latest");
+  const [filter, setFilter] = useState("all");
   const navigate = useNavigate();
+
+  const getSortedDiaryList = () => {
+    // 필터링 함수
+    const getFilteredList = () => {
+      // filter state가 good 이면 (emotion의 값이 3보다 작거나 같을 때)
+      setFilter(filterOptionList.emotion);
+
+      // filter state가 good이 아니면(emotion의 값이 3보다 클 때)
+    };
+
+    // 정렬 함수
+
+    const getOrderedList = () => {
+      // order state가 latest이면 b-a
+      // order state가 latest가 아니면 a-b
+    };
+
+    const filteredList = diaryList.filter((diary) => getFilteredList(diary));
+    const sortedList = filteredList.sort(getOrderedList);
+    return sortedList;
+  };
   return (
     <div className="diaryList">
       <div className="menu_wrapper">
         <div className="control_menus">
-          <ControlMenu optionList={sortOptionList} />
-          <ControlMenu optionList={filterOptionList} />
+          <ControlMenu
+            optionList={sortOptionList}
+            value={order}
+            onChange={setOrder}
+          />
+          <ControlMenu
+            optionList={filterOptionList}
+            value={filter}
+            onChange={setFilter}
+          />
         </div>
         <div className="new_btn">
           <Button
@@ -46,7 +81,9 @@ function DiaryList(props) {
           />
         </div>
       </div>
-      <DiaryItem />
+      {diaryList.map((diary) => {
+        return <DiaryItem key={diary.id} {...diary} />;
+      })}
     </div>
   );
 }
