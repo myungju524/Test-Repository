@@ -1,34 +1,33 @@
 import React, { useContext, useEffect, useState } from "react";
-import DiaryEditor from "../components/DiaryEditor";
-import { DiaryStateContext } from "../App";
 import { useNavigate, useParams } from "react-router-dom";
+import { DiaryStateContext } from "../App";
 import { changeTitle } from "../util/chageTitle";
+import DiaryEditor from "../components/DiaryEditor";
 
 function EditPage(props) {
   const { id } = useParams();
+  const [data, setData] = useState();
   const diaryList = useContext(DiaryStateContext);
-  const [list, setList] = useState(null);
   const navigate = useNavigate();
+
   useEffect(() => {
-    changeTitle(`감정 일기장 = ${id}번 일기 수정`);
+    changeTitle(`감정 일기장 - ${id}번 일기 수정`);
   }, []);
+
   useEffect(() => {
     if (diaryList.length > 0) {
-      const targetDiary = diaryList.find((diary) => {
-        return diary.id == id;
-      });
+      const targetDiary = diaryList.find((diary) => diary.id == id);
+
       if (targetDiary) {
-        setList(targetDiary);
+        setData(targetDiary);
       } else {
         alert("잘못된 접근입니다.");
         navigate("/", { replace: true });
       }
     }
   }, [diaryList]);
-  if (!list) {
-    return <div className="diaryPage">로딩중입니다...</div>;
-  }
-  return <div>{list && <DiaryEditor originData={list} isEdit={true} />}</div>;
+
+  return <div>{data && <DiaryEditor originData={data} isEdit={true} />}</div>;
 }
 
 export default EditPage;

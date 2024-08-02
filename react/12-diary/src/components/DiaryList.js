@@ -55,18 +55,16 @@ function DiaryList({ diaryList }) {
         // order state가 latest 이면 b - a
         return b.date - a.date;
       } else {
-        // ord er state가 latest 가 아니면 a - b
-
+        // order state가 latest 가 아니면 a - b
         return a.date - b.date;
       }
     };
-    // const filteredList = diaryList.filter((diary) => getFilteredList(diary));
     const filteredList =
       filter === "all"
         ? diaryList
         : diaryList.filter((diary) => getFilteredList(diary));
+
     const sortedList = filteredList.sort(getOrderedList);
-    // sort 는 파라미터로 함수를 받음
     return sortedList;
   };
 

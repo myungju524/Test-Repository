@@ -2,15 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import Header from "../components/Header";
 import Button from "../components/Button";
 import { useNavigate, useParams } from "react-router-dom";
-import { DiaryStateContext } from "../App";
+import { DiaryStateContext } from "./../App";
 import { emotionList } from "../util/emotionList";
 import "./DiaryPage.css";
 import { changeTitle } from "../util/chageTitle";
 
-function DiaryPage(props) {
+function DiaryPage() {
   const { id } = useParams();
   const diaryList = useContext(DiaryStateContext);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,12 +20,12 @@ function DiaryPage(props) {
   useEffect(() => {
     if (diaryList.length > 0) {
       // targetDiary 를 찾는 방법
-      // 전체 diaryList 를 확인해서 useParams 로 가져온 id와 같은 diary data를 뽑아서
-      // data state 에 set 해준다.
+      // 전체 diaryList 를 확인해서 useParams로 가져온 id 와 같은 diary data를 뽑아서
       // filter, findIndex, find
       const targetDiary = diaryList.find((diary) => diary.id == id);
 
       if (targetDiary) {
+        // data state에 set 해준다.
         setData(targetDiary);
       } else {
         alert("없는 일기입니다.");
@@ -33,8 +33,9 @@ function DiaryPage(props) {
       }
     }
   }, [diaryList]);
+
   if (!data) {
-    return <div className="diaryPage">로딩중입니다...</div>;
+    return <div className="diaryPage"></div>;
   } else {
     const emotionData = emotionList.find(
       (emotion) => emotion.emotion_id == data.emotion
@@ -52,11 +53,10 @@ function DiaryPage(props) {
           }
         />
         <article>
-          {/* 신문 or 뉴스 or 에쎄이 만드는 페이지에서 많이씀 */}
           <section>
             <h4>오늘의 감정</h4>
             <div
-              className={`diary_img_wrapper diary_img_wrapper_${data.emotion} `}
+              className={`diary_img_wrapper diary_img_wrapper_${data.emotion}`}
             >
               <img src={`/assets/emotion${data.emotion}.png`} />
               <div className="emotion_description">

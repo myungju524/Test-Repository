@@ -22,7 +22,7 @@ function DiaryItem({ date, content, emotion, id }) {
       <div className="info_wrapper" onClick={goDetail}>
         <div className="diary_date">{new Date(date).toLocaleDateString()}</div>
         <div className="diary_content_preview">
-          {`${content.slice(0, 25)}...`}{" "}
+          {`${content.slice(0, 25)}...`}
         </div>
       </div>
       <div className="btn_wrapper">

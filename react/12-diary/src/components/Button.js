@@ -4,7 +4,7 @@ import "./Button.css";
 function Button({ text, onClick, type }) {
   const btnClass = ["positive", "negative"].includes(type) ? type : "default";
   return (
-    <button onClick={onClick} className={`btn btn_${btnClass}`}>
+    <button className={`btn btn_${btnClass}`} onClick={onClick}>
       {text}
     </button>
   );
