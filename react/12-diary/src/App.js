@@ -5,6 +5,7 @@ import NewPage from "./pages/NewPage";
 import { createContext, useEffect, useReducer } from "react";
 import { addItem, fetchItems, initialState, reducer } from "./api/itemReducer";
 import DiaryPage from "./pages/DiaryPage";
+import EditPage from "./pages/EditPage";
 
 export const DiaryStateContext = createContext();
 export const DiaryDispathContext = createContext();
@@ -49,7 +50,7 @@ function App() {
               <Route path="/">
                 <Route index element={<HomePage />} />
                 <Route path="new" element={<NewPage />} />
-                {/* <Route path="edit" /> */}
+                <Route path="edit/:id" element={<EditPage />} />
                 <Route path="diary/:id" element={<DiaryPage />} />
               </Route>
             </Routes>

@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Header from "./Header";
 import Button from "./Button";
 import { emotionList } from "../util/emotionList";
@@ -13,7 +13,7 @@ const INITIAL_VALUES = {
   emotion: 3,
 };
 
-function DiaryEditor(props) {
+function DiaryEditor({ originData = INITIAL_VALUES, isEdit }) {
   const { onCreate } = useContext(DiaryDispathContext);
   // App 컴포넌트에서 객체 형태로 onCreate를 넘겨줘서 구조분해 하듯이 씀.
 
@@ -27,7 +27,7 @@ function DiaryEditor(props) {
   // useContext(사용할 컨텍스트)사용
 
   //  1. 날짜, 감정, 텍스트 관리할 상태를 만들어야 한다.
-  const [values, setValuse] = useState(INITIAL_VALUES);
+  const [values, setValuse] = useState(originData);
   // 2. 각각의 emotionItem을 클릭했을 때 콘솔창에 emotion_id 를 출력해본다.
   //<EmotionItem /> 컴포넌트로 가서 함
 
@@ -56,6 +56,16 @@ function DiaryEditor(props) {
     }
     navigate("/", { replace: true });
   };
+  useEffect(() => {
+    if (isEdit) {
+      // 받아온 날짜 데이터(밀리세컨즈 단위)를 formatting(yyyy-mm-dd) 해주자.
+      handleChange(
+        "date",
+        new Date(originData.date).toISOString().split("T")[0]
+      );
+    }
+  }, []);
+
   return (
     <div className="diaryEditor">
       <Header
