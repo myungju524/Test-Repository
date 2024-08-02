@@ -44,7 +44,7 @@ function HomePage(props) {
     );
     // sertSortedItem 함수 사용
     setSortedItem(newItem);
-  }, [curDate]);
+  }, [curDate, diaryList]);
 
   return (
     <div>

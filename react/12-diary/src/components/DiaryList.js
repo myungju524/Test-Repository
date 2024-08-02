@@ -8,7 +8,6 @@ const sortOptionList = [
   { name: "최신순", value: "latest" },
   { name: "오래된 순", value: "oldest" },
 ];
-
 const filterOptionList = [
   { name: "전부다", value: "all" },
   { name: "좋은 감정만", value: "good" },
@@ -20,7 +19,7 @@ function ControlMenu({ optionList, value, onChange }) {
     <select
       className="ControlMenu"
       value={value}
-      onChange={(e) => onChange(e.target.vale)}
+      onChange={(e) => onChange(e.target.value)}
     >
       {optionList.map((option, idx) => {
         return (
@@ -40,22 +39,37 @@ function DiaryList({ diaryList }) {
 
   const getSortedDiaryList = () => {
     // 필터링 함수
-    const getFilteredList = () => {
-      // filter state가 good 이면 (emotion의 값이 3보다 작거나 같을 때)
-      // filter state가 good이 아니면(emotion의 값이 3보다 클 때)
+    const getFilteredList = (diary) => {
+      if (filter === "good") {
+        // filter state가 good 이면(emotion의 값이 3보다 작거나 같을 때)
+        return diary.emotion <= 3;
+      } else {
+        // filter state가 good 이 아니면(emotion의 값이 3보다 클 때)
+        return diary.emotion > 3;
+      }
     };
-
+    // [1, 11, 21].sort((a,b) => b - a);
     // 정렬 함수
-
     const getOrderedList = (a, b) => {
-      // order state가 latest이면 b-a
-      // order state가 latest가 아니면 a-b
-    };
+      if (order === "latest") {
+        // order state가 latest 이면 b - a
+        return b.date - a.date;
+      } else {
+        // ord er state가 latest 가 아니면 a - b
 
-    const filteredList = diaryList.filter((diary) => getFilteredList(diary));
+        return a.date - b.date;
+      }
+    };
+    // const filteredList = diaryList.filter((diary) => getFilteredList(diary));
+    const filteredList =
+      filter === "all"
+        ? diaryList
+        : diaryList.filter((diary) => getFilteredList(diary));
     const sortedList = filteredList.sort(getOrderedList);
+    // sort 는 파라미터로 함수를 받음
     return sortedList;
   };
+
   return (
     <div className="diaryList">
       <div className="menu_wrapper">
@@ -79,7 +93,7 @@ function DiaryList({ diaryList }) {
           />
         </div>
       </div>
-      {diaryList.map((diary) => {
+      {getSortedDiaryList().map((diary) => {
         return <DiaryItem key={diary.id} {...diary} />;
       })}
     </div>

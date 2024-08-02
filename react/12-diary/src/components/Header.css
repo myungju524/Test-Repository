@@ -6,7 +6,6 @@ header {
   /* justify-content: space-between; */
   border-bottom: 1px solid #e2e2e2;
 }
-
 header > div {
   display: flex;
 }
@@ -16,10 +15,10 @@ header .head_text {
   width: 50%;
 }
 header .head_btn_left {
-  justify-content: start;
   width: 25%;
+  justify-content: start;
 }
 header .head_btn_right {
+  width: 25%;
   justify-content: end;
-  right: 25%;
 }
