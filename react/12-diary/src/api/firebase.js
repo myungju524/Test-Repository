@@ -14,6 +14,7 @@ import {
   runTransaction,
   updateDoc,
   doc,
+  deleteDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -34,7 +35,7 @@ function getCollection(collectionName) {
   return collection(db, collectionName);
 }
 
-function getUserAuth() {
+export function getUserAuth() {
   return auth;
 }
 
@@ -115,6 +116,17 @@ export async function updateDatas(collectionName, docId, updateObj) {
     console.log("Error Update: ", error);
   }
 }
+
+export async function deleteDatas(collectionName, docId) {
+  try {
+    const docRef = doc(db, collectionName, docId);
+    await deleteDoc(docRef);
+    return true;
+  } catch (error) {
+    console.log("ERROR Delete: ", error);
+  }
+}
+
 // Transaction 데이터 베이스의 작업 단위
 // 1명 : 무슨 작업을 하던 이사람의 작업이 우선적으로 실행
 // 사용자가 여러명이면 그 순서를 어떻게 정할 것인가?

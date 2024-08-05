@@ -7,7 +7,7 @@ import DiaryEditor from "../components/DiaryEditor";
 function EditPage(props) {
   const { id } = useParams();
   const [data, setData] = useState();
-  const diaryList = useContext(DiaryStateContext);
+  const { diaryList } = useContext(DiaryStateContext);
   const navigate = useNavigate();
 
   useEffect(() => {
