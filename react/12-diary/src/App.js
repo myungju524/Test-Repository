@@ -4,8 +4,8 @@ import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import NewPage from "./pages/NewPage";
 import {
-  addItem,
-  deleteItem,
+  // addItem,
+  // deleteItem,
   // fetchItems,
   initialState,
   reducer,
@@ -19,7 +19,7 @@ import { getUserAuth } from "./api/firebase";
 import { userInitialState, userReducer } from "./api/userReducer";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchItems } from "./store/diarySlice";
+import { addItems, deleteItems, fetchItems } from "./store/diarySlice";
 
 export const DiaryStateContext = createContext();
 export const DiaryDispatchContext = createContext();
@@ -43,7 +43,7 @@ function App() {
       emotion: values.emotion,
       userEmail: user.email,
     };
-    await addItem("diary", addObj, dispatch);
+    dispatch(addItems({ collectionName: "diary", addObj }));
   };
   // READ
   // UPDATE
@@ -58,7 +58,7 @@ function App() {
   };
   // DELETE
   const onDelete = async (docId) => {
-    await deleteItem("diary", docId, dispatch);
+    dispatch(deleteItems({ collectionName: "diary", docId }));
   };
 
   useEffect(() => {

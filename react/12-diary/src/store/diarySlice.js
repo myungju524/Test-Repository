@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getDatas } from "../api/firebase";
+import { addDatas, deleteDatas, getDatas } from "../api/firebase";
 
 const diarySlice = createSlice({
   name: "diary",
@@ -17,9 +17,20 @@ const diarySlice = createSlice({
       })
       .addCase(fetchItems.fulfilled, (state, action) => {
         state.items = action.payload;
-        state.status = "compelete";
+        state.status = "complete";
       })
       .addCase(fetchItems.rejected, (state, action) => {
+        state.status = "fail";
+      })
+      .addCase(addItems.fulfilled, (state, action) => {
+        state.items.push(action.payload);
+        state.status = "complete";
+      })
+      .addCase(deleteItems.fulfilled, (state, action) => {
+        state.items = state.items.filter((item) => item.id !== action.payload);
+        state.status = "complete";
+      })
+      .addCase(deleteItems.rejected, (state, action) => {
         state.status = "fail";
       });
   },
@@ -32,10 +43,33 @@ const fetchItems = createAsyncThunk(
       const resultData = await getDatas(collectionName, queryOptions);
       return resultData;
     } catch (error) {
-      console.log("FETCH Error: ", error);
+      console.log("FETCH Error ", error);
+    }
+  }
+);
+const addItems = createAsyncThunk(
+  "items/addAllItems",
+  async ({ collectionName, addObj }) => {
+    try {
+      const resultData = await addDatas(collectionName, addObj);
+      return resultData;
+    } catch (error) {
+      console.log("ADD Error ", error);
+    }
+  }
+);
+
+const deleteItems = createAsyncThunk(
+  "items/deleteAllItems",
+  async ({ collectionName, docId }) => {
+    try {
+      await deleteDatas(collectionName, docId);
+      return docId;
+    } catch (error) {
+      console.log("DELETE Error", error);
     }
   }
 );
 
 export default diarySlice;
-export { fetchItems };
+export { fetchItems, addItems, deleteItems };
