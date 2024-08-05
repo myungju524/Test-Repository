@@ -3,9 +3,11 @@ import Header from "../components/Header";
 import Button from "../components/Button";
 import { DiaryStateContext } from "../App";
 import DiaryList from "../components/DiaryList";
+import { useSelector } from "react-redux";
 
 function HomePage(props) {
-  const { diaryList, auth } = useContext(DiaryStateContext);
+  const { auth } = useContext(DiaryStateContext);
+  const diaryList = useSelector((state) => state.diary.items);
   const [curDate, setCurDate] = useState(new Date());
   const [sortedItem, setSortedItem] = useState([]);
   const headText = `${curDate.getFullYear()}년 ${curDate.getMonth() + 1}월`;
