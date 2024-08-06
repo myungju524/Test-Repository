@@ -3,11 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { DiaryStateContext } from "../App";
 import { changeTitle } from "../util/chageTitle";
 import DiaryEditor from "../components/DiaryEditor";
+import { useSelector } from "react-redux";
 
 function EditPage(props) {
   const { id } = useParams();
   const [data, setData] = useState();
-  const { diaryList } = useContext(DiaryStateContext);
+  // const { diaryList } = useContext(DiaryStateContext);
+  const diaryList = useSelector((state) => state.diary.items);
   const navigate = useNavigate();
 
   useEffect(() => {

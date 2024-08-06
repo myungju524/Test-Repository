@@ -6,7 +6,7 @@ import DiaryList from "../components/DiaryList";
 import { useSelector } from "react-redux";
 
 function HomePage(props) {
-  const { auth } = useContext(DiaryStateContext);
+  // const { auth } = useContext(DiaryStateContext);
   const diaryList = useSelector((state) => state.diary.items);
   const [curDate, setCurDate] = useState(new Date());
   const [sortedItem, setSortedItem] = useState([]);
@@ -49,7 +49,11 @@ function HomePage(props) {
         leftChild={<Button text={"<"} onClick={decreaseMonth} />}
         rightChild={<Button text={">"} onClick={increaseMonth} />}
       />
-      <DiaryList diaryList={sortedItem} auth={auth} />
+      <DiaryList
+        diaryList={sortedItem}
+
+        //  auth={auth}
+      />
     </div>
   );
 }

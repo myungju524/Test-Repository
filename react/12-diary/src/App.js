@@ -9,7 +9,7 @@ import {
   // fetchItems,
   initialState,
   reducer,
-  updateItem,
+  // updateItem,
 } from "./api/itemReducer";
 import DiaryPage from "./pages/DiaryPage";
 import EditPage from "./pages/EditPage";
@@ -19,7 +19,13 @@ import { getUserAuth } from "./api/firebase";
 import { userInitialState, userReducer } from "./api/userReducer";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useSelector, useDispatch } from "react-redux";
-import { addItems, deleteItems, fetchItems } from "./store/diarySlice";
+import {
+  addItem,
+  deleteItem,
+  fetchItems,
+  updateItem,
+} from "./store/diarySlice";
+import { loginSuccess, logout } from "./store/userSlice";
 
 export const DiaryStateContext = createContext();
 export const DiaryDispatchContext = createContext();
@@ -33,6 +39,16 @@ function App() {
   const auth = getUserAuth();
   const [user] = useAuthState(auth);
 
+  useEffect(() => {
+    // serialize(직렬화): 데이터를 저장할 때 저장할 수 있는 형태로 변환하는 것
+    // serialize 가 안되는 타입: Promise, Symbol, Map, Set, function, class
+    if (user) {
+      dispatch(loginSuccess([user.email, true, null]));
+    } else {
+      dispatch(logout([null, false, null]));
+    }
+  }, [user]);
+
   // CREATE
   const onCreate = async (values) => {
     const addObj = {
@@ -43,7 +59,12 @@ function App() {
       emotion: values.emotion,
       userEmail: user.email,
     };
-    dispatch(addItems({ collectionName: "diary", addObj }));
+    const param = {
+      collectionName: "diary",
+      addObj,
+    };
+    // await addItem('diary', addObj, dispatch);
+    dispatch(addItem(param));
   };
   // READ
   // UPDATE
@@ -54,64 +75,60 @@ function App() {
       content: values.content,
       emotion: values.emotion,
     };
-    await updateItem("diary", values.docId, updateObj, dispatch);
+    const param = {
+      collectionName: "diary",
+      docId: values.docId,
+      updateObj: updateObj,
+    };
+    // await updateItem('diary', values.docId, updateObj, dispatch);
+    dispatch(updateItem(param));
   };
   // DELETE
   const onDelete = async (docId) => {
-    dispatch(deleteItems({ collectionName: "diary", docId }));
+    // await deleteItem('diary', docId, dispatch);
+    const param = {
+      collectionName: "diary",
+      docId: docId,
+    };
+    dispatch(deleteItem(param));
   };
 
   useEffect(() => {
-    // fetchItems(
-    //   'diary',
-    //   {
-    //     conditions: [
-    //       {
-    //         field: 'userEmail',
-    //         operator: '==',
-    //         value: user ? user.email : 'admin@gmail.com',
-    //       },
-    //     ],
-    //     orderBys: [{ field: 'date', direction: 'desc' }],
-    //   },
-    //   dispatch
-    // );
+    const param = {
+      collectionName: "diary",
+      queryOptions: {
+        conditions: [
+          {
+            field: "userEmail",
+            operator: "==",
+            value: user ? user.email : "admin@gmail.com",
+          },
+        ],
+        orderBys: [{ field: "date", direction: "desc" }],
+      },
+    };
 
-    dispatch(
-      fetchItems({
-        collectionName: "diary",
-        queryOptions: {
-          conditions: [
-            {
-              field: "userEmail",
-              operator: "==",
-              value: user ? user.email : "admin@gmail.com",
-            },
-          ],
-          orderBys: [{ field: "date", direction: "desc" }],
-        },
-      })
-    );
+    dispatch(fetchItems(param));
   }, [user]);
   return (
-    <DiaryStateContext.Provider value={{ diaryList: items, auth }}>
-      <DiaryDispatchContext.Provider value={{ onCreate, onUpdate, onDelete }}>
-        <BrowserRouter>
-          <div className="App">
-            {/* <Button text={'로그인'} className='btn_login' onClick={goLogin} /> */}
-            <Routes>
-              <Route path="/">
-                <Route index element={<HomePage />} />
-                <Route path="new" element={<NewPage />} />
-                <Route path="edit/:id" element={<EditPage />} />
-                <Route path="diary/:id" element={<DiaryPage />} />
-                <Route path="login" element={<LoginPage />} />
-              </Route>
-            </Routes>
-          </div>
-        </BrowserRouter>
-      </DiaryDispatchContext.Provider>
-    </DiaryStateContext.Provider>
+    // <DiaryStateContext.Provider value={{ diaryList: items, auth }}>
+    <DiaryDispatchContext.Provider value={{ onCreate, onUpdate, onDelete }}>
+      <BrowserRouter>
+        <div className="App">
+          {/* <Button text={'로그인'} className='btn_login' onClick={goLogin} /> */}
+          <Routes>
+            <Route path="/">
+              <Route index element={<HomePage />} />
+              <Route path="new" element={<NewPage />} />
+              <Route path="edit/:id" element={<EditPage />} />
+              <Route path="diary/:id" element={<DiaryPage />} />
+              <Route path="login" element={<LoginPage />} />
+            </Route>
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </DiaryDispatchContext.Provider>
+    // </DiaryStateContext.Provider>
   );
 }
 
