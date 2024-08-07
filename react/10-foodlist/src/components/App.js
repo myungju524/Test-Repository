@@ -1,144 +1,158 @@
 import "./App.css";
-import logoImg from "../assets/logo.png";
-import searChImg from "../assets/ic-search.png";
-import FoodForm from "./FoodForm";
-import FoodList from "./FoodList";
-import footerLogo from "../assets/logo-text.png";
 import backgroundImg from "../assets/background.png";
-import { useEffect, useState, useTransition } from "react";
+import logoImg from "../assets/logo.png";
+import logoTextImg from "../assets/logo-text.png";
+import FoodForm from "./FoodForm";
+import searchImg from "../assets/ic-search.png";
+import FoodList from "./FoodList";
+import { useEffect, useState } from "react";
 import {
   addDatas,
   deleteDatas,
-  getDatas,
-  getDatasByOrderLimit,
+  getDatasOrderByLimit,
+  getSearchDatas,
   updateDatas,
 } from "../api/firebase";
 import LocaleSelect from "./LocaleSelect";
-import useTranslate from "../hooks/useTranslate";
 import useAsync from "../hooks/useAsync";
-
-const LIMIT = 5;
-let listItems;
+import { useDispatch, useSelector } from "react-redux";
+import { fetchItems, setOrder, updateItem } from "../store/foodSlice";
 
 function AppSortButton({ children, selected, onClick }) {
   return (
     <button
       className={`AppSortButton ${selected ? "selected" : ""}`}
       onClick={onClick}
+      disabled={selected}
     >
       {children}
     </button>
   );
 }
 
+const LIMITS = 5;
+
 function App() {
-  const [items, setItems] = useState([]);
-  const [order, setOrder] = useState("createdAt");
-  const [lq, setLq] = useState();
-  // 더보기 버튼을 관리하기 위해 만든 state
-  const [hasNext, setHasNext] = useState(true);
-  const t = useTranslate();
-  const [keyword, setKeyword] = useState("");
+  const dispatch = useDispatch();
+  const { items, order, lq, hasNext, isLoading } = useSelector(
+    (state) => state.food
+  );
+
+  // const [items, setItems] = useState([]);
+  // const [order, setOrder] = useState('createdAt');
+  // const [lq, setLq] = useState();
+  // const [hasNext, setHasNext] = useState(true);
+  const [search, setSearch] = useState("");
   // const [isLoading, setIsLoading] = useState(false);
-  const [isLoading, loadingError, getDatasAsync] =
-    useAsync(getDatasByOrderLimit);
+  // const [isLoading, loadingError, getDatasAsync] =
+  //   useAsync(getDatasOrderByLimit);
+
   const handleLoad = async (options) => {
-    // setIsLoading(true);
-    // const { resultData, lastQuery } = await getDatasByOrderLimit(
-    //   "foods",
-    //   options
-    // );
-    // setIsLoading(false);
-    const { resultData, lastQuery } = await getDatasAsync("foods", options);
-    if (!options.lq) {
-      setItems(resultData);
-    } else {
-      setItems((prevItems) => [...prevItems, ...resultData]);
-    }
+    dispatch(fetchItems({ collectionName: "foods", queryOptions: options }));
 
-    setLq(lastQuery);
-    if (!lastQuery) {
-      setHasNext(false);
-    }
+    // // setIsLoading(true);
+    // // const { resultData, lastQuery } = await getDatasOrderByLimit(
+    // //   'food',
+    // //   options
+    // // );
+    // // setIsLoading(false);
+    // const { resultData, lastQuery } = await getDatasAsync('food', options);
+    // if (!options.lq) {
+    //   // setItems(resultData);
+    // } else {
+    //   // setItems((prevItems) => [...prevItems, ...resultData]);
+    // }
+    // setLq(lastQuery);
+    // if (!lastQuery) {
+    //   setHasNext(false);
+    // }
   };
-
-  const handleNewestClick = () => setOrder("createdAt");
-  const handleCalorieClick = () => setOrder("calorie");
-
   const handleLoadMore = async () => {
-    handleLoad({ fieldName: order, limits: LIMIT, lq: lq });
+    const queryOptions = {
+      conditions: [],
+      orderBys: [{ field: order, direction: "desc" }],
+      lastQuery: lq,
+      limits: LIMITS,
+    };
+    handleLoad(queryOptions);
   };
+
+  const handleNewestClick = () => dispatch(setOrder("createdAt"));
+  const handleCalorieClick = () => dispatch(setOrder("calorie"));
+
   const handleDelete = async (docId, imgUrl) => {
-    // items 에서 docId를 받아온다.
-    // db에서 데이터 삭제(스토리지에 있는 사진파일 삭제, database에 있는 데이터 삭제.
-    // 두 가지를 같이 해야함)
+    // items 에서 docId 를 받아온다.
+    // db에서 데이터 삭제(스토리지에 있는 사진파일 삭제, database에 있는 데이터 삭제)
     const { result, message } = await deleteDatas("foods", docId, imgUrl);
     if (!result) {
       alert(message);
-      return false;
+      return;
     }
-    // 삭제 성공시 화면에 그 결과를 반영한다.(필터 사용)
-    setItems((prevItems) =>
-      // prevItems == > 현재 state 값 (items 값 : 화면에 뿌려진 배열15개)
-      // 배열 안에 객체{} 가지고 있고 {...docId} 도 가지고 있음
-      // 삭제버튼을 누른 {docId 객체와} 가지고 있는 배열 중 docId 배열이 같으면 삭제한다.
-      // 그래서 삭제한 docId와 다른 docId들을 화면에 다시 출력한다.
-      prevItems.filter(function (item) {
-        return item.docId !== docId;
-      })
-    );
+    // 삭제 성공시 화면에 그 결과를 반영한다.
+    // setItems((prevItems) =>
+    //   prevItems.filter(function (item) {
+    //     return item.docId !== docId;
+    //   })
+    // );
   };
 
-  const handleAddsuccess = (resultData) => {
-    setItems((prevItems) => [resultData, ...prevItems]);
+  const handleAddSuccess = (resultData) => {
+    console.log(resultData);
+    // setItems((prevItems) => [resultData, ...prevItems]);
+  };
+
+  const handleUpdate = (collectionName, docId, updateObj, imgUrl) => {
+    dispatch(updateItem({ collectionName, docId, updateObj, imgUrl }));
   };
 
   const handleUpdateSuccess = (result) => {
-    setItems((prevItems) => {
-      // 수정된 item의 index 찾기
-      const splitIdx = prevItems.findIndex((item) => item.id === result.id);
-
-      const beforeArr = prevItems.slice(0, splitIdx);
-      // splitIdx 0부터 직전까지
-      const afterArr = prevItems.slice(splitIdx + 1);
-      //
-      // return [...beforeArr, result, ...afterArr];
-      // result = 새로운 아이템 수정된 아이템
-      return [
-        ...prevItems.slice(0, splitIdx),
-        result,
-        ...prevItems.slice(splitIdx + 1),
-      ];
-    });
-  };
-
-  const handleKeywordChange = (e) => {
-    setKeyword(e.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (keyword === "") {
-      handleLoad({ fieldName: order, limits: LIMIT, lq: undefined });
-    } else {
-      const resultData = await getDatas("foods", {
-        limits: LIMIT,
-        keyword: keyword,
-      });
-      setItems(resultData);
-    }
-    setHasNext(false);
-    // const searchItems = listItems.filter(function (item) {
-    //   return item.title.includes(keyword);
+    console.log(result);
+    // setItems((prevItems) => {
+    //   // 수정된 item의 index 찾기
+    //   const splitIdx = prevItems.findIndex(function (item) {
+    //     return item.id === result.id;
+    //   });
+    //   const beforeArr = prevItems.slice(0, splitIdx);
+    //   const afterArr = prevItems.slice(splitIdx + 1);
+    //   return [...beforeArr, result, ...afterArr];
+    //   // return [
+    //   //   ...prevItems.slice(0, splitIdx),
+    //   //   result,
+    //   //   ...prevItems.slice(splitIdx + 1)
+    //   // ]
     // });
-    // setItems(searchItems);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const handleSearchSubmit = async (e) => {
+    e.preventDefault();
+    if (search === "") {
+      handleLoad({ fieldName: order, limits: LIMITS, lq: undefined });
+    } else {
+      const resultData = await getSearchDatas("foods", {
+        limits: LIMITS,
+        search: search,
+      });
+      // setItems(resultData);
+    }
   };
 
   useEffect(() => {
-    handleLoad({ fieldName: order, limits: LIMIT, lq: undefined });
+    // handleLoad({ fieldName: order, limits: LIMITS, lq: undefined });
+    const queryOptions = {
+      conditions: [],
+      orderBys: [{ field: order, direction: "desc" }],
+      lastQuery: undefined,
+      limits: LIMITS,
+    };
+    // const collectionName = "food";
+    // dispatch(fetchItems({ collectionName: 'food', queryOptions }));
+    handleLoad(queryOptions);
   }, [order]);
-  console.log(items);
+
   return (
     <div className="App" style={{ backgroundImage: `url(${backgroundImg})` }}>
       <div className="App-nav">
@@ -146,17 +160,13 @@ function App() {
       </div>
       <div className="App-container">
         <div className="App-FoodForm">
-          <FoodForm onSubmitSuccess={handleAddsuccess} onSubmit={addDatas} />
+          <FoodForm onSubmit={addDatas} onSubmitSuccess={handleAddSuccess} />
         </div>
         <div className="App-filter">
-          <form className="App-search" onSubmit={handleSubmit}>
-            <input
-              className="App-search-input"
-              onChange={handleKeywordChange}
-              value={keyword}
-            />
+          <form className="App-search" onSubmit={handleSearchSubmit}>
+            <input className="App-search-input" onChange={handleSearchChange} />
             <button className="App-search-button">
-              <img src={searChImg} />
+              <img src={searchImg} />
             </button>
           </form>
           <div className="App-orders">
@@ -164,20 +174,21 @@ function App() {
               selected={order === "createdAt"}
               onClick={handleNewestClick}
             >
-              {t("newest")}
+              최신순
             </AppSortButton>
             <AppSortButton
-              onClick={handleCalorieClick}
               selected={order === "calorie"}
+              onClick={handleCalorieClick}
             >
-              {t("calorie")}
+              칼로리순
             </AppSortButton>
           </div>
         </div>
         <FoodList
           items={items}
           onDelete={handleDelete}
-          onUpdate={updateDatas}
+          // onUpdate={updateDatas}
+          onUpdate={handleUpdate}
           onUpdateSuccess={handleUpdateSuccess}
         />
         {hasNext && (
@@ -186,16 +197,16 @@ function App() {
             onClick={handleLoadMore}
             disabled={isLoading}
           >
-            {t("load more")}
+            더 보기
           </button>
         )}
       </div>
       <div className="App-footer">
         <div className="App-footer-container">
-          <img src={footerLogo} />
+          <img src={logoTextImg} />
           <LocaleSelect />
           <div className="App-footer-menu">
-            {t("terms of service")} | {t("privary policy")}
+            서비스 이용약관 | 개인정보 처리방침
           </div>
         </div>
       </div>

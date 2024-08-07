@@ -13,9 +13,7 @@
   gap: 14px;
 }
 .FoodForm-title-calorie {
-  /* items로 써의 의미 */
   flex: none;
-  /* container 로 쓰겠다 */
   display: flex;
   gap: 15px;
 }

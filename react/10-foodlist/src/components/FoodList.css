@@ -8,7 +8,7 @@
 .FoodList > li {
   padding: 22px;
   border-radius: 15px;
-  box-shadow: 0 0 9px 0 rgba(100, 126, 118, 0.09);
+
   background-color: #fff;
 }
 .FoodListItem {
@@ -36,17 +36,17 @@
   gap: 15px;
 }
 .FoodListItem-title {
-  margin: 0;
   font-size: 20px;
+  margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   flex-shrink: 1;
 }
 .FoodListItem-calorie {
-  background-color: #eaf3ea;
   padding: 6px 8px 5px;
   border-radius: 6px;
+  background-color: #eaf3ea;
   font-size: 15px;
   font-weight: bold;
   color: #4caf50;
@@ -56,19 +56,17 @@
   margin: 0 0 18px;
   font-size: 16px;
   color: #6d7372;
-  max-height: 52px;
+  max-height: 48px;
+  overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  /* flex-direction 이랑 똑같음 vertical : colunm */
   -webkit-line-clamp: 2;
-  overflow: hidden;
 }
-
 .FoodListItem-date-buttons {
+  flex: none;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex: none;
 }
 .FoodListItem-date {
   flex: 1 1;
