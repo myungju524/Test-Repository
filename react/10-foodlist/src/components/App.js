@@ -88,6 +88,13 @@ function App() {
       alert(message);
       return;
     }
+    const queryOptions = {
+      conditions: [],
+      orderBys: [{ field: order, direction: "desc" }],
+      lastQuery: undefined,
+      limits: LIMITS,
+    };
+    handleLoad(queryOptions);
     // 삭제 성공시 화면에 그 결과를 반영한다.
     // setItems((prevItems) =>
     //   prevItems.filter(function (item) {
@@ -97,7 +104,13 @@ function App() {
   };
 
   const handleAddSuccess = (resultData) => {
-    console.log(resultData);
+    const queryOptions = {
+      conditions: [],
+      orderBys: [{ field: order, direction: "desc" }],
+      lastQuery: undefined,
+      limits: LIMITS,
+    };
+    handleLoad(queryOptions);
     // setItems((prevItems) => [resultData, ...prevItems]);
   };
 
@@ -148,7 +161,7 @@ function App() {
       lastQuery: undefined,
       limits: LIMITS,
     };
-    // const collectionName = "food";
+    // const collectionName = "foods";
     // dispatch(fetchItems({ collectionName: 'food', queryOptions }));
     handleLoad(queryOptions);
   }, [order]);

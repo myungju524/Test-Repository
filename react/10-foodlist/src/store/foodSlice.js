@@ -1,14 +1,14 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getDatasOrderByLimit, updateDatas } from '../api/firebase';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { getDatasOrderByLimit, updateDatas } from "../api/firebase";
 
 const foodSlice = createSlice({
-  name: 'food',
+  name: "food",
   initialState: {
     items: [],
     lq: undefined,
     isLoading: false,
-    loadingError: '',
-    order: 'createdAt',
+    loadingError: "",
+    order: "createdAt",
     hasNext: true,
   },
   reducers: {
@@ -58,7 +58,7 @@ const foodSlice = createSlice({
 });
 
 const fetchItems = createAsyncThunk(
-  'items/fetchItems',
+  "items/fetchItems",
   async ({ collectionName, queryOptions }) => {
     try {
       const resultData = await getDatasOrderByLimit(
@@ -68,14 +68,14 @@ const fetchItems = createAsyncThunk(
       resultData.isReset = !queryOptions.lastQuery ? true : false;
       return resultData;
     } catch (error) {
-      return 'FETCH Error: ' + error;
+      return "FETCH Error: " + error;
       // console.log("FETCH Error: ", error);
     }
   }
 );
 
 const updateItem = createAsyncThunk(
-  'items/updateItem',
+  "items/updateItem",
   async ({ collectionName, docId, updateObj, imgUrl }) => {
     try {
       const resultData = await updateDatas(
@@ -86,7 +86,7 @@ const updateItem = createAsyncThunk(
       );
       return resultData;
     } catch (error) {
-      return 'UPDATE Error: ' + error;
+      return "UPDATE Error: " + error;
     }
   }
 );
