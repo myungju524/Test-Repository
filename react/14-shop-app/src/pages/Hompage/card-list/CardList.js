@@ -7,13 +7,19 @@ import { fetchProducts } from "../../../store/products/productsSlice";
 function CardList() {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.productsSlice);
-  const category = "";
+  const category = "Electronics";
   useEffect(() => {
     const queryOptions = {
-      conditions: [{ field: "category", operator: ">=", value: category }],
+      conditions: [
+        {
+          field: "category",
+          operator: category ? "==" : ">=",
+          value: category.toLowerCase(),
+        },
+      ],
     };
     dispatch(fetchProducts({ collectionName: "products", queryOptions }));
-  }, []);
+  }, [category]);
 
   return (
     <ul className={styles.card_list}>
