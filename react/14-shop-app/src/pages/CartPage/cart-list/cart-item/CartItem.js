@@ -2,8 +2,14 @@ import React from "react";
 import styles from "./CartItem.module.scss";
 import { Link } from "react-router-dom";
 import { AiOutlineDelete } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { incrementProduct } from "../../../../store/cart/cartSlice";
 
 function CartItem({ item }) {
+  const dispatch = useDispatch();
+  const incrementCount = () => {
+    dispatch(incrementProduct(item.id));
+  };
   return (
     <div className={styles.cart_item}>
       <Link>
@@ -20,8 +26,8 @@ function CartItem({ item }) {
       <div className={styles.cart_count}>
         <div>
           <button>-</button>
-          <span>1</span>
-          <button>+</button>
+          <span>{item.quantity}</span>
+          <button onClick={incrementCount}>+</button>
         </div>
       </div>
       <button className={styles.cart_delete}>

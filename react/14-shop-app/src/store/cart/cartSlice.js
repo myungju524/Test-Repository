@@ -31,10 +31,10 @@ const cartSlice = createSlice({
         (product) => product.id === action.payload
       );
       state.products[index].quantity += 1;
-      state.products[index].total += state.products[index].total;
+      state.products[index].total += state.products[index].price;
     },
   },
 });
 
 export default cartSlice.reducer;
-export const { addToCart, getTotalPrice } = cartSlice.actions;
+export const { addToCart, getTotalPrice, incrementProduct } = cartSlice.actions;
