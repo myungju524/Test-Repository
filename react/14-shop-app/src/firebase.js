@@ -1,38 +1,45 @@
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 import {
   getFirestore,
   collection,
   addDoc,
-  getDoc,
   query,
   orderBy,
   limit,
   onSnapshot,
-  getDocs,
   where,
+  getDoc,
   runTransaction,
+  getDocs,
   updateDoc,
   doc,
   deleteDoc,
-} from "firebase/firestore";
+  setDoc,
+  writeBatch,
+} from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCGtSfWmi8EMclymnVLA9y9xwha7-XQkMs",
-  authDomain: "shop-app-19908.firebaseapp.com",
-  projectId: "shop-app-19908",
-  storageBucket: "shop-app-19908.appspot.com",
-  messagingSenderId: "1062803683008",
-  appId: "1:1062803683008:web:c775ef535faba0b4535f25",
-  measurementId: "G-0PVK07V0ZQ",
+  apiKey: 'AIzaSyAeVAA1GOql8fn9OuSe2LrhG2pzNLBWdF8',
+  authDomain: 'shop-app-c8539.firebaseapp.com',
+  projectId: 'shop-app-c8539',
+  storageBucket: 'shop-app-c8539.appspot.com',
+  messagingSenderId: '533245681338',
+  appId: '1:533245681338:web:43d2e784635de86099ac83',
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-function getCollection(collectionName) {
-  return collection(db, collectionName);
+function getCollection(...path) {
+  let newPath = path;
+  if (typeof path[0] !== 'string') {
+    // [newPath] = path;
+    newPath = path.flat();
+  }
+  return collection(db, ...newPath);
 }
 
 export function getUserAuth() {
@@ -42,7 +49,7 @@ export function getUserAuth() {
 async function getLastNum(collectionName, field) {
   const q = query(
     collection(db, collectionName),
-    orderBy(field, "desc"),
+    orderBy(field, 'desc'),
     limit(1)
   );
   const lastDoc = await getDocs(q);
@@ -65,14 +72,14 @@ function getQuery(collectionName, queryOption) {
 
   // orderBy 조건
   orderBys.forEach((order) => {
-    q = query(q, orderBy(order.field, order.direction || "asc"));
+    q = query(q, orderBy(order.field, order.direction || 'asc'));
   });
 
   // limit 조건
   q = query(q, limit(limits));
-
   return q;
 }
+
 export async function getDatas(collectionName, queryOptions) {
   const q = getQuery(collectionName, queryOptions);
   const snapshot = await getDocs(q);
@@ -80,10 +87,63 @@ export async function getDatas(collectionName, queryOptions) {
   const resultData = docs.map((doc) => ({ ...doc.data(), docId: doc.id }));
   return resultData;
 }
+
 export async function getData(collectionName, queryOptions) {
   const q = getQuery(collectionName, queryOptions);
   const snapshot = await getDocs(q);
   const doc = snapshot.docs[0];
   const resultData = { ...doc.data(), docId: doc.id };
   return resultData;
+}
+
+export async function joinUser(uid, email) {
+  await setDoc(doc(db, 'users', uid), { email: email });
+}
+
+export async function syncCart(uid, cartArr) {
+  const cartRef = getCollection('users', uid, 'cart');
+  const batch = writeBatch(db);
+
+  for (const item of cartArr) {
+    const result = await updateQuantity(uid, item);
+    if (!result) {
+      const itemRef = doc(cartRef, item.id.toString());
+      batch.set(itemRef, item);
+    }
+  }
+  await batch.commit();
+  const resultData = await getDatas(['users', uid, 'cart'], {});
+  return resultData;
+}
+
+export async function updateQuantity(uid, cartItem) {
+  const cartRef = getCollection('users', uid, 'cart');
+  const itemRef = doc(cartRef, cartItem.id.toString());
+  // 문서가 존재하는지 확인
+  const itemDoc = await getDoc(itemRef);
+  if (itemDoc.exists()) {
+    const currentData = itemDoc.data();
+    const updatedQuantity = (currentData.quantity || 0) + 1;
+    await updateDoc(itemRef, { quantity: updatedQuantity });
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export async function deleteDatas(collectionName, docId) {
+  try {
+    const cartRef = getCollection(collectionName);
+    const docRef = doc(cartRef, docId.toString());
+    await deleteDoc(docRef);
+    return true;
+  } catch (error) {
+    console.log('Error Delete: ', error);
+  }
+}
+
+export async function addCart(collectionName, cartObj) {
+  const collectionRef = getCollection(collectionName);
+  const cartRef = doc(collectionRef, cartObj.id.toString());
+  await setDoc(cartRef, cartObj);
 }

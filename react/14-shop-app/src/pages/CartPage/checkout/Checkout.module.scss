@@ -1,12 +1,13 @@
 .checkout {
   display: flex;
-
   justify-content: center;
   margin-bottom: 130px;
+
   div {
     display: flex;
     flex-direction: column;
     width: 90%;
+
     p {
       display: flex;
       justify-content: space-between;
@@ -18,16 +19,19 @@
       text-align: start;
       background-color: #f1eadc;
     }
+
     @media (min-width: 510px) {
       flex-direction: row;
       justify-content: flex-end;
       width: 100%;
+
       p {
         display: flex;
-        justify-content: start;
+        justify-content: flex-start;
         margin-right: 30px;
         margin-bottom: 0;
         padding: 20px 50px;
+
         span {
           margin-right: 30px;
         }
@@ -43,7 +47,7 @@
   font-weight: 400;
   font-size: 17px;
   background-color: #fff;
-  border: 2px solid var(--main-color);
+  border: 1px solid var(--main-color);
   cursor: pointer;
   transition: 0.3s all ease;
 

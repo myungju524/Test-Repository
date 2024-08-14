@@ -1,9 +1,7 @@
-import React from "react";
-import styles from "./CategoryTab.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import categoriesSlice, {
-  setActiveCategory,
-} from "./../../../../store/categories/categoriesSlice";
+import React from 'react';
+import styles from './CategoryTab.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { setActiveCategory } from '../../../../store/categories/categoriesSlice';
 
 function CategoryTab({ text, categoryName }) {
   const dispatch = useDispatch();

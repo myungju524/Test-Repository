@@ -1,4 +1,5 @@
-@import "../../../mixins.scss";
+@import '../../../mixins.scss';
+
 .nav {
   ul {
     display: flex;
@@ -8,10 +9,9 @@
     font-size: 20px;
 
     a {
-      @include hover-effect(yellow);
+      @include hover-effect(blue);
     }
   }
-
   @media (min-width: 768px) {
     li {
       font-size: 25px;
@@ -37,8 +37,10 @@
     border-radius: 50%;
   }
 }
+
 .nav_hover_cart {
   display: none;
+
   @media (min-width: 990px) {
     width: 450px;
     min-height: 100px;
@@ -57,4 +59,10 @@
 .nav li:hover .nav_hover_cart {
   visibility: visible;
   opacity: 1;
+}
+
+.nav_sign_out {
+  cursor: pointer;
+
+  @include hover-effect(blue);
 }

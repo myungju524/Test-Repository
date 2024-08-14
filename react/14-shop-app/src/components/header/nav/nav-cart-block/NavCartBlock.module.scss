@@ -1,12 +1,16 @@
 .nav_cart_price {
+  //   display: flex;
+  //   justify-content: flex-end;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
+
   p {
     margin: 20px 10px;
     font-weight: bold;
     text-align: end;
   }
 }
+
 .nav_cart_link {
   a {
     display: block;

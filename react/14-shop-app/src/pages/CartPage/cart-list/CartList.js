@@ -1,15 +1,15 @@
-import React from "react";
-import styles from "./CartList.module.scss";
-import { useSelector } from "react-redux";
-import CartItem from "./cart-item/CartItem";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import CartItem from './cart-item/CartItem';
+import styles from './CartList.module.scss';
 
 function CartList() {
   const { products } = useSelector((state) => state.cartSlice);
   return (
     <div className={styles.cart_list}>
-      {products.map((item) => {
-        return <CartItem item={item} key={item.id} />;
-      })}
+      {products.map((product) => (
+        <CartItem key={product.id} {...product} />
+      ))}
     </div>
   );
 }

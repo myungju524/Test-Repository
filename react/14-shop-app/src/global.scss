@@ -31,7 +31,6 @@ li {
     margin-top: 60px;
   }
 }
-
 // page 안에 있는 wrapper
 .container {
   max-width: 1200px;
@@ -55,10 +54,10 @@ li {
   margin: 80px auto;
   padding: 10px;
   box-shadow: rgb(0 0 0 / 35%) 0 5px 15px;
-  // rgba(0,0,0,0.35)
 
   a {
     color: var(--main-color);
+
     &:hover {
       color: var(--second-color);
       cursor: pointer;

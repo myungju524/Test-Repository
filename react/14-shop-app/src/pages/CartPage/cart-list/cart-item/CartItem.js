@@ -1,33 +1,44 @@
-import React from "react";
-import styles from "./CartItem.module.scss";
-import { Link } from "react-router-dom";
-import { AiOutlineDelete } from "react-icons/ai";
-import { useDispatch } from "react-redux";
-import { incrementProduct } from "../../../../store/cart/cartSlice";
+import React from 'react';
+import styles from './CartItem.module.scss';
+import { AiOutlineDelete } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {
+  decrementProduct,
+  incrementProduct,
+} from '../../../../store/cart/cartSlice';
 
-function CartItem({ item }) {
+function CartItem({ image, title, price, category, quantity, total, id }) {
   const dispatch = useDispatch();
+
   const incrementCount = () => {
-    dispatch(incrementProduct(item.id));
+    dispatch(incrementProduct(id));
   };
+  const decrementCount = () => {
+    dispatch(decrementProduct(id));
+  };
+
   return (
     <div className={styles.cart_item}>
       <Link>
-        <img src={item.image} />
+        <img src={image} />
       </Link>
       <div className={styles.cart_description}>
-        <h3>{item.category}</h3>
-        <h2>${item.title}</h2>
+        <h3>{category}</h3>
+        <h2>{title}</h2>
         <span>
-          {item.price} x {item.quantity} = $ {item.total.toFixed(2)}
-          {/* toFixed : 소숫점 반올림. ()안에 넣은 숫자만큼만 나옴  */}
+          {price} x {quantity} = $ {total.toFixed(2)}
         </span>
       </div>
       <div className={styles.cart_count}>
         <div>
-          <button>-</button>
-          <span>{item.quantity}</span>
-          <button onClick={incrementCount}>+</button>
+          <button disabled={quantity === 1} onClick={decrementCount}>
+            -
+          </button>
+          <span>{quantity}</span>
+          <button disabled={quantity === 10} onClick={incrementCount}>
+            +
+          </button>
         </div>
       </div>
       <button className={styles.cart_delete}>
