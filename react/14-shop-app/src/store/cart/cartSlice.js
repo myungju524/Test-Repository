@@ -1,16 +1,16 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { addCart, deleteDatas } from '../../firebase';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { addCart, syncCart, deleteDatas } from "../../firebase";
 
 const initialState = {
-  products: localStorage.getItem('cartProducts')
-    ? JSON.parse(localStorage.getItem('cartProducts'))
+  products: localStorage.getItem("cartProducts")
+    ? JSON.parse(localStorage.getItem("cartProducts"))
     : [],
   totalPrice: 0,
-  userId: '',
+  userId: "",
 };
 
 const cartSlice = createSlice({
-  name: 'cart',
+  name: "cart",
   initialState,
   reducers: {
     addToCart: (state, action) => {
@@ -19,13 +19,17 @@ const cartSlice = createSlice({
         quantity: 1,
         total: action.payload.price,
       });
-      localStorage.setItem('cartProducts', JSON.stringify(state.products));
+      localStorage.setItem("cartProducts", JSON.stringify(state.products));
     },
     deleteFromCart: (state, action) => {
       state.products = state.products.filter(
         (product) => product.id !== action.payload
       );
-      localStorage.setItem('cartProducts', JSON.stringify(state.products));
+      localStorage.setItem("cartProducts", JSON.stringify(state.products));
+    },
+    syncCartAndSlice: (state, action) => {
+      state.products = action.payload;
+      localStorage.setItem("cartProducts", JSON.stringify(state.products));
     },
     getTotalPrice: (state) => {
       state.totalPrice = state.products.reduce(
@@ -50,13 +54,20 @@ const cartSlice = createSlice({
   },
 });
 
-export const asyncCartAndStorage = createAsyncThunk(
-  'cart/asyncCartItem',
-  async ({ uid, cartItems }, thunkAPI) => {}
+export const syncCartAndStorage = createAsyncThunk(
+  "cart/asyncCartItem",
+  async ({ uid, cartItems }, thunkAPI) => {
+    try {
+      const result = await syncCart(uid, cartItems);
+      thunkAPI.dispatch(syncCartAndSlice(result));
+    } catch (error) {
+      console.error(error);
+    }
+  }
 );
 
 export const addCartItem = createAsyncThunk(
-  'cart/addCartItem',
+  "cart/addCartItem",
   async ({ collectionName, product }, thunkAPI) => {
     try {
       await thunkAPI.dispatch(addToCart(product));
@@ -73,7 +84,7 @@ export const addCartItem = createAsyncThunk(
 );
 
 export const deleteCartItem = createAsyncThunk(
-  'cart/deleteCartItem',
+  "cart/deleteCartItem",
   async ({ collectionName, productId }, thunkAPI) => {
     try {
       const resultData = await deleteDatas(collectionName, productId);
@@ -81,7 +92,7 @@ export const deleteCartItem = createAsyncThunk(
         thunkAPI.dispatch(deleteFromCart(productId));
       }
     } catch (error) {
-      return thunkAPI.rejectWithValue('Error Delete CartItem');
+      return thunkAPI.rejectWithValue("Error Delete CartItem");
     }
   }
 );
@@ -90,6 +101,7 @@ export default cartSlice.reducer;
 export const {
   addToCart,
   deleteFromCart,
+  syncCartAndSlice,
   getTotalPrice,
   incrementProduct,
   decrementProduct,

@@ -1,5 +1,5 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import {
   getFirestore,
   collection,
@@ -17,15 +17,15 @@ import {
   deleteDoc,
   setDoc,
   writeBatch,
-} from 'firebase/firestore';
+} from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAeVAA1GOql8fn9OuSe2LrhG2pzNLBWdF8',
-  authDomain: 'shop-app-c8539.firebaseapp.com',
-  projectId: 'shop-app-c8539',
-  storageBucket: 'shop-app-c8539.appspot.com',
-  messagingSenderId: '533245681338',
-  appId: '1:533245681338:web:43d2e784635de86099ac83',
+  apiKey: "AIzaSyAeVAA1GOql8fn9OuSe2LrhG2pzNLBWdF8",
+  authDomain: "shop-app-c8539.firebaseapp.com",
+  projectId: "shop-app-c8539",
+  storageBucket: "shop-app-c8539.appspot.com",
+  messagingSenderId: "533245681338",
+  appId: "1:533245681338:web:43d2e784635de86099ac83",
 };
 
 // Initialize Firebase
@@ -35,7 +35,7 @@ const db = getFirestore(app);
 
 function getCollection(...path) {
   let newPath = path;
-  if (typeof path[0] !== 'string') {
+  if (typeof path[0] !== "string") {
     // [newPath] = path;
     newPath = path.flat();
   }
@@ -49,7 +49,7 @@ export function getUserAuth() {
 async function getLastNum(collectionName, field) {
   const q = query(
     collection(db, collectionName),
-    orderBy(field, 'desc'),
+    orderBy(field, "desc"),
     limit(1)
   );
   const lastDoc = await getDocs(q);
@@ -72,7 +72,7 @@ function getQuery(collectionName, queryOption) {
 
   // orderBy 조건
   orderBys.forEach((order) => {
-    q = query(q, orderBy(order.field, order.direction || 'asc'));
+    q = query(q, orderBy(order.field, order.direction || "asc"));
   });
 
   // limit 조건
@@ -97,11 +97,11 @@ export async function getData(collectionName, queryOptions) {
 }
 
 export async function joinUser(uid, email) {
-  await setDoc(doc(db, 'users', uid), { email: email });
+  await setDoc(doc(db, "users", uid), { email: email });
 }
 
 export async function syncCart(uid, cartArr) {
-  const cartRef = getCollection('users', uid, 'cart');
+  const cartRef = getCollection("users", uid, "cart");
   const batch = writeBatch(db);
 
   for (const item of cartArr) {
@@ -112,12 +112,12 @@ export async function syncCart(uid, cartArr) {
     }
   }
   await batch.commit();
-  const resultData = await getDatas(['users', uid, 'cart'], {});
+  const resultData = await getDatas(["users", uid, "cart"], {});
   return resultData;
 }
 
 export async function updateQuantity(uid, cartItem) {
-  const cartRef = getCollection('users', uid, 'cart');
+  const cartRef = getCollection("users", uid, "cart");
   const itemRef = doc(cartRef, cartItem.id.toString());
   // 문서가 존재하는지 확인
   const itemDoc = await getDoc(itemRef);
@@ -138,7 +138,7 @@ export async function deleteDatas(collectionName, docId) {
     await deleteDoc(docRef);
     return true;
   } catch (error) {
-    console.log('Error Delete: ', error);
+    console.log("Error Delete: ", error);
   }
 }
 
