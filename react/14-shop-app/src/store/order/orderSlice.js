@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getDatas } from "../../firebase";
 
-const initailState = {
+const initialState = {
   order: [],
   isLoading: false,
   error: "",
@@ -9,7 +9,7 @@ const initailState = {
 
 const orderSlice = createSlice({
   name: "order",
-  initailState,
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -22,20 +22,20 @@ const orderSlice = createSlice({
       })
       .addCase(fetchOrder.rejected, (state, action) => {
         state.isLoading = false;
-        state.error - action.payload;
+        state.error = action.payload;
       });
   },
 });
 
 export const fetchOrder = createAsyncThunk(
   "order/fetchOrder",
-  async ({ collectionName, queryOptions, thynkAPI }) => {
+  async ({ collectionName, queryOptions }, thunkAPI) => {
     try {
-      const resultDate = await getDatas(collectionName, queryOptions);
-      return resultDate;
+      const resultData = await getDatas(collectionName, queryOptions);
+      return resultData;
     } catch (error) {
       console.error(error);
-      return thynkAPI.rejectWithValue("Error fetch order");
+      return thunkAPI.rejectWithValue("Error fetch Order");
     }
   }
 );
