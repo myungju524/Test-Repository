@@ -7,6 +7,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "classnames": "^2.5.1",
+    "dompurify": "^3.1.6",
     "firebase": "^10.6.0",
     "gh-pages": "^6.1.1",
     "react": "^18.3.1",
@@ -42,5 +43,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://myungju524.github.io/Test-Repository/"
+  "homepage": "https://TD-Kim.github.io/DW_DataVisualization3/"
 }

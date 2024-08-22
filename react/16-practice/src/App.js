@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
-import "./App.css";
-import mockData from "./MJ/koreancowDate.json";
+import { BrowserRouter } from "react-router-dom";
+import { Routes } from "react-router-dom";
+import { Route } from "react-router-dom";
+import Community from "./MJ/Pages/Community";
 
 function App() {
-  const [data, setData] = useState();
-  useEffect(() => {
-    setData(mockData);
-  }, []);
   return (
     <div className="App">
-      <h1>{data ? JSON.stringify(data) : "Loading..."}</h1>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/">
+            <Route path="/community" element={<Community />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
