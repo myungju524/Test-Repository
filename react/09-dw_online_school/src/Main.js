@@ -7,8 +7,8 @@ import QuestionListPage from "./pages/QuestionListPage";
 import CoursePage from "./pages/CoursePage";
 import Login from "./components/Login";
 import WishListPage from "./pages/WishListPage";
-import Logout from "./components/Logout";
 import QuestionPage from "./pages/QuestionPage";
+import Logout from "./components/Logout";
 
 function Main(props) {
   /** */
