@@ -8,6 +8,7 @@ import CoursePage from "./pages/CoursePage";
 import Login from "./components/Login";
 import WishListPage from "./pages/WishListPage";
 import QuestionPage from "./pages/QuestionPage";
+import Logout from "./components/Logout";
 
 function Main(props) {
   return (
@@ -24,6 +25,7 @@ function Main(props) {
             <Route path=":questionId" element={<QuestionPage />} />
           </Route>
           <Route path="login" element={<Login />} />
+          <Route path="logout" element={<Logout />} />
           <Route path="wishlist" element={<WishListPage />} />
         </Route>
       </Routes>
