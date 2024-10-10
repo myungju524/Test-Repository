@@ -42,9 +42,9 @@ function UserMenu(props) {
               <Link to="/wishlist">
                 <li>위시리스트</li>
               </Link>
-              <Link to="/logout">
+              {/* <Link to="/logout">
                 <li>로그아웃</li>
-              </Link>
+              </Link> */}
             </>
           )}
         </ul>
