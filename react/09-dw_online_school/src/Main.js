@@ -7,7 +7,6 @@ import QuestionListPage from "./pages/QuestionListPage";
 import CoursePage from "./pages/CoursePage";
 import Login from "./components/Login";
 import WishListPage from "./pages/WishListPage";
-import Logout from "./components/Logout";
 import QuestionPage from "./pages/QuestionPage";
 
 function Main(props) {
@@ -25,7 +24,6 @@ function Main(props) {
             <Route path=":questionId" element={<QuestionPage />} />
           </Route>
           <Route path="login" element={<Login />} />
-          <Route path="logout" element={<Logout />} />
           <Route path="wishlist" element={<WishListPage />} />
         </Route>
       </Routes>
