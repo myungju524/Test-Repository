@@ -4,18 +4,17 @@
   gap: 10px;
 }
 .writer .info {
-  /* display: flex;
+  display: flex;
   flex-direction: column;
-  gap: 5px; */
+  gap: 5px;
 }
 .writer .name {
-  margin-bottom: 5px;
   font-size: 14px;
   font-weight: 500;
   color: #494949;
 }
 .writer .level {
+  color: #c4c4c4;
   font-size: 12px;
   font-weight: 500;
-  color: #c4c4c4;
 }

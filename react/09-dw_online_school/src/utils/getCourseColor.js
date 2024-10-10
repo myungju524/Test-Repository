@@ -1,7 +1,7 @@
 const COLORS = {
-  purple: '#d19fe9',
-  green: '#7cd9c2',
-  yellow: '#f7d16f',
+  purple: "#d19fe9",
+  green: "#7cd9c2",
+  yellow: "#f7d16f",
 };
 
 function getCourseColor(code = "000") {

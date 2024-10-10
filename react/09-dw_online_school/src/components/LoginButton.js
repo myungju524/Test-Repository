@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const LoginButton = styled.button`
   background-color: #6500c3;
@@ -6,7 +6,7 @@ const LoginButton = styled.button`
   color: #fff;
   padding: 16px;
   font-size: 18px;
-  border-radius: ${({ $round }) => ($round ? '9999px' : '8px')};
+  border-radius: ${({ $round }) => ($round ? "9999px" : "8px")};
   cursor: pointer;
 
   &:hover {

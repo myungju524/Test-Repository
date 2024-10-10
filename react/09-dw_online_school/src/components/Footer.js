@@ -1,5 +1,5 @@
-import React from 'react';
-import Container from './Container';
+import React from "react";
+import Container from "./Container";
 import facebookIcon from "../assets/facebook.svg";
 import instagramIcon from "../assets/instagram.svg";
 import twitterIcon from "../assets/twitter.svg";
@@ -29,9 +29,9 @@ function Footer(props) {
             <span>DW</span> OS
           </div>
           <div className={styles.sns}>
-            <img src={facebookIcon}/>
-            <img src={instagramIcon}/>
-            <img src={twitterIcon}/>
+            <img src={facebookIcon} alt="" />
+            <img src={twitterIcon} alt="" />
+            <img src={instagramIcon} alt="" />
           </div>
         </div>
       </Container>

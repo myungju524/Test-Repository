@@ -1,6 +1,6 @@
-import React from 'react';
-import styles from './Button.module.css';
-import cn from 'classnames';
+import React from "react";
+import styles from "./Button.module.css";
+import cn from "classnames";
 
 function Button({ variant, ...restProps }) {
   return (

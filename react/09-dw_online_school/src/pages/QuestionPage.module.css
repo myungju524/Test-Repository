@@ -1,11 +1,10 @@
 .header {
-  padding-top: 39px;
-  padding-bottom: 33px;
+  padding: 39px 0 33px;
   background-color: #fff;
 }
 .count {
-  padding: 0 30px;
   margin: 0 0 22px;
+  padding: 0 30px;
   font-size: 18px;
   font-weight: 500;
   color: #878787;
@@ -39,9 +38,11 @@
   font-weight: 500;
   color: #c4c4c4;
 }
+
 .answers {
   margin: 30px auto 80px;
 }
+
 .answerItem {
   padding: 30px;
   display: flex;

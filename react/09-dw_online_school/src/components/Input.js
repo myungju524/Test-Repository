@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const SIZES = {
   large: 24,
@@ -9,14 +9,15 @@ const SIZES = {
 const Input = styled.input`
   font-size: 16px;
   border: none;
-  border-bottom: 2px solid ${({ $error }) => $error ? '#f44336' : '#eeeeee'};
-  padding: 8px 0;
+  border-bottom: 2px solid ${({ $error }) => ($error ? "#f44336" : "#eeeeee")};
+  padding: 10px 0;
+  padding-left: 8px;
   outline: none;
   display: block;
   width: 100%;
 
   &:focus {
-    border-color: ${({ $error }) => $error ? '#f44336' : '#7760b4'};
+    border-color: ${({ $error }) => ($error ? "#f44336" : "#7760b4")};
   }
 
   &::placeholder {

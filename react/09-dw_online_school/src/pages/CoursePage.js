@@ -1,56 +1,46 @@
-import React, { useEffect, useState } from 'react';
-import Container from '../components/Container';
-import CourseIcon from '../components/CourseIcon';
-import Button from '../components/Button';
-import Card from '../components/Card';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import getCourseColor from '../utils/getCourseColor';
-import { getData, updateDatas } from '../api/firebase';
-import styles from './CoursePage.module.css';
+import React, { useEffect, useState } from "react";
+import Container from "../components/Container";
+import CourseIcon from "../components/CourseIcon";
+import Button from "../components/Button";
+import Card from "../components/Card";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import getCourseColor from "../utils/getCourseColor";
+import { getData, upDateDatas } from "../api/firebase";
+import styles from "./CoursePage.module.css";
 
 function CoursePage() {
+  const { courseSlug } = useParams();
   const props = useLocation();
   const { pathname } = props;
-  const { courseSlug } = useParams();
   const navigate = useNavigate();
 
   const [course, setCourse] = useState();
-
-  // undefined.code
-  // undefined 여기서 그냥 끝
-  //   if(course) {
-  //     getCourseColor(course.code)
-  //   }
   const courseColor = getCourseColor(course?.code);
-  const headerStyle = {
-    borderColor: courseColor,
-  };
 
   const handleLoad = async () => {
-    const resultData = await getData('courses', {
-      field: 'slug',
-      condition: '==',
+    const resultData = await getData("courses", {
+      field: "slug",
+      condition: "==",
       value: courseSlug,
     });
     setCourse(resultData);
   };
 
-  const handleAddWishlistClick = async () => {
-    const member = JSON.parse(localStorage.getItem('member'));
-
+  const handleAddWishListClick = async () => {
+    const member = JSON.parse(localStorage.getItem("member"));
     if (member) {
-      const result = await updateDatas("member", member.docId, course, {
+      const result = await upDateDatas("member", member.docId, course, {
         type: "ADD",
-        fieldName: "courseList"
+        fieldName: "courseList",
       });
-      if(result) {
+      if (result) {
         navigate("/wishlist");
-      }else {
-        alert("코스 담기를 실패했습니다.\n관리자에게 문의하세요.");
+      } else {
+        alert("코스담기를 실패했습니다.\n 관리자에게 문의하세요.");
       }
     } else {
-      alert('로그인을 해주세요.');
-      navigate('/login', { state: pathname });
+      alert("로그인을 해주세요");
+      navigate("/login", { state: pathname }); // ==> localHost:3000/login
     }
   };
 
@@ -58,13 +48,16 @@ function CoursePage() {
     handleLoad();
   }, []);
 
+  //   const courseTopic = { ...topics[0].title, summary: topics[0].summary };
+  //   console.log(courseTopic);
+
   return (
     <>
-      <div className={styles.header} style={headerStyle}>
+      <div className={styles.header} style={{ borderColor: courseColor }}>
         <Container className={styles.content}>
           <CourseIcon photoUrl={course?.photoUrl} />
           <h1 className={styles.title}>{course?.title}</h1>
-          <Button variant='round' onClick={handleAddWishlistClick}>
+          <Button variant="round" onClick={handleAddWishListClick}>
             + 코스 담기
           </Button>
           <p className={styles.summary}>{course?.summary}</p>

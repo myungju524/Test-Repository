@@ -1,7 +1,7 @@
-import React from 'react';
-import Avatar from './Avatar';
-import styles from './Writer.module.css';
-import cn from 'classnames';
+import React from "react";
+import Avatar from "./Avatar";
+import styles from "./Writer.module.css";
+import cn from "classnames";
 
 function Writer({ className, writer }) {
   const {

@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
 const styleObject = {
-  paddingBottom: '4px',
-  boxShadow: 'inset 0 -14px #ebebeb',
+  paddingBottom: "4px",
+  boxShadow: "inset 0 -14px #ebebeb",
 };
 
 function Lined({ children }) {

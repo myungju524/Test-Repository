@@ -1,21 +1,20 @@
-import React, { memo } from 'react';
-import Container from '../components/Container';
-import styles from './QuestionPage.module.css';
-import Writer from '../components/Writer';
-import Answer from '../components/Answer';
-import { useLocation } from 'react-router-dom';
-import DateText from './../components/DateText';
-import Lined from '../components/Lined';
-import Warn from '../components/Warn';
-import DOMPurify from 'dompurify';
+import React from "react";
+import Container from "../components/Container";
+import styles from "./QuestionPage.module.css";
+import Writer from "../components/Writer";
+import Answer from "../components/Answer";
+import { useLocation } from "react-router-dom";
+import DateText from "./../components/DateText";
+import Lined from "../components/Lined";
+import Warn from "../components/Warn";
+import DOMpurify from "dompurify";
 
-function QuestionPage() {
-  //   const question = useLocation().state.question;
+function QuestionPage(props) {
   const { question } = useLocation().state;
-  const { title, createdAt, answers, content, writer } = question;
+  const { title, content, createdAt, answers, writer } = question;
 
   const sanitizedData = (data) => {
-    return { __html: DOMPurify.sanitize(data) };
+    return { __html: DOMpurify.sanitize(data) };
   };
 
   return (
@@ -44,19 +43,18 @@ function QuestionPage() {
         <h2 className={styles.count}>
           <Lined>{answers.length}개 답변</Lined>
         </h2>
-
         {answers.length > 0 ? (
           answers.map((answer) => (
             <Answer
+              className={styles.answerItem}
               key={answer.id}
               answer={answer}
-              className={styles.answerItem}
             />
           ))
         ) : (
           <Warn
-            title='답변을 기다리고 있어요.'
-            description='이 질문의 첫 번째 답변을 달아주시겠어요?'
+            title="답변을 기다리고 있어요."
+            description="이 질문의 첫 번째 답변을 달아주시겠어요?"
           />
         )}
       </Container>

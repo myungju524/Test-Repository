@@ -1,14 +1,14 @@
-import React from 'react';
-import CourseIcon from './CourseIcon';
-import { Link } from 'react-router-dom';
-import styles from './CourseItem.module.css';
-import Card from './Card';
-import getCourseColor from '../utils/getCourseColor';
+import React from "react";
+import Card from "./Card";
+import CourseIcon from "./CourseIcon";
+import { Link } from "react-router-dom";
+import styles from "./CourseItem.module.css";
+import getCourseColor from "../utils/getCourseColor";
 
-const DIFFICULTY = ['입문', '초급', '중급', '고급'];
+const DIFFICULTY = ["입문", "초급", "중급", "상급"];
 
-function CourseItem({ course }) {
-  const { title, summary, language, difficulty, code, photoUrl, slug } = course;
+function CourseItem({ Data }) {
+  const { title, summary, language, difficulty, code, photoUrl, slug } = Data;
   const courseColor = getCourseColor(code);
   const thumbStyle = {
     borderColor: courseColor,
@@ -20,7 +20,7 @@ function CourseItem({ course }) {
       </div>
       <div className={styles.content}>
         <h2 className={styles.title}>
-          <Link to={`/courses/${slug}`} state={{ course }}>
+          <Link to={`/courses/${slug}`} state={{ Data }}>
             {title}
           </Link>
         </h2>

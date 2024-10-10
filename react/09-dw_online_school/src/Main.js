@@ -7,11 +7,10 @@ import QuestionListPage from "./pages/QuestionListPage";
 import CoursePage from "./pages/CoursePage";
 import Login from "./components/Login";
 import WishListPage from "./pages/WishListPage";
-import QuestionPage from "./pages/QuestionPage";
 import Logout from "./components/Logout";
+import QuestionPage from "./pages/QuestionPage";
 
 function Main(props) {
-  /** */
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
